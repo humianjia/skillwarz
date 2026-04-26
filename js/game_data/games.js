@@ -1,0 +1,47 @@
+var gamesData = [
+    {
+        "id": "skillwarz",
+        "name": "skillwarz",
+        "imageUrl": "img/skillwarz.avif",
+        "gameType": "Index",
+        "rating": "4.8",
+        "description": "Veck.io is a fast, browser-based FPS that delivers quick, intense multiplayer battles without downloads or installation. Designed for pure reflex-driven combat, the game features smooth low-poly visuals, tight gunplay, and compact maps that keep action constant. Whether you want to jump into solo fights or coordinate with friends, Veck.io offers an accessible, competitive shooter experience directly in your browser.",
+        "keywords": "veck io, veck io game, veck io FPS, veck io shooter, veck io multiplayer, veck io online, veck io free, veck io browser, veck io play, veck io action, veck io battle, veck io combat, veck io io games, veck io shooting, veck io first person shooter, veck io competitive, veck io reflex, veck io skill, veck io fast paced, veck io no download, veck io skins, veck io free for all, veck io 1v1, veck io team game, veck io private room",
+        "link": "index.html",
+        "tags": [
+            "veck io",
+            "FPS",
+            "multiplayer shooter",
+            "browser game",
+            "io games",
+            "action games",
+            "shooting games",
+            "first person shooter",
+            "online game",
+            "free game",
+            "battle royale",
+            "competitive shooter",
+            "reflex game",
+            "skill game"
+        ],
+        "iframeUrl": "https://ext.minijuegosgratis.com/cz/play.html?n=skillwarz&mp_assets=https%3A%2F%2Fs2.minijuegosgratis.com%2F&mp_embed=0&mp_game_id=251508&mp_game_uid=skillwarz-legacy-edition&mp_game_url=https%3A%2F%2Fwww.miniplay.com%2Fgame%2Fskillwarz-legacy-edition&mp_int=1&mp_locale=en_US&mp_player_type=IFRAME&mp_site_https_url=https%3A%2F%2Fwww.miniplay.com%2F&mp_site_name=miniplay.com&mp_site_url=https%3A%2F%2Fwww.miniplay.com%2F&mp_timezone=Asia%2FShanghai&mp_view_type=",
+        "gameplay": "Veck.io gameplay revolves around rapid combat and constant movement. Run, slide, jump, and switch weapons instantly to stay alive and outplay opponents. Fast respawns and compact arenas ensure nonstop action.",
+        "gameModes": [
+            "Free For All",
+            "1v1 Duel",
+            "2v2 Team",
+            "3v3 Team",
+            "4v4 Team",
+            "Private Room"
+        ],
+        "features": [
+            "No download required",
+            "Browser-based multiplayer",
+            "Low-poly graphics",
+            "Fast-paced combat",
+            "Inventory & skins system",
+            "Free daily rewards",
+            "Cross-platform play"
+        ]
+    },
+]

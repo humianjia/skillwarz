@@ -1,0 +1,122 @@
+var battleRoyaleData = [
+    {
+        "id": "Doge's Battle Royale",
+        "name": "Doge's Battle Royale",
+        "imageUrl": "img/icon/BattleRoyale/DogesBattleRoyale.jpg",
+        "gameType": "SkillWarz",
+        "rating": "4.3",
+        "description": "SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style. Features advanced movement system with slide and sprint mechanics, bounce pads, teleport systems, and fluid combat movement. Experience diverse game modes with dynamic map design including day/night cycles, interactive elements, and battle pickups. Customize your gameplay with unique classes, gear customization, and a variety of weapons.",
+        "keywords": "SkillWarz, FPS, shooter, multiplayer, action, battle royale, sniper",
+        "link": "BattleRoyale/Doge_s_Battle_Royale.html",
+        "tags": ["doge", "battle royale", "meme", "funny"],
+        "iframeUrl": "https://html5.gamedistribution.com/f7106e2740504e31be69410a12304172/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
+    },
+    {
+        "id": "Battle Royale Noob vs Pro",
+        "name": "Battle Royale Noob vs Pro",
+        "imageUrl": "img/icon/BattleRoyale/BattleRoyaleNoobvsPro.jpeg",
+        "gameType": "SkillWarz",
+        "rating": "4.4",
+        "description": "SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style. Features advanced movement system with slide and sprint mechanics, bounce pads, teleport systems, and fluid combat movement. Experience diverse game modes with dynamic map design including day/night cycles, interactive elements, and battle pickups. Customize your gameplay with unique classes, gear customization, and a variety of weapons.",
+        "keywords": "SkillWarz, FPS, shooter, multiplayer, action, battle royale, sniper",
+        "link": "BattleRoyale/Battle_Royale_Noob_vs_Pro.html",
+        "tags": ["battle royale noob vs pro", "noob vs pro", "battle royale"],
+        "iframeUrl": "https://html5.gamedistribution.com/ab052df5478e46f3b8907dce6799a88f/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
+    },
+    {
+        "id": "Top Guns IO",
+        "name": "Top Guns IO",
+        "imageUrl": "img/icon/BattleRoyale/TopGunsIO.jpeg",
+        "gameType": "SkillWarz",
+        "rating": "4.5",
+        "description": "SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style. Features advanced movement system with slide and sprint mechanics, bounce pads, teleport systems, and fluid combat movement. Experience diverse game modes with dynamic map design including day/night cycles, interactive elements, and battle pickups. Customize your gameplay with unique classes, gear customization, and a variety of weapons.",
+        "keywords": "SkillWarz, FPS, shooter, multiplayer, action, battle royale, sniper",
+        "link": "BattleRoyale/Top_Guns_IO.html",
+        "tags": ["top guns io", "aerial combat", "jet", "battle royale"],
+        "iframeUrl": "https://html5.gamedistribution.com/a8cdacefc98244c0a23f76eff86b1c60/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
+    },
+    {
+        "id": "Battle Royale Puzzles",
+        "name": "Battle Royale Puzzles",
+        "imageUrl": "img/icon/BattleRoyale/BattleRoyalePuzzles.jpeg",
+        "gameType": "SkillWarz",
+        "rating": "4.2",
+        "description": "SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style. Features advanced movement system with slide and sprint mechanics, bounce pads, teleport systems, and fluid combat movement. Experience diverse game modes with dynamic map design including day/night cycles, interactive elements, and battle pickups. Customize your gameplay with unique classes, gear customization, and a variety of weapons.",
+        "keywords": "SkillWarz, FPS, shooter, multiplayer, action, battle royale, sniper",
+        "link": "BattleRoyale/Battle_Royale_Puzzles.html",
+        "tags": ["battle royale puzzles", "puzzle", "battle royale"],
+        "iframeUrl": "https://html5.gamedistribution.com/6e40272c0d394ab8b6e4104fd4692d51/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
+    },
+    {
+        "id": "Battle Royale Coloring Book",
+        "name": "Battle Royale Coloring Book",
+        "imageUrl": "img/icon/BattleRoyale/BattleRoyaleColoringBook.jpeg",
+        "gameType": "SkillWarz",
+        "rating": "4.0",
+        "description": "SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style. Features advanced movement system with slide and sprint mechanics, bounce pads, teleport systems, and fluid combat movement. Experience diverse game modes with dynamic map design including day/night cycles, interactive elements, and battle pickups. Customize your gameplay with unique classes, gear customization, and a variety of weapons.",
+        "keywords": "SkillWarz, FPS, shooter, multiplayer, action, battle royale, sniper",
+        "link": "BattleRoyale/Battle_Royale_Coloring_Book.html",
+        "tags": ["battle royale coloring book", "coloring", "creative"],
+        "iframeUrl": "https://html5.gamedistribution.com/bb7b60d5cf1f4cca9b3009726246cf69/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
+    },
+    {
+        "id": "Battle Royale Jigsaw",
+        "name": "Battle Royale Jigsaw",
+        "imageUrl": "img/icon/BattleRoyale/BattleRoyaleJigsaw.jpeg",
+        "gameType": "SkillWarz",
+        "rating": "4.1",
+        "description": "SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style. Features advanced movement system with slide and sprint mechanics, bounce pads, teleport systems, and fluid combat movement. Experience diverse game modes with dynamic map design including day/night cycles, interactive elements, and battle pickups. Customize your gameplay with unique classes, gear customization, and a variety of weapons.",
+        "keywords": "SkillWarz, FPS, shooter, multiplayer, action, battle royale, sniper",
+        "link": "BattleRoyale/Battle_Royale_Jigsaw.html",
+        "tags": ["battle royale jigsaw", "jigsaw", "puzzle"],
+        "iframeUrl": "https://html5.gamedistribution.com/4cb0cfaad7f04b71a4316d54b418f089/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
+    },
+    {
+        "id": "Cube Battle Royale",
+        "name": "Cube Battle Royale",
+        "imageUrl": "img/icon/BattleRoyale/CubeBattleRoyale.jpeg",
+        "gameType": "SkillWarz",
+        "rating": "4.6",
+        "description": "SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style. Features advanced movement system with slide and sprint mechanics, bounce pads, teleport systems, and fluid combat movement. Experience diverse game modes with dynamic map design including day/night cycles, interactive elements, and battle pickups. Customize your gameplay with unique classes, gear customization, and a variety of weapons.",
+        "keywords": "SkillWarz, FPS, shooter, multiplayer, action, battle royale, sniper",
+        "link": "BattleRoyale/Cube_Battle_Royale.html",
+        "tags": ["cube battle royale", "cube", "blocky", "minecraft"],
+        "iframeUrl": "https://html5.gamedistribution.com/5d4d5247537c4009af6104a6a1b20323/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
+    },
+    {
+        "id": "Battle Royale Puzzle Challenge",
+        "name": "Battle Royale Puzzle Challenge",
+        "imageUrl": "img/icon/BattleRoyale/BattleRoyalePuzzleChallenge.jpeg",
+        "gameType": "SkillWarz",
+        "rating": "4.3",
+        "description": "SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style. Features advanced movement system with slide and sprint mechanics, bounce pads, teleport systems, and fluid combat movement. Experience diverse game modes with dynamic map design including day/night cycles, interactive elements, and battle pickups. Customize your gameplay with unique classes, gear customization, and a variety of weapons.",
+        "keywords": "SkillWarz, FPS, shooter, multiplayer, action, battle royale, sniper",
+        "link": "BattleRoyale/Battle_Royale_Puzzle_Challenge.html",
+        "tags": ["battle royale puzzle challenge", "puzzle", "challenge"],
+        "iframeUrl": "https://html5.gamedistribution.com/0e462cb3e0804b4dbb34878b7bd1c17e/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
+    },
+    {
+        "id": "Pixel Battle Royale Multiplayer",
+        "name": "Pixel Battle Royale Multiplayer",
+        "imageUrl": "img/icon/BattleRoyale/PixelBattleRoyaleMultiplayer.jpeg",
+        "gameType": "SkillWarz",
+        "rating": "4.4",
+        "description": "SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style. Features advanced movement system with slide and sprint mechanics, bounce pads, teleport systems, and fluid combat movement. Experience diverse game modes with dynamic map design including day/night cycles, interactive elements, and battle pickups. Customize your gameplay with unique classes, gear customization, and a variety of weapons.",
+        "keywords": "SkillWarz, FPS, shooter, multiplayer, action, battle royale, sniper",
+        "link": "BattleRoyale/Pixel_Battle_Royale_Multiplayer.html",
+        "tags": ["pixel battle royale", "pixel", "multiplayer", "retro"],
+        "iframeUrl": "https://html5.gamedistribution.com/32bad42c0e3d43f9b2fbcf104e6a710e/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
+    },
+    {
+        "id": "Pixel Battle Royale",
+        "name": "Pixel Battle Royale",
+        "imageUrl": "img/icon/BattleRoyale/PixelBattleRoyale.jpeg",
+        "gameType": "SkillWarz",
+        "rating": "4.2",
+        "description": "SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style. Features advanced movement system with slide and sprint mechanics, bounce pads, teleport systems, and fluid combat movement. Experience diverse game modes with dynamic map design including day/night cycles, interactive elements, and battle pickups. Customize your gameplay with unique classes, gear customization, and a variety of weapons.",
+        "keywords": "SkillWarz, FPS, shooter, multiplayer, action, battle royale, sniper",
+        "link": "BattleRoyale/Pixel_Battle_Royale.html",
+        "tags": ["pixel battle royale", "pixel", "retro", "battle royale"],
+        "iframeUrl": "https://html5.gamedistribution.com/b798bda4908e4424b18af068e26eb5f0/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
+    }
+]
