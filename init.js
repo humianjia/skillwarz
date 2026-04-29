@@ -62,8 +62,30 @@ function toggleFullscreen() {
     }
 }
 
+function createFullscreenMask() {
+    let mask = document.getElementById('fullscreen-mask');
+    if (!mask) {
+        mask = document.createElement('div');
+        mask.id = 'fullscreen-mask';
+        mask.style.cssText = `
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: black;
+            z-index: 9999;
+            pointer-events: none;
+            display: none;
+        `;
+        document.body.appendChild(mask);
+    }
+    return mask;
+}
+
 document.addEventListener('fullscreenchange', function() {
     const iframe = document.getElementById('game-iframe');
+    const mask = createFullscreenMask();
     if (document.fullscreenElement === iframe) {
         iframe.style.height = '110vh';
         iframe.style.width = '100vw';
@@ -71,6 +93,7 @@ document.addEventListener('fullscreenchange', function() {
         iframe.style.objectPosition = 'top -40px';
         iframe.style.margin = '0';
         iframe.style.padding = '0';
+        mask.style.display = 'block';
     } else {
         iframe.style.height = '';
         iframe.style.width = '';
@@ -78,11 +101,13 @@ document.addEventListener('fullscreenchange', function() {
         iframe.style.objectPosition = '';
         iframe.style.margin = '';
         iframe.style.padding = '';
+        mask.style.display = 'none';
     }
 });
 
 document.addEventListener('webkitfullscreenchange', function() {
     const iframe = document.getElementById('game-iframe');
+    const mask = createFullscreenMask();
     if (document.webkitFullscreenElement === iframe) {
         iframe.style.height = '110vh';
         iframe.style.width = '100vw';
@@ -90,6 +115,7 @@ document.addEventListener('webkitfullscreenchange', function() {
         iframe.style.objectPosition = 'top -40px';
         iframe.style.margin = '0';
         iframe.style.padding = '0';
+        mask.style.display = 'block';
     } else {
         iframe.style.height = '';
         iframe.style.width = '';
@@ -97,6 +123,7 @@ document.addEventListener('webkitfullscreenchange', function() {
         iframe.style.objectPosition = '';
         iframe.style.margin = '';
         iframe.style.padding = '';
+        mask.style.display = 'none';
     }
 });
 

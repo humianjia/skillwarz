@@ -262,40 +262,35 @@ body {
     margin-bottom: -80px;
 }
 
-.game-frame iframe:fullscreen {
-    height: calc(100vh + 100px) !important;
-    width: 100vw !important;
-    object-fit: cover !important;
-    object-position: top -50px !important;
-    margin-top: 0 !important;
-    margin-bottom: -100px !important;
+.iframe-bottom-mask {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #2d5a3d;
+    z-index: 10;
+    pointer-events: none;
 }
 
-.game-frame iframe:-webkit-full-screen {
-    height: calc(100vh + 100px) !important;
-    width: 100vw !important;
-    object-fit: cover !important;
-    object-position: top -50px !important;
-    margin-top: 0 !important;
-    margin-bottom: -100px !important;
+.game-frame:has(iframe:fullscreen) .iframe-bottom-mask {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: black;
+    z-index: 9999;
 }
 
-#game-iframe:-webkit-full-screen {
-    height: calc(100vh + 100px) !important;
-    width: 100vw !important;
-    object-fit: cover !important;
-    object-position: top -50px !important;
-    margin-top: 0 !important;
-    margin-bottom: -100px !important;
-}
-
-#game-iframe:fullscreen {
-    height: calc(100vh + 100px) !important;
-    width: 100vw !important;
-    object-fit: cover !important;
-    object-position: top -50px !important;
-    margin-top: 0 !important;
-    margin-bottom: -100px !important;
+.game-frame:has(iframe:-webkit-full-screen) .iframe-bottom-mask {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: black;
+    z-index: 9999;
 }
 
 .game-controls {
