@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Generator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #1a1a2e;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 2px solid #ff6a00;
+            border-radius: 8px;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ff4500, #ff8c00);
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <h1>SkillWarz Favicon Generator</h1>
+    <canvas id="faviconCanvas" width="48" height="48"></canvas>
+    <div>
+        <button onclick="downloadFavicon(32)">Download 32x32</button>
+        <button onclick="downloadFavicon(16)">Download 16x16</button>
+        <button onclick="downloadFavicon(48)">Download 48x48</button>
+    </div>
+
+    <script>
+        function drawFavicon(ctx, size) {
+            ctx.clearRect(0, 0, size, size);
+            
+            // Background
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, size, size);
+            
+            // Calculate dimensions based on size
+            const rectX = size * 0.1667;  // 8/48
+            const rectY = size * 0.25;     // 12/48
+            const rectWidth = size * 0.6667; // 32/48
+            const rectHeight = size * 0.5;   // 24/48
+            const strokeWidth = size * 0.0625; // 3/48
+            
+            // Rectangle outline
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#ff4500');
+            gradient.addColorStop(1, '#ff8c00');
+            
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = strokeWidth;
+            ctx.roundRect(rectX, rectY, rectWidth, rectHeight, size * 0.0417); // 2/48
+            ctx.stroke();
+            
+            // Horizontal lines
+            ctx.lineWidth = size * 0.0417; // 2/48
+            ctx.beginPath();
+            ctx.moveTo(rectX, rectY + rectHeight * 0.1667); // 16/48 y
+            ctx.lineTo(rectX + rectWidth, rectY + rectHeight * 0.1667);
+            ctx.moveTo(rectX, rectY + rectHeight * 0.4167); // 22/48 y
+            ctx.lineTo(rectX + rectWidth, rectY + rectHeight * 0.4167);
+            ctx.moveTo(rectX, rectY + rectHeight * 0.6667); // 28/48 y
+            ctx.lineTo(rectX + rectWidth, rectY + rectHeight * 0.6667);
+            ctx.stroke();
+            
+            // Triangle
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.moveTo(size * 0.5, size * 0.125); // 24/48 x, 6/48 y
+            ctx.lineTo(size * 0.625, size * 0.25); // 30/48 x, 12/48 y
+            ctx.lineTo(size * 0.375, size * 0.25); // 18/48 x, 12/48 y
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // Draw on canvas
+        const canvas = document.getElementById('faviconCanvas');
+        const ctx = canvas.getContext('2d');
+        drawFavicon(ctx, 48);
+
+        function downloadFavicon(size) {
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = size;
+            tempCanvas.height = size;
+            const tempCtx = tempCanvas.getContext('2d');
+            drawFavicon(tempCtx, size);
+            
+            const link = document.createElement('a');
+            link.download = `favicon-${size}x${size}.png`;
+            link.href = tempCanvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
