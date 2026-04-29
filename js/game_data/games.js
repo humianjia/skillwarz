@@ -24,7 +24,7 @@ var gamesData = [
             "reflex game",
             "skill game"
         ],
-        "iframeUrl": "https://www.gamenora.com/splash/skillwarz/",
+        "iframeUrl": "https://ext.minijuegosgratis.com/cz/play.html?n=skillwarz&mp_assets=https%3A%2F%2Fs2.minijuegosgratis.com%2F&mp_embed=0&mp_game_id=251508&mp_game_uid=skillwarz-legacy-edition&mp_game_url=https%3A%2F%2Fwww.miniplay.com%2Fgame%2Fskillwarz-legacy-edition&mp_int=1&mp_locale=en_US&mp_player_type=IFRAME&mp_site_https_url=https%3A%2F%2Fwww.miniplay.com%2F&mp_site_name=miniplay.com&mp_site_url=https%3A%2F%2Fwww.miniplay.com%2F&mp_timezone=Asia%2FShanghai&mp_view_type=",
         "gameplay": "Veck.io gameplay revolves around rapid combat and constant movement. Run, slide, jump, and switch weapons instantly to stay alive and outplay opponents. Fast respawns and compact arenas ensure nonstop action.",
         "gameModes": [
             "Free For All",

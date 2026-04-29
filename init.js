@@ -46,6 +46,10 @@ function loadGame(gameIndex) {
 function toggleFullscreen() {
     const iframe = document.getElementById('game-iframe');
     if (iframe) {
+        iframe.style.height = '110vh';
+        iframe.style.width = '100vw';
+        iframe.style.objectFit = 'cover';
+        iframe.style.objectPosition = 'top';
         if (iframe.requestFullscreen) {
             iframe.requestFullscreen();
         } else if (iframe.webkitRequestFullscreen) {

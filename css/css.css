@@ -252,12 +252,28 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .game-frame iframe {
     width: 100%;
-    height: 100%;
+    height: calc(100% + 60px);
     border: none;
+    margin-bottom: -60px;
+}
+
+.game-frame iframe:fullscreen {
+    height: 110vh !important;
+    width: 100vw !important;
+    object-fit: cover;
+    object-position: top;
+}
+
+.game-frame iframe:-webkit-full-screen {
+    height: 110vh !important;
+    width: 100vw !important;
+    object-fit: cover;
+    object-position: top;
 }
 
 .game-controls {
