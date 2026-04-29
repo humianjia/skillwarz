@@ -44,86 +44,65 @@ function loadGame(gameIndex) {
 
 // 全屏切换
 function toggleFullscreen() {
-    const iframe = document.getElementById('game-iframe');
-    if (iframe) {
-        iframe.style.height = '110vh';
-        iframe.style.width = '100vw';
-        iframe.style.objectFit = 'cover';
-        iframe.style.objectPosition = 'top -40px';
-        iframe.style.margin = '0';
-        iframe.style.padding = '0';
-        if (iframe.requestFullscreen) {
-            iframe.requestFullscreen();
-        } else if (iframe.webkitRequestFullscreen) {
-            iframe.webkitRequestFullscreen();
-        } else if (iframe.msRequestFullscreen) {
-            iframe.msRequestFullscreen();
+    const gameFrame = document.querySelector('.game-frame');
+    if (gameFrame) {
+        if (gameFrame.requestFullscreen) {
+            gameFrame.requestFullscreen();
+        } else if (gameFrame.webkitRequestFullscreen) {
+            gameFrame.webkitRequestFullscreen();
+        } else if (gameFrame.msRequestFullscreen) {
+            gameFrame.msRequestFullscreen();
         }
     }
 }
 
-function createFullscreenMask() {
-    let mask = document.getElementById('fullscreen-mask');
-    if (!mask) {
-        mask = document.createElement('div');
-        mask.id = 'fullscreen-mask';
-        mask.style.cssText = `
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: black;
-            z-index: 9999;
-            pointer-events: none;
-            display: none;
-        `;
-        document.body.appendChild(mask);
-    }
-    return mask;
-}
-
 document.addEventListener('fullscreenchange', function() {
+    const gameFrame = document.querySelector('.game-frame');
     const iframe = document.getElementById('game-iframe');
-    const mask = createFullscreenMask();
-    if (document.fullscreenElement === iframe) {
+    const mask = document.querySelector('.iframe-bottom-mask');
+    if (document.fullscreenElement === gameFrame) {
+        gameFrame.classList.add('fullscreen-active');
+        if (mask) {
+            mask.classList.add('fullscreen-mask');
+        }
         iframe.style.height = '110vh';
         iframe.style.width = '100vw';
         iframe.style.objectFit = 'cover';
         iframe.style.objectPosition = 'top -40px';
-        iframe.style.margin = '0';
-        iframe.style.padding = '0';
-        mask.style.display = 'block';
     } else {
+        gameFrame.classList.remove('fullscreen-active');
+        if (mask) {
+            mask.classList.remove('fullscreen-mask');
+        }
         iframe.style.height = '';
         iframe.style.width = '';
         iframe.style.objectFit = '';
         iframe.style.objectPosition = '';
-        iframe.style.margin = '';
-        iframe.style.padding = '';
-        mask.style.display = 'none';
     }
 });
 
 document.addEventListener('webkitfullscreenchange', function() {
+    const gameFrame = document.querySelector('.game-frame');
     const iframe = document.getElementById('game-iframe');
-    const mask = createFullscreenMask();
-    if (document.webkitFullscreenElement === iframe) {
+    const mask = document.querySelector('.iframe-bottom-mask');
+    if (document.webkitFullscreenElement === gameFrame) {
+        gameFrame.classList.add('fullscreen-active');
+        if (mask) {
+            mask.classList.add('fullscreen-mask');
+        }
         iframe.style.height = '110vh';
         iframe.style.width = '100vw';
         iframe.style.objectFit = 'cover';
         iframe.style.objectPosition = 'top -40px';
-        iframe.style.margin = '0';
-        iframe.style.padding = '0';
-        mask.style.display = 'block';
     } else {
+        gameFrame.classList.remove('fullscreen-active');
+        if (mask) {
+            mask.classList.remove('fullscreen-mask');
+        }
         iframe.style.height = '';
         iframe.style.width = '';
         iframe.style.objectFit = '';
         iframe.style.objectPosition = '';
-        iframe.style.margin = '';
-        iframe.style.padding = '';
-        mask.style.display = 'none';
     }
 });
 
