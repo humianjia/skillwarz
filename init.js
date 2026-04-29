@@ -49,7 +49,9 @@ function toggleFullscreen() {
         iframe.style.height = '110vh';
         iframe.style.width = '100vw';
         iframe.style.objectFit = 'cover';
-        iframe.style.objectPosition = 'top';
+        iframe.style.objectPosition = 'top -40px';
+        iframe.style.margin = '0';
+        iframe.style.padding = '0';
         if (iframe.requestFullscreen) {
             iframe.requestFullscreen();
         } else if (iframe.webkitRequestFullscreen) {
@@ -59,6 +61,44 @@ function toggleFullscreen() {
         }
     }
 }
+
+document.addEventListener('fullscreenchange', function() {
+    const iframe = document.getElementById('game-iframe');
+    if (document.fullscreenElement === iframe) {
+        iframe.style.height = '110vh';
+        iframe.style.width = '100vw';
+        iframe.style.objectFit = 'cover';
+        iframe.style.objectPosition = 'top -40px';
+        iframe.style.margin = '0';
+        iframe.style.padding = '0';
+    } else {
+        iframe.style.height = '';
+        iframe.style.width = '';
+        iframe.style.objectFit = '';
+        iframe.style.objectPosition = '';
+        iframe.style.margin = '';
+        iframe.style.padding = '';
+    }
+});
+
+document.addEventListener('webkitfullscreenchange', function() {
+    const iframe = document.getElementById('game-iframe');
+    if (document.webkitFullscreenElement === iframe) {
+        iframe.style.height = '110vh';
+        iframe.style.width = '100vw';
+        iframe.style.objectFit = 'cover';
+        iframe.style.objectPosition = 'top -40px';
+        iframe.style.margin = '0';
+        iframe.style.padding = '0';
+    } else {
+        iframe.style.height = '';
+        iframe.style.width = '';
+        iframe.style.objectFit = '';
+        iframe.style.objectPosition = '';
+        iframe.style.margin = '';
+        iframe.style.padding = '';
+    }
+});
 
 // 打乱数组顺序（用于随机排序）
 function shuffleArray(array) {
