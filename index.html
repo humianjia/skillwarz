@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkillWarz - Fast-Paced FPS Multiplayer Shooter | Cross-Platform Action Game</title>
-    <meta name="description" content="SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through over 40 dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style. Cross-platform support for web, mobile, and desktop. No download required - play for free now!">
-    <meta name="keywords" content="skillwarz, skillwarz game, skillwarz FPS, skillwarz shooter, skillwarz multiplayer, skillwarz online, skillwarz free, skillwarz browser, skillwarz play, skillwarz action, skillwarz battle, skillwarz combat, skillwarz io games, skillwarz shooting, skillwarz first person shooter, skillwarz competitive, skillwarz reflex, skillwarz skill, skillwarz fast paced, skillwarz no download, skillwarz cross-platform, skillwarz game modes, skillwarz maps">
+    <title>SkillWarz Online - Fast-Paced FPS Multiplayer Shooter | Play Free</title>
+    <meta name="description" content="Play SkillWarz Online for free! Experience fast-paced FPS action with advanced movement mechanics, 8+ game modes (Deathmatch, Gun Game, Skull Hunt), 40+ maps, and cross-platform multiplayer. No download required - play in your browser now!">
+    <meta name="keywords" content="SkillWarz, SkillWarz online, SkillWarz free, SkillWarz FPS, SkillWarz shooter, browser FPS, free online games, multiplayer shooter, Deathmatch, Gun Game, Skull Hunt, first person shooter, browser game, no download">
     <meta name="robots" content="index, follow">
     <meta name="author" content="SkillWarz">
     <link rel="canonical" href="https://skillwarz.online/">
-    <meta property="og:title" content="SkillWarz - Fast-Paced FPS Multiplayer Shooter">
-    <meta property="og:description" content="SkillWarz is a fast-paced FPS with 8+ game modes, 40+ maps, advanced movement, and cross-platform support. Play for free in your browser - no download required!">
+    <meta property="og:title" content="SkillWarz Online - Fast-Paced FPS Multiplayer Shooter">
+    <meta property="og:description" content="Play SkillWarz Online for free! Fast-paced FPS with advanced movement, 8+ game modes, 40+ maps. No download required.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://skillwarz.online/">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SkillWarz - Fast-Paced FPS Multiplayer Shooter">
-    <meta name="twitter:description" content="Experience skill-based combat in SkillWarz - 8 game modes, 40+ maps, cross-platform play, and advanced movement mechanics. Play free in browser!">
+    <meta name="twitter:title" content="SkillWarz Online - Fast-Paced FPS Multiplayer Shooter">
+    <meta name="twitter:description" content="Play SkillWarz Online for free! Experience fast-paced FPS action with advanced movement mechanics.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -30,16 +27,12 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-DNT670B4R3');
 </script>
 </head>
 <body>
-    <!-- 粒子背景 -->
     <div class="particles" id="particles"></div>
-    <!-- 鼠标跟随光效 -->
     <div class="cursor-glow" id="cursorGlow"></div>
-    <!-- 顶部导航 -->
     <header class="header">
         <div class="logo">
             <svg class="logo-icon" viewBox="0 0 50 50" width="45" height="45">
@@ -68,11 +61,8 @@
         </div>
     </header>
 
-    <!-- 主容器 -->
     <div class="main-container">
-        <!-- 中间主内容 -->
         <main class="main-content">
-            <!-- 游戏展示区 -->
             <div class="game-showcase">
                 <div class="game-frame">
                     <iframe id="game-iframe" src="" allowfullscreen></iframe>
@@ -80,8 +70,8 @@
                 </div>
                 <div class="game-controls">
                     <div class="game-title-section">
-                        <img src="" id="game-icon" class="game-icon" alt="Icon">
-                        <span class="game-title" id="current-game-title">Gummy merge</span>
+                        <img src="" id="game-icon" class="game-icon" alt="SkillWarz Icon">
+                        <span class="game-title" id="current-game-title">SkillWarz</span>
                     </div>
                     <div class="game-actions">
                         <i class="fas fa-expand" onclick="toggleFullscreen()"></i>
@@ -89,75 +79,311 @@
                 </div>
             </div>
 
-            <!-- 相关推荐 -->
             <div class="related-games">
                 <h3 class="section-title">Popular Shooter Games</h3>
-                <div class="games-grid" id="related-games-container">
-                    <!-- 21个游戏卡片将由JavaScript动态生成 -->
-                </div>
+                <div class="games-grid" id="related-games-container"></div>
             </div>
 
-            <!-- 内容区域 - 游戏介绍 -->
             <div class="content-section">
                 <div class="game-info">
-                    <div class="info-header">Welcome to SkillWarz - A fast-paced first-person shooter offering advanced movement mechanics and diverse game modes.</div>
+                    <h1>SkillWarz Online</h1>
+                    
+                    <div class="info-header">Experience fast-paced FPS action with advanced movement mechanics and diverse game modes.</div>
+
                     <div class="info-content">
-                        <h2>WHAT IS SKILLWARZ?</h2>
-                        <p><strong>SkillWarz</strong> is a fast-paced first-person shooter offering advanced movement mechanics and diverse game modes including Deathmatch, Team Deathmatch, Gun Game, Team Gun Game, Skull Hunt, Elimination, Capture The Flag, and Domination. Navigate through over 40 dynamic day and night maps featuring bounce pads, teleports, and battle pickups. Unlock unique classes, customize your gear, and challenge others or practice against bots in action-packed matches tailored to your style.</p>
-                        <p>SkillWarz is a cross-platform game available on web, mobile, and desktop, allowing you to play anytime, anywhere. The game features a progression system with unlocks, statistics tracking, and a training mode where you can practice movement and shooting before entering multiplayer matches.</p>
+                        <h2 id="play-skillwarz">Play SkillWarz Online for Free</h2>
+                        <p>SkillWarz is a fast-paced FPS that runs directly in your browser. You can join matches without download or install. Play Deathmatch, Gun Game, Skull Hunt, and more modes against real players or AI bots. No upfront cost – just open the page and play in seconds.</p>
+                        <a href="https://www.crazygames.com/game/skillwarz" target="_blank" rel="noopener noreferrer">Play Now on CrazyGames</a>
+                        
+                        <div class="video-container">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/NB6DcDoZd6U" title="SkillWarz Gameplay" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
 
-                        <h3>GAME MODES</h3>
+                        <div class="feature-tags">
+                            <span class="feature-tag">Browser Based</span>
+                            <span class="feature-tag">Free to Play</span>
+                            <span class="feature-tag">Fast-Paced FPS</span>
+                        </div>
+
+                        <h2 id="what-is-skillwarz">What Is SkillWarz?</h2>
+                        <p>SkillWarz is a movement-based arena FPS focused on speed, mobility, and map control. It isn't a realistic military shooter but a fast, flow-oriented experience. You can play on PC and mobile browsers with mouse-keyboard or touch controls, versus real players or AI bots.</p>
+                        <a href="https://www.miniplay.com/game/skillwarz-legacy-edition" target="_blank" rel="noopener noreferrer">Play Legacy Edition</a>
+
+                        <h2 id="skillwarz-game-modes">SkillWarz Game Modes</h2>
+                        <p>SkillWarz features multiple modes that change how you fight round by round.</p>
+                        <a href="https://baltverge.itch.io/skillwarz" target="_blank" rel="noopener noreferrer">View on itch.io</a>
+                        
+                        <div class="game-modes-grid">
+                            <div class="mode-card">
+                                <h3>Deathmatch</h3>
+                                <p>Classic free-for-all; get the most kills before time runs out.</p>
+                            </div>
+                            <div class="mode-card">
+                                <h3>Gun Game</h3>
+                                <p>Change weapons with each kill; be the first to finish the full lineup.</p>
+                            </div>
+                            <div class="mode-card">
+                                <h3>Skull Hunt</h3>
+                                <p>Collect skulls or items while fighting, adding extra pressure and map control.</p>
+                            </div>
+                            <div class="mode-card">
+                                <h3>Elimination</h3>
+                                <p>Limited lives; once you're dead, you stay out until next round.</p>
+                            </div>
+                            <div class="mode-card">
+                                <h3>Team Deathmatch</h3>
+                                <p>Work with your team to eliminate the opposing team.</p>
+                            </div>
+                            <div class="mode-card">
+                                <h3>Capture The Flag</h3>
+                                <p>Capture the enemy flag while defending your own.</p>
+                            </div>
+                            <div class="mode-card">
+                                <h3>Domination</h3>
+                                <p>Control strategic points on the map.</p>
+                            </div>
+                            <div class="mode-card">
+                                <h3>Training Mode</h3>
+                                <p>Practice against AI bots to improve your skills.</p>
+                            </div>
+                        </div>
+
+                        <h2 id="skillwarz-maps">SkillWarz Maps and Movement</h2>
+                        <p>Maps are built around movement, with bounce pads, teleports, and battle pickups to keep you mobile.</p>
+                        
+                        <div class="video-container">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/NB6DcDoZd6U" title="SkillWarz Maps & Movement" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
                         <ul>
-                            <li><strong>Deathmatch:</strong> Free-for-all combat where every player fights for themselves</li>
-                            <li><strong>Team Deathmatch:</strong> Work with your team to eliminate the opposing team</li>
-                            <li><strong>Gun Game:</strong> Progress through different weapons with each elimination - first to cycle through all weapons wins</li>
-                            <li><strong>Team Gun Game:</strong> Team-based version of Gun Game</li>
-                            <li><strong>Skull Hunt:</strong> Unique objective-based mode combining combat with strategic elements</li>
-                            <li><strong>Elimination:</strong> Players have limited lives, last team standing wins</li>
-                            <li><strong>Capture The Flag:</strong> Capture the enemy flag while defending your own</li>
-                            <li><strong>Domination:</strong> Control strategic points on the map</li>
-                            <li><strong>Training Mode:</strong> Practice movement and shooting against AI opponents</li>
+                            <li><strong>Advanced Movement Mechanics:</strong> Use air strafing, slides, and flick jumps to dodge bullets and control angles.</li>
+                            <li><strong>Dynamic Day and Night Maps:</strong> Lighting changes add extra layer of hiding and positioning.</li>
+                            <li><strong>Bounce Pads and Teleports:</strong> Use them to flank, escape, or get overhead angles fast.</li>
                         </ul>
 
-                        <h3>FEATURES</h3>
+                        <h2 id="skillwarz-weapons">SkillWarz Weapons and Classes</h2>
+                        <p>SkillWarz has a growing weapon list that keeps matches fresh.</p>
+                        <a href="https://skillwarz.techylist.com" target="_blank" rel="noopener noreferrer">View TechyList Profile</a>
+                        
                         <ul>
-                            <li><strong>Advanced Movement System:</strong> Run, jump, strafe, slide, and use bounce pads for dynamic gameplay</li>
-                            <li><strong>Cross-Platform Support:</strong> Play on web, mobile, and desktop</li>
-                            <li><strong>40+ Maps:</strong> Diverse day and night maps with unique tactical opportunities</li>
-                            <li><strong>Progression System:</strong> Unlock new content as you play</li>
-                            <li><strong>Statistics Tracking:</strong> Monitor your performance and improve your skills</li>
-                            <li><strong>Bot Practice:</strong> Hone your skills against AI opponents</li>
-                            <li><strong>Customization:</strong> Personalize your character with different gear and skins</li>
-                            <li><strong>No Download Required:</strong> Play directly in your browser</li>
+                            <li><strong>Weapon Progression:</strong> SMGs, rifles, shotguns, and more; change as you play.</li>
+                            <li><strong>Preconfigured Classes (Legacy Edition):</strong> Fixed loadouts to help you jump in faster.</li>
+                            <li><strong>Custom Gear:</strong> Tweak gear for speed or firepower based on playstyle.</li>
                         </ul>
 
-                        <h3>LAST UPDATED</h3>
-                        <p>Mar 19, 2026</p>
+                        <h2 id="how-to-play">How to Play SkillWarz</h2>
+                        <p>Controls are straightforward and easy to learn.</p>
+                        <a href="https://www.crazygames.com/game/skillwarz" target="_blank" rel="noopener noreferrer">Play Now</a>
+                        
+                        <div class="video-container small-video">
+                            <iframe width="320" height="180" src="https://www.youtube.com/embed/KnFvHXTbzYw" title="SkillWarz Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
 
-                        <h3>CONTROLS</h3>
+                        <h3>Basic Controls</h3>
                         <ul>
-                            <li><strong>WASD</strong> = move</li>
-                            <li><strong>Space</strong> = jump</li>
-                            <li><strong>C</strong> = crouch/slide</li>
-                            <li><strong>Shift</strong> = sprint</li>
-                            <li><strong>R</strong> = reload weapon</li>
-                            <li><strong>Left click</strong> = fire weapon</li>
-                            <li><strong>Right click</strong> = aim down the sight</li>
-                            <li><strong>Mouse wheel</strong> = switch weapon</li>
-                            <li><strong>Q</strong> = melee</li>
-                            <li><strong>G</strong> = primary grenade</li>
-                            <li><strong>F</strong> = secondary grenade</li>
-                            <li><strong>1</strong> = select primary weapon</li>
-                            <li><strong>2</strong> = select secondary weapon</li>
-                            <li><strong>3</strong> = select melee weapon</li>
-                            <li><strong>4</strong> = use pickup bonus</li>
-                            <li><strong>Tab</strong> = scoreboard</li>
-                            <li><strong>~</strong> = menu</li>
-                            <li><strong>T</strong> = spray</li>
-                            <li><strong>Y</strong> = say all</li>
-                            <li><strong>U</strong> = say team</li>
+                            <li><strong>WASD</strong> = Movement</li>
+                            <li><strong>Space</strong> = Jump</li>
+                            <li><strong>C</strong> = Crouch/Slide</li>
+                            <li><strong>Shift</strong> = Sprint</li>
+                            <li><strong>Left Click</strong> = Fire</li>
+                            <li><strong>Right Click</strong> = Aim Down Sight</li>
                         </ul>
+
+                        <h3>Gameplay Tips</h3>
+                        <ul>
+                            <li><strong>Crosshair Placement:</strong> Keep it near head level to reduce aim adjustment.</li>
+                            <li><strong>Recoil Control:</strong> Learn how your gun kicks and compensate slightly.</li>
+                            <li><strong>Map Awareness:</strong> Watch minimap, use sounds and landmarks, stay aware of flanks.</li>
+                        </ul>
+
+                        <h2 id="skillwarz-tips">SkillWarz Tips and Tricks</h2>
+                        <div class="tips-container">
+                            <div class="tip-card">
+                                <i class="fas fa-gamepad"></i>
+                                <h4>Use Training Mode</h4>
+                                <p>Practice before public matches to master mechanics.</p>
+                            </div>
+                            <div class="tip-card">
+                                <i class="fas fa-mouse-pointer"></i>
+                                <h4>Master Movement</h4>
+                                <p>Air strafing, slides, and flick jumps are key.</p>
+                            </div>
+                            <div class="tip-card">
+                                <i class="fas fa-crosshairs"></i>
+                                <h4>Crosshair Placement</h4>
+                                <p>Keep it at head level for better reactions.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="video-grid">
+                            <div class="video-card">
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/WDDfEgqZkag" title="Movement Tutorial" frameborder="0" allowfullscreen></iframe>
+                                <p>Movement Guide</p>
+                            </div>
+                            <div class="video-card">
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/KnFvHXTbzYw" title="Aiming Guide" frameborder="0" allowfullscreen></iframe>
+                                <p>Aiming Tips</p>
+                            </div>
+                            <div class="video-card">
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/wygf5nkAwLE" title="Tips & Tricks" frameborder="0" allowfullscreen></iframe>
+                                <p>Advanced Tips</p>
+                            </div>
+                        </div>
+
+                        <h2 id="skillwarz-videos">SkillWarz Gameplay Videos</h2>
+                        <p>SkillWarz has many YouTube videos you can watch for inspiration and learning.</p>
+                        <a href="https://www.youtube.com/playlist?list=PLm7IwklTn4-IKZjZofCwf_gRxOrYxaiJG" target="_blank" rel="noopener noreferrer">Watch Playlist</a>
+                        
+                        <div class="video-grid">
+                            <div class="video-card">
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/NB6DcDoZd6U" title="Main Gameplay" frameborder="0" allowfullscreen></iframe>
+                                <p>Main Gameplay</p>
+                            </div>
+                            <div class="video-card">
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/UqAagEno7IU" title="Mobile Gameplay" frameborder="0" allowfullscreen></iframe>
+                                <p>Mobile Version</p>
+                            </div>
+                            <div class="video-card">
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/ac9IqDmP6ls" title="Highlights" frameborder="0" allowfullscreen></iframe>
+                                <p>Game Highlights</p>
+                            </div>
+                            <div class="video-card">
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/KnFvHXTbzYw" title="Aim Guide" frameborder="0" allowfullscreen></iframe>
+                                <p>Aiming Tutorial</p>
+                            </div>
+                            <div class="video-card">
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/WDDfEgqZkag" title="Movement Guide" frameborder="0" allowfullscreen></iframe>
+                                <p>Movement Guide</p>
+                            </div>
+                            <div class="video-card">
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/CG6zXFBnkUA" title="Patch Notes" frameborder="0" allowfullscreen></iframe>
+                                <p>Latest Updates</p>
+                            </div>
+                        </div>
+
+                        <h2 id="skillwarz-wallpapers">SkillWarz Wallpapers</h2>
+                        <p>Stunning FPS game wallpapers featuring intense combat scenes and immersive environments.</p>
+                        
+                        <div class="maps-gallery">
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-01.jpg" alt="SkillWarz FPS game wallpaper, first person shooter battle scene, Epic Online Battles, gaming background" loading="lazy">
+                                <a href="img/maps/skillwarz-01.jpg" download="skillwarz-epic-battle-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-02.jpg" alt="SkillWarz online battle wallpaper, gaming setup with RGB lights, cyberpunk arena, curved monitor" loading="lazy">
+                                <a href="img/maps/skillwarz-02.jpg" download="skillwarz-cyber-arena-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-05.jpg" alt="SkillWarz futuristic city wallpaper, night battle scene, laser beams, military combat, FPS game" loading="lazy">
+                                <a href="img/maps/skillwarz-05.jpg" download="skillwarz-futuristic-city-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-06.jpg" alt="SkillWarz gaming wallpaper, PC setup with keyboard and mouse, game screen showing battle scene" loading="lazy">
+                                <a href="img/maps/skillwarz-06.jpg" download="skillwarz-gaming-setup-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-07.jpg" alt="SkillWarz desert warfare wallpaper, military combat, sandstorm, tactical soldiers, FPS game background" loading="lazy">
+                                <a href="img/maps/skillwarz-07.jpg" download="skillwarz-desert-warfare-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-08.jpg" alt="SkillWarz underground ops wallpaper, bunker battle, dark tunnels, close quarters combat" loading="lazy">
+                                <a href="img/maps/skillwarz-08.jpg" download="skillwarz-underground-ops-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-09.jpg" alt="SkillWarz arctic combat wallpaper, snow battlefield, winter warfare, cold environment" loading="lazy">
+                                <a href="img/maps/skillwarz-09.jpg" download="skillwarz-arctic-combat-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-10.jpg" alt="SkillWarz urban warfare wallpaper, destroyed city, street combat, ruins, military vehicles" loading="lazy">
+                                <a href="img/maps/skillwarz-10.jpg" download="skillwarz-urban-warfare-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-11.jpg" alt="SkillWarz hero team wallpaper, anime style soldiers, female and male characters, futuristic weapons" loading="lazy">
+                                <a href="img/maps/skillwarz-11.jpg" download="skillwarz-hero-team-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-12.jpg" alt="SkillWarz game preview wallpaper, fantasy warriors, magic spells, cyborg soldiers, battle arena" loading="lazy">
+                                <a href="img/maps/skillwarz-12.jpg" download="skillwarz-game-preview-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-13.jpg" alt="SkillWarz cyberpunk wallpaper, purple neon lights, futuristic soldiers, floating platforms" loading="lazy">
+                                <a href="img/maps/skillwarz-13.jpg" download="skillwarz-cyber-arena-2-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                            <div class="map-card">
+                                <img src="img/maps/skillwarz-14.jpg" alt="SkillWarz mobile edition wallpaper, futuristic city night, mech soldier, laser beams, flying vehicles" loading="lazy">
+                                <a href="img/maps/skillwarz-14.jpg" download="skillwarz-mobile-edition-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
+                            </div>
+                        </div>
+
+                        <h2 id="skillwarz-community">SkillWarz Versions</h2>
+                        <p>Choose how you want to play. Online version for instant action, PC version for full features.</p>
+                        
+                        <div class="community-section">
+                            <div class="community-card">
+                                <h3><i class="fas fa-globe"></i> Online Version</h3>
+                                <p>Play instantly in your browser. No download required.</p>
+                                <ul class="version-features">
+                                    <li><i class="fas fa-check"></i> Instant play - no installation</li>
+                                    <li><i class="fas fa-check"></i> Cross-platform (PC, Mobile, Tablet)</li>
+                                    <li><i class="fas fa-check"></i> 8+ game modes, 40+ maps</li>
+                                    <li><i class="fas fa-times"></i> No map editor</li>
+                                    <li><i class="fas fa-times"></i> Limited customization</li>
+                                </ul>
+                                <span class="version-badge online">Current</span>
+                            </div>
+                            <div class="community-card">
+                                <h3><i class="fas fa-desktop"></i> PC Version</h3>
+                                <p>Full-featured desktop experience with map editor.</p>
+                                <ul class="version-features">
+                                    <li><i class="fas fa-check"></i> Map Editor - create custom maps</li>
+                                    <li><i class="fas fa-check"></i> Import from Blender/3DS Max</li>
+                                    <li><i class="fas fa-check"></i> Better graphics & performance</li>
+                                    <li><i class="fas fa-check"></i> Voice chat & custom skins</li>
+                                    <li><i class="fas fa-times"></i> Requires download (5GB)</li>
+                                </ul>
+                                <a href="https://skillwarz.com/files/file/5-map-editor/" target="_blank" rel="noopener noreferrer" class="download-link">
+                                    <i class="fas fa-download"></i> Download PC Version
+                                </a>
+                                <a href="https://www.youtube.com/watch?v=88RIqayVagE" target="_blank" rel="noopener noreferrer" class="tutorial-link">
+                                    <i class="fas fa-play-circle"></i> Editor Tutorial
+                                </a>
+                            </div>
+                        </div>
+
+                        <h2 id="skillwarz-faq">SkillWarz FAQ</h2>
+                        <div class="faq-section">
+                            <div class="faq-item">
+                                <h3>Q: Is SkillWarz free to play?</h3>
+                                <p>A: Yes! Play free in browser, no upfront cost.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h3>Q: Can you play SkillWarz in a browser?</h3>
+                                <p>A: Yes! Runs directly in browser on many portals.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h3>Q: Is SkillWarz suitable for beginners?</h3>
+                                <p>A: Yes! Training mode and AI bots help practice.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h3>Q: What are the main modes?</h3>
+                                <p>A: Deathmatch, Gun Game, Skull Hunt, Elimination, Team modes, Domination, Training.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h3>Q: How do you improve movement?</h3>
+                                <p>A: Practice air strafing, slides, flick jumps, and use bounce pads/teleports.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h3>Q: How do you improve aim?</h3>
+                                <p>A: Keep crosshair at head level, control recoil, and stay in favorable ranges.</p>
+                            </div>
+                        </div>
+
+                        <div class="last-updated">
+                            <h3>LAST UPDATED</h3>
+                            <p>Mar 19, 2026</p>
+                        </div>
                     </div>
+
                     <div class="tags">
                         <span class="tag"><i class="fas fa-bullseye"></i> SKILLWARZ</span>
                         <span class="tag"><i class="fas fa-gamepad"></i> FPS</span>
@@ -173,7 +399,6 @@
         </main>
     </div>
 
-    <!-- 页脚 -->
     <footer class="footer">
         <div class="footer-links">
             <a href="about.html">About SkillWarz</a>
@@ -185,14 +410,12 @@
         <div class="footer-copyright">© 2026 SkillWarz - Free Online Shooter Games. All rights reserved.</div>
     </footer>
 
-    <!-- 游戏数据 -->
     <script src="js/game_data/games.js"></script>
     <script src="js/game_data/action.js"></script>
     <script src="js/game_data/battleRoyale.js"></script>
     <script src="js/game_data/fps.js"></script>
     <script src="js/game_data/multiplayer.js"></script>
     <script src="js/game_data/sniper.js"></script>
-    <!-- 主脚本 -->
     <script src="init.js"></script>
 </body>
 </html>
