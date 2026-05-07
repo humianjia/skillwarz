@@ -128,13 +128,14 @@ function runLocalChecks() {
         if (!html.includes('meta name="description"')) missing.push('description');
         if (!html.includes('rel="canonical"')) missing.push('canonical');
         if (!html.includes('G-DNT670B4R3')) missing.push('analytics');
+        if (!html.includes('google-adsense-account')) missing.push('adsense account meta');
         if (!html.includes('422435896@qq.com')) missing.push('contact email');
 
         add(
             results,
             missing.length === 0 ? 'PASS' : 'FAIL',
             `Static page metadata: ${file}`,
-            missing.length === 0 ? 'Title, description, canonical, analytics, and email found.' : `Missing: ${missing.join(', ')}`
+            missing.length === 0 ? 'Title, description, canonical, analytics, AdSense account meta, and email found.' : `Missing: ${missing.join(', ')}`
         );
     }
 
@@ -231,14 +232,14 @@ function runLocalChecks() {
         gamePageFailures === 0 ? 'All checked game pages include canonical, contact, and embed disclosure text.' : `${gamePageFailures} game pages failed consistency checks.`
     );
 
-    const adsenseCodeFound = [...staticPages, 'index.html', 'categories.html'].some((file) => exists(file) && /ca-pub-|adsbygoogle|pagead2\.googlesyndication\.com/.test(read(file)));
+    const adsenseCodeFound = [...staticPages, 'index.html', 'categories.html'].some((file) => exists(file) && /google-adsense-account|ca-pub-|adsbygoogle|pagead2\.googlesyndication\.com/.test(read(file)));
     add(
         results,
         adsenseCodeFound ? 'PASS' : 'WARN',
-        'AdSense code present locally',
+        'AdSense verification token present locally',
         adsenseCodeFound
-            ? 'At least one local page contains an AdSense-related token.'
-            : 'No AdSense code found locally yet. This is expected until you insert the real publisher code.'
+            ? 'At least one local page contains an AdSense-related verification token.'
+            : 'No AdSense token found locally yet. Add the account meta tag or full AdSense code before submission.'
     );
 
     return results;
@@ -358,14 +359,14 @@ async function runLiveChecks(baseUrl) {
         add(results, 'FAIL', 'Live guide page check', error.message);
     }
 
-    const adsenseTokens = ['ca-pub-', 'adsbygoogle', 'pagead2.googlesyndication.com'];
+    const adsenseTokens = ['google-adsense-account', 'ca-pub-', 'adsbygoogle', 'pagead2.googlesyndication.com'];
     try {
         const home = await fetchText(`${baseUrl}/`);
         const found = adsenseTokens.some((token) => home.text.includes(token));
         add(
             results,
             found ? 'PASS' : 'WARN',
-            'Live AdSense code presence',
+            'Live AdSense token presence',
             found ? 'AdSense-related token found on the live homepage.' : 'No AdSense-related token found on the live homepage yet.'
         );
     } catch (error) {

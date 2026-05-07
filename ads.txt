@@ -1,3 +1,2 @@
 # SkillWarz ads.txt
-# Replace the example line below with your real Google AdSense publisher ID before or immediately after approval.
-# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+google.com, pub-7534347140708021, DIRECT, f08c47fec0942fa0

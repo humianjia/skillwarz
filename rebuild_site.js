@@ -9,6 +9,7 @@ const SITE = {
     dateIso: '2026-05-07',
     dateLabel: 'May 7, 2026',
     analyticsId: 'G-DNT670B4R3',
+    adsensePublisher: 'ca-pub-7534347140708021',
     author: 'SkillWarz Editorial Team',
 };
 
@@ -526,6 +527,7 @@ function standardHead({
     <meta name="twitter:title" content="${escapeHtml(ogTitle || title)}">
     <meta name="twitter:description" content="${escapeHtml(ogDescription || description)}">
     <meta name="twitter:image" content="${escapeHtml(image)}">
+    <meta name="google-adsense-account" content="${escapeHtml(SITE.adsensePublisher)}">
     <link rel="icon" type="image/svg+xml" href="${relativePrefix}favicon.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="${relativePrefix}css/css.css">
@@ -1364,8 +1366,7 @@ Sitemap: ${SITE.url}/sitemap.xml
 
 function buildAdsTxt() {
     return `# SkillWarz ads.txt
-# Replace the example line below with your real Google AdSense publisher ID before or immediately after approval.
-# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+google.com, ${SITE.adsensePublisher.replace(/^ca-/, '')}, DIRECT, f08c47fec0942fa0
 `;
 }
 

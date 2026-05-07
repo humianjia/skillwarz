@@ -49,8 +49,8 @@ This checklist is for the current SkillWarz site structure and should be run aft
 ## 6. Verify AdSense Readiness Items
 
 - [ ] Replace the placeholder line in `ads.txt` with the real Google publisher ID.
-- [ ] Add the real AdSense site verification / ad code once you have the correct `ca-pub-...` value.
-- [ ] Recheck that live pages expose the AdSense code after deployment.
+- [ ] Add the real AdSense site verification / account meta once you have the correct `ca-pub-...` value.
+- [ ] Recheck that live pages expose the AdSense token after deployment.
 
 ## 7. Verify Search And Monitoring
 
