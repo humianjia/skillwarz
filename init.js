@@ -146,7 +146,7 @@ function loadRelatedGames() {
         card.setAttribute('data-game', game.id);
         const imageUrl = game.imageUrl;
         card.innerHTML = `
-            <img src="${imageUrl}" alt="${game.name}" onerror="this.src='img/icon/veckIo.jpg'">
+            <img src="${imageUrl}" alt="${game.name}" onerror="this.src='img/skillwarz.avif'">
             <div class="game-card-title">${game.name}</div>
         `;
         card.addEventListener('click', function() {

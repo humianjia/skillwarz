@@ -1,5 +1,4 @@
-const fs = require('fs');
-const path = require('path');
+throw new Error('gen_pages.js is deprecated. Use rebuild_site.js to regenerate the current SkillWarz site.');
 
 const gamePageTemplate = `<!DOCTYPE html>
 <html lang="zh-CN">
