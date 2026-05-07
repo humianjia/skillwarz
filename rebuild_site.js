@@ -582,6 +582,7 @@ function buildFooter(relativePrefix) {
             <a href="${relativePrefix}terms.html">Terms of Service</a>
         </div>
         <div class="footer-copyright">© 2026 SkillWarz - Browser shooter discovery and original guide content.</div>
+        <div class="footer-copyright">&copy; 2026 SkillWarz - Browser shooter discovery and original guide content.</div>
         <div class="footer-meta">Editorial contact: <a href="mailto:${SITE.email}">${SITE.email}</a></div>
     </footer>`;
 }
@@ -596,12 +597,16 @@ function gameCategoryBadge(game) {
 
 function gameSearchStatus(game) {
     return game.indexable
-        ? `<span class="meta-badge"><i class="fas fa-compass"></i>Indexed</span>`
-        : `<span class="meta-badge warn"><i class="fas fa-wrench"></i>Catalog support page</span>`;
+        ? `<span class="meta-badge"><i class="fas fa-compass"></i>Editorial page</span>`
+        : `<span class="meta-badge warn"><i class="fas fa-wrench"></i>Support page</span>`;
 }
 
 function cleanText(value) {
     return String(value || '').replace(/\s+/g, ' ').trim();
+}
+
+function pluralize(count, singular, plural = `${singular}s`) {
+    return count === 1 ? singular : plural;
 }
 
 function inferPlayStyle(game) {
@@ -721,6 +726,122 @@ function buildGuideCard(guide) {
     </article>`;
 }
 
+function buildDeferredPlayShell({
+    shellId,
+    iframeUrl,
+    title,
+    imageUrl,
+    imageAlt,
+    heading,
+    description,
+    buttonLabel,
+    disclosure,
+    relativePrefix = '',
+    secondaryHref = '',
+    secondaryLabel = '',
+}) {
+    const secondaryLink = secondaryHref && secondaryLabel
+        ? `<a class="button-link secondary" href="${secondaryHref}">${escapeHtml(secondaryLabel)}</a>`
+        : '';
+
+    return `<div class="game-showcase deferred-play-shell">
+        <div class="game-frame play-frame-shell" id="${shellId}">
+            <div class="play-placeholder">
+                <img src="${relativePrefix}${escapeHtml(imageUrl)}" class="play-placeholder-thumb" alt="${escapeHtml(imageAlt)}" loading="lazy">
+                <div class="play-placeholder-copy">
+                    <span class="play-kicker">User-initiated browser session</span>
+                    <h3>${escapeHtml(heading)}</h3>
+                    <p>${escapeHtml(description)}</p>
+                    <div class="button-row">
+                        <button
+                            class="button-link play-trigger"
+                            type="button"
+                            data-play-target="${shellId}"
+                            data-iframe-url="${escapeHtml(iframeUrl)}"
+                            data-iframe-title="${escapeHtml(title)}"
+                            data-expand-target="${shellId}-expand"
+                        ><i class="fas fa-play"></i>${escapeHtml(buttonLabel)}</button>
+                        ${secondaryLink}
+                    </div>
+                    <div class="play-status">The playable frame loads only after the visitor chooses to open it.</div>
+                </div>
+            </div>
+        </div>
+        <div class="game-controls">
+            <div class="game-title-section">
+                <img src="${relativePrefix}${escapeHtml(imageUrl)}" class="game-icon" alt="${escapeHtml(imageAlt)}">
+                <span class="game-title">${escapeHtml(title)}</span>
+            </div>
+            <div class="game-actions">
+                <button
+                    class="game-action-button"
+                    type="button"
+                    id="${shellId}-expand"
+                    data-fullscreen-target="${shellId}"
+                    hidden
+                    aria-hidden="true"
+                ><i class="fas fa-expand"></i><span>Fullscreen</span></button>
+            </div>
+        </div>
+        <div class="embed-note">${escapeHtml(disclosure)}</div>
+    </div>`;
+}
+
+function buildPlayActivationScript() {
+    return `<script>
+(function () {
+    function loadPlayableFrame(trigger) {
+        const targetId = trigger.getAttribute('data-play-target');
+        const shell = document.getElementById(targetId);
+        if (!targetId || !shell || shell.dataset.loaded === 'true') {
+            return;
+        }
+
+        const iframe = document.createElement('iframe');
+        iframe.src = trigger.getAttribute('data-iframe-url');
+        iframe.title = trigger.getAttribute('data-iframe-title');
+        iframe.loading = 'lazy';
+        iframe.setAttribute('allowfullscreen', '');
+
+        shell.innerHTML = '';
+        shell.appendChild(iframe);
+        shell.dataset.loaded = 'true';
+
+        trigger.disabled = true;
+        trigger.classList.add('is-loaded');
+        trigger.innerHTML = '<i class="fas fa-check"></i>Browser session loaded';
+
+        const expandButton = document.getElementById(trigger.getAttribute('data-expand-target'));
+        if (expandButton) {
+            expandButton.hidden = false;
+            expandButton.removeAttribute('aria-hidden');
+        }
+    }
+
+    document.addEventListener('click', function (event) {
+        const loadTrigger = event.target.closest('[data-play-target]');
+        if (loadTrigger) {
+            loadPlayableFrame(loadTrigger);
+            return;
+        }
+
+        const fullscreenTrigger = event.target.closest('[data-fullscreen-target]');
+        if (!fullscreenTrigger) {
+            return;
+        }
+
+        const shell = document.getElementById(fullscreenTrigger.getAttribute('data-fullscreen-target'));
+        const iframe = shell && shell.querySelector('iframe');
+        if (!iframe || !iframe.requestFullscreen) {
+            return;
+        }
+
+        iframe.requestFullscreen();
+    });
+}());
+</script>`;
+}
+
 function buildPageLayout({
     head,
     bodyClass = '',
@@ -728,6 +849,7 @@ function buildPageLayout({
     mainClass = 'main-container',
     mainContent,
     footer,
+    extraScripts = '',
 }) {
     return `<!DOCTYPE html>
 <html lang="en">
@@ -740,6 +862,7 @@ ${head}
 ${mainContent}
     </main>
     ${footer}
+    ${extraScripts}
 </body>
 </html>`;
 }
@@ -797,48 +920,55 @@ function buildHomePage(homeGame, featuredGames) {
 
     const statCards = stats.map((item) => `<div class="stat-card"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.text)}</p></div>`).join('');
     const guideCards = GUIDES.map(buildGuideCard).join('');
-    const featuredCards = featuredGames.map((game) => buildCatalogCard(game, '')).join('');
+    const featuredCards = featuredGames.slice(0, 8).map((game) => buildCatalogCard(game, '')).join('');
+    const homePlayShell = buildDeferredPlayShell({
+        shellId: 'home-play-shell',
+        iframeUrl: homeGame.iframeUrl,
+        title: 'SkillWarz browser session',
+        imageUrl: homeGame.imageUrl,
+        imageAlt: 'SkillWarz icon',
+        heading: 'Load the playable browser session only when you are ready',
+        description: 'This keeps the homepage focused on original guidance first while still letting visitors launch the browser build on demand.',
+        buttonLabel: 'Load playable browser session',
+        disclosure: 'Playable browser sessions may be delivered through a third-party distribution partner when available. The editorial text on this site is written independently to help visitors understand controls, genre fit, and session style before they play.',
+        secondaryHref: 'skillwarz-beginner-guide.html',
+        secondaryLabel: 'Read the beginner guide first',
+    });
 
     const head = standardHead({
-        title: 'SkillWarz - Browser Shooter Guides, Reviews, and Instant Play',
-        description: 'SkillWarz is a browser shooter discovery site with original SkillWarz guides, curated FPS picks, battle royale recommendations, and instant-play game pages.',
+        title: 'SkillWarz - Browser Shooter Guides, Reviews, and Curated Play Pages',
+        description: 'SkillWarz is a browser shooter discovery site with original SkillWarz guides, curated FPS picks, battle royale recommendations, and editorial game pages.',
         canonical: `${SITE.url}/`,
         ogTitle: 'SkillWarz - Browser Shooter Guides and Curated Game Pages',
-        ogDescription: 'Play SkillWarz in your browser, explore curated shooter pages, and read original quick-start guides before jumping into a match.',
+        ogDescription: 'Read original SkillWarz guides, compare curated shooter pages, and load browser sessions only when you are ready to play.',
         ogImage: 'img/skillwarz.avif',
     });
 
     const mainContent = `        <div class="main-content">
-            <div class="game-showcase">
-                <div class="game-frame">
-                    <iframe id="game-iframe" src="${escapeHtml(homeGame.iframeUrl)}" title="Play SkillWarz in browser" allowfullscreen loading="lazy"></iframe>
-                </div>
-                <div class="game-controls">
-                    <div class="game-title-section">
-                        <img src="${escapeHtml(homeGame.imageUrl)}" class="game-icon" alt="SkillWarz icon">
-                        <span class="game-title">SkillWarz browser session</span>
-                    </div>
-                    <div class="game-actions">
-                        <i class="fas fa-expand" onclick="document.getElementById('game-iframe').requestFullscreen()" aria-label="Enter fullscreen"></i>
-                    </div>
-                </div>
-            </div>
-
             <div class="content-section">
                 <div class="game-info page-copy">
                     <h1>SkillWarz Browser Guide And Shooter Discovery Hub</h1>
                     <div class="info-header">SkillWarz now focuses on editorial summaries, browser shooter discovery, and clearer category pages instead of thin template content.</div>
-                    <p class="lead-copy">The goal of this site is simple: help players understand what they are about to click, which games fit their mood, and why SkillWarz itself stands out as a browser FPS worth learning.</p>
-
-                    <div class="button-row">
-                        <a class="button-link" href="skillwarz-beginner-guide.html"><i class="fas fa-book-open"></i>Start with the beginner guide</a>
-                        <a class="button-link secondary" href="categories.html"><i class="fas fa-layer-group"></i>Browse all categories</a>
-                    </div>
-
-                    <div class="embed-note">Playable browser sessions may be delivered through a third-party distribution partner when available. The editorial text on this site is written independently to help visitors understand controls, genre fit, and session style before they play.</div>
-
-                    <div class="stat-grid">
-                        ${statCards}
+                    <div class="hero-grid">
+                        <section class="callout-card hero-card hero-card-primary">
+                            <p class="lead-copy">The goal of this site is simple: help players understand what they are about to click, which games fit their mood, and why SkillWarz itself stands out as a browser FPS worth learning.</p>
+                            <div class="button-row">
+                                <a class="button-link" href="skillwarz-beginner-guide.html"><i class="fas fa-book-open"></i>Start with the beginner guide</a>
+                                <a class="button-link secondary" href="categories.html"><i class="fas fa-layer-group"></i>Browse all categories</a>
+                            </div>
+                            <div class="stat-grid">
+                                ${statCards}
+                            </div>
+                        </section>
+                        <aside class="callout-card hero-card hero-card-secondary">
+                            <h2>What reviewers should see first</h2>
+                            <p>SkillWarz now leads with original guidance, a tighter shooter-only review path, and clear trust signals before any playable frame is loaded.</p>
+                            <ul class="mini-list">
+                                <li>Original guides and comparison articles sit above the play trigger.</li>
+                                <li>Only stronger shooter pages are surfaced as flagship editorial pages.</li>
+                                <li>Support pages remain noindex while coverage is expanded and refined.</li>
+                            </ul>
+                        </aside>
                     </div>
 
                     <div class="section-stack">
@@ -861,6 +991,12 @@ function buildHomePage(homeGame, featuredGames) {
                                 <li>Cleaner categories for FPS, sniper, and battle royale players.</li>
                                 <li>Support pages with real contact details and updated policy information.</li>
                             </ul>
+                        </section>
+
+                        <section class="section-block">
+                            <h2>Playable Browser Session</h2>
+                            <p>Visitors can still launch SkillWarz from this homepage, but the browser frame is loaded only after they actively request it. That keeps the page centered on original guidance first and playable access second.</p>
+                            ${homePlayShell}
                         </section>
 
                         <section class="section-block">
@@ -905,6 +1041,7 @@ function buildHomePage(homeGame, featuredGames) {
         header: buildHeader('', 'home'),
         mainContent,
         footer: buildFooter(''),
+        extraScripts: buildPlayActivationScript(),
     });
 }
 
@@ -912,26 +1049,42 @@ function buildCategoryPage(allGames) {
     const grouped = DATASETS.map((dataset) => ({
         ...dataset,
         games: allGames.filter((game) => game.category === dataset.dir),
+    })).map((group) => ({
+        ...group,
+        featuredGames: group.games.filter((game) => game.indexable),
+        supportGames: group.games.filter((game) => !game.indexable),
     }));
 
     const jumpCards = grouped.map((group) => `<article class="jump-card">
         <h3><a href="#${group.slug}">${escapeHtml(group.label)}</a></h3>
-        <p>${group.games.length} pages in the current catalog.</p>
+        <p>${group.featuredGames.length} featured ${pluralize(group.featuredGames.length, 'page')} and ${group.supportGames.length} support ${pluralize(group.supportGames.length, 'page')}.</p>
     </article>`).join('');
 
     const sections = grouped.map((group) => {
-        const cards = group.games.map((game) => buildCatalogCard(game, '')).join('');
+        const cards = group.featuredGames.map((game) => buildCatalogCard(game, '')).join('');
+        const supportNote = group.supportGames.length
+            ? `<div class="support-note">
+                ${group.supportGames.length} additional support ${pluralize(group.supportGames.length, 'page')} exist in this category, but they remain noindex and off the main review path until deeper original coverage is ready.
+            </div>`
+            : '';
+        const sectionBody = cards
+            ? `<div class="catalog-grid">
+                ${cards}
+            </div>`
+            : `<div class="site-note">
+                <p>No flagship editorial page is being surfaced in this category yet. Support entries remain de-emphasized until stronger original writeups are ready.</p>
+            </div>`;
+
         return `<section class="catalog-section" id="${group.slug}">
             <div class="catalog-section-header">
                 <div>
                     <h2>${escapeHtml(group.label)}</h2>
                     <p>${escapeHtml(group.intro)}</p>
                 </div>
-                <span class="catalog-badge"><i class="fas fa-gamepad"></i>${group.games.length} pages</span>
+                <span class="catalog-badge"><i class="fas fa-gamepad"></i>${group.featuredGames.length} editorial ${pluralize(group.featuredGames.length, 'page')}</span>
             </div>
-            <div class="catalog-grid">
-                ${cards}
-            </div>
+            ${supportNote}
+            ${sectionBody}
         </section>`;
     }).join('\n');
 
@@ -950,8 +1103,8 @@ function buildCategoryPage(allGames) {
                     <div class="page-breadcrumb"><a href="index.html">Home</a><span>/</span><span>Categories</span></div>
                     <h1>SkillWarz Categories</h1>
                     <div class="info-header">Every category page on SkillWarz is being rebuilt around cleaner genre fit, actual page counts, and stronger editorial summaries.</div>
-                    <p class="lead-copy">This catalog focuses on browser-playable action and shooter titles. Some pages are stronger editorial targets than others, and some remain supporting catalog pages while we continue expanding original content.</p>
-                    <div class="catalog-note">You will no longer see inflated counts, random ratings, or fake play totals here. Category sections show the actual number of pages currently in the site catalog.</div>
+                    <p class="lead-copy">This catalog now highlights the strongest shooter-aligned editorial pages first. Support entries still exist in the broader site inventory, but they stay noindex and off the main review path while original coverage expands.</p>
+                    <div class="catalog-note">You will no longer see inflated counts, random ratings, or fake play totals here. Category sections now prioritize flagship pages and reduce the visibility of weaker support entries.</div>
 
                     <div class="category-jump-grid">
                         ${jumpCards}
@@ -1031,17 +1184,39 @@ function buildGamePage(game, allGames) {
     const expectations = buildGameExpectations(game);
     const bullets = buildGameBullets(game);
     const warnings = inferWarnings(game);
+    const guideByCategory = {
+        'FPS': { href: `${relativePrefix}how-to-improve-browser-fps-aim.html`, label: 'Read the FPS aim guide' },
+        'Sniper': { href: `${relativePrefix}best-browser-sniper-games-guide.html`, label: 'Read the sniper guide' },
+        'BattleRoyale': { href: `${relativePrefix}battle-royale-beginner-mistakes.html`, label: 'Read the battle royale guide' },
+        'Action': { href: `${relativePrefix}how-to-choose-browser-shooter.html`, label: 'Use the game choice guide' },
+        'Multiplayer': { href: `${relativePrefix}best-browser-shooter-modes.html`, label: 'Compare browser shooter modes' },
+    }[game.category] || { href: `${relativePrefix}skillwarz-beginner-guide.html`, label: 'Read the beginner guide' };
     const relatedGames = allGames
         .filter((candidate) => candidate.link !== game.link && candidate.category === game.category)
+        .sort((left, right) => Number(right.indexable) - Number(left.indexable) || left.name.localeCompare(right.name))
         .slice(0, 6);
+    const playShell = buildDeferredPlayShell({
+        shellId: `${slugFromName(game.name)}-play-shell`,
+        iframeUrl: game.iframeUrl,
+        title: `${game.name} browser session`,
+        imageUrl: game.imageUrl,
+        imageAlt: `${game.name} icon`,
+        heading: `Load ${game.name} only after you have read the quick take`,
+        description: 'This page keeps the original summary and player-fit notes visible first, then lets the visitor choose whether to open the playable browser frame.',
+        buttonLabel: `Load ${game.name}`,
+        disclosure: 'The playable frame above may be supplied by a third-party browser distribution partner. SkillWarz uses this page to add context, original summary text, and cleaner navigation around the title.',
+        relativePrefix,
+        secondaryHref: guideByCategory.href,
+        secondaryLabel: guideByCategory.label,
+    });
 
     const relatedHtml = relatedGames.map((candidate) => buildRelatedCard(candidate, relativePrefix)).join('');
     const head = standardHead({
-        title: `${game.name} - Browser Guide And Instant Play | SkillWarz`,
-        description: `Read the SkillWarz quick guide for ${game.name}, understand the core loop, and launch the browser version when available.`,
+        title: `${game.name} - Browser Guide And Play Page | SkillWarz`,
+        description: `Read the SkillWarz quick guide for ${game.name}, understand the core loop, and load the browser version when available.`,
         canonical,
         ogTitle: `${game.name} | SkillWarz`,
-        ogDescription: `A curated SkillWarz page for ${game.name} with instant play access, original summary text, and category context.`,
+        ogDescription: `A curated SkillWarz page for ${game.name} with original summary text, on-demand browser play, and category context.`,
         ogImage: game.imageUrl,
         robots: game.indexable ? 'index, follow, max-image-preview:large' : 'noindex, follow',
         relativePrefix,
@@ -1051,21 +1226,6 @@ function buildGamePage(game, allGames) {
     const warningList = warnings.map((warning) => `<li>${escapeHtml(warning)}</li>`).join('');
 
     const mainContent = `        <div class="main-content">
-            <div class="game-showcase">
-                <div class="game-frame">
-                    <iframe id="game-iframe" src="${escapeHtml(game.iframeUrl)}" title="Play ${escapeHtml(game.name)} in browser" allowfullscreen loading="lazy"></iframe>
-                </div>
-                <div class="game-controls">
-                    <div class="game-title-section">
-                        <img src="${relativePrefix}${escapeHtml(game.imageUrl)}" class="game-icon" alt="${escapeHtml(game.name)} icon">
-                        <span class="game-title">${escapeHtml(game.name)}</span>
-                    </div>
-                    <div class="game-actions">
-                        <i class="fas fa-expand" onclick="document.getElementById('game-iframe').requestFullscreen()" aria-label="Enter fullscreen"></i>
-                    </div>
-                </div>
-            </div>
-
             <div class="content-section">
                 <div class="game-info page-copy">
                     <div class="page-breadcrumb">
@@ -1084,8 +1244,6 @@ function buildGamePage(game, allGames) {
                         <a class="button-link secondary" href="${relativePrefix}contact.html"><i class="fas fa-envelope"></i>Report a page issue</a>
                     </div>
 
-                    <div class="embed-note">The playable frame above may be supplied by a third-party browser distribution partner. SkillWarz uses this page to add context, original summary text, and cleaner navigation around the title.</div>
-
                     <div class="summary-grid">
                         ${summaryCards}
                     </div>
@@ -1099,6 +1257,12 @@ function buildGamePage(game, allGames) {
                         <section class="section-block">
                             <h2>What To Expect Before You Click Play</h2>
                             ${expectations.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('\n')}
+                        </section>
+
+                        <section class="section-block">
+                            <h2>Playable Browser Frame</h2>
+                            <p>The browser frame is loaded only when a visitor chooses to open it, which keeps the editorial summary and player-fit notes visible before any third-party session starts.</p>
+                            ${playShell}
                         </section>
 
                         <section class="section-block">
@@ -1137,6 +1301,7 @@ function buildGamePage(game, allGames) {
         header: buildHeader(relativePrefix, game.categorySlug),
         mainContent,
         footer: buildFooter(relativePrefix),
+        extraScripts: buildPlayActivationScript(),
     });
 }
 

@@ -77,6 +77,25 @@ a.logo {
     margin-bottom: 20px;
 }
 
+.hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
+    gap: 18px;
+    margin: 20px 0 28px;
+}
+
+.hero-card {
+    height: 100%;
+}
+
+.hero-card-primary .stat-grid {
+    margin-bottom: 0;
+}
+
+.hero-card-secondary {
+    background: linear-gradient(160deg, rgba(255, 157, 77, 0.12), rgba(78, 204, 163, 0.08));
+}
+
 .button-row {
     display: flex;
     flex-wrap: wrap;
@@ -106,6 +125,16 @@ a.logo {
 
 .button-link:hover {
     transform: translateY(-1px);
+}
+
+.play-trigger {
+    border: none;
+    cursor: pointer;
+}
+
+.play-trigger.is-loaded {
+    background: rgba(78, 204, 163, 0.14);
+    box-shadow: none;
 }
 
 .stat-grid,
@@ -208,6 +237,15 @@ a.logo {
     border-radius: 12px;
 }
 
+.support-note {
+    margin: 0 0 16px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 157, 77, 0.24);
+    border-radius: 14px;
+    background: rgba(255, 157, 77, 0.08);
+    color: #ffe0bf;
+}
+
 .section-stack {
     display: grid;
     gap: 24px;
@@ -276,6 +314,67 @@ a.logo {
     height: 160px;
     object-fit: cover;
     display: block;
+}
+
+.deferred-play-shell {
+    margin-top: 18px;
+}
+
+.play-frame-shell {
+    min-height: 360px;
+    background:
+        radial-gradient(circle at top left, rgba(78, 204, 163, 0.22), transparent 40%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.88));
+}
+
+.play-placeholder {
+    display: grid;
+    grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+    width: 100%;
+    padding: 24px;
+}
+
+.play-placeholder-thumb {
+    width: 100%;
+    max-width: 240px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.26);
+}
+
+.play-placeholder-copy {
+    display: grid;
+    gap: 14px;
+}
+
+.play-placeholder-copy h3 {
+    margin: 0;
+    color: #fff7ed;
+    font-size: 1.3rem;
+}
+
+.play-placeholder-copy p {
+    margin: 0;
+}
+
+.play-kicker {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(78, 204, 163, 0.14);
+    border: 1px solid rgba(78, 204, 163, 0.24);
+    color: #d1fae5;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+}
+
+.play-status {
+    color: var(--content-muted);
+    font-size: 13px;
 }
 
 .catalog-card-body {
@@ -413,6 +512,26 @@ a.logo {
     color: rgba(255, 255, 255, 0.58);
 }
 
+.footer-copyright:first-of-type {
+    display: none;
+}
+
+.game-action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    cursor: pointer;
+}
+
+.game-action-button[hidden] {
+    display: none !important;
+}
+
 @media (max-width: 1024px) {
     .header {
         gap: 18px;
@@ -451,11 +570,21 @@ a.logo {
     .info-grid,
     .summary-grid,
     .category-jump-grid,
-    .related-grid {
+    .related-grid,
+    .hero-grid,
+    .play-placeholder {
         grid-template-columns: 1fr;
     }
 
     .catalog-card img {
         height: 200px;
+    }
+
+    .play-placeholder {
+        padding: 20px;
+    }
+
+    .play-placeholder-thumb {
+        max-width: none;
     }
 }

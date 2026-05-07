@@ -146,12 +146,30 @@ function runLocalChecks() {
         home ? 'Homepage file checked locally.' : 'Homepage missing.'
     );
 
+    add(
+        results,
+        home.includes('The playable frame loads only after the visitor chooses to open it.') && !home.includes('<iframe id="game-iframe"') ? 'PASS' : 'WARN',
+        'Homepage defers playable frame loading',
+        home.includes('The playable frame loads only after the visitor chooses to open it.')
+            ? 'Homepage now leads with editorial content and a user-initiated play trigger.'
+            : 'Homepage still appears to auto-load the playable frame.'
+    );
+
     const categories = exists('categories.html') ? read('categories.html') : '';
     add(
         results,
         !/1000\+ Games|Math\.random/.test(categories) ? 'PASS' : 'FAIL',
         'Category page no longer uses inflated counts or random stats',
         !categories ? 'categories.html missing.' : 'Category page checked locally.'
+    );
+
+    add(
+        results,
+        categories.includes('off the main review path') && !/Support page<\/span>/.test(categories) ? 'PASS' : 'WARN',
+        'Category page foregrounds flagship editorial pages',
+        categories.includes('off the main review path')
+            ? 'Categories emphasize stronger editorial pages and de-emphasize support entries.'
+            : 'Categories may still be surfacing too many support entries.'
     );
 
     const legacyTargets = [
@@ -260,8 +278,31 @@ async function runLiveChecks(baseUrl) {
                 ? 'Live homepage matches rebuilt editorial variant.'
                 : 'Live homepage still looks like the older version.'
         );
+
+        add(
+            results,
+            home.text.includes('The playable frame loads only after the visitor chooses to open it.') && !home.text.includes('<iframe id="game-iframe"') ? 'PASS' : 'WARN',
+            'Live homepage defers playable frame loading',
+            home.text.includes('The playable frame loads only after the visitor chooses to open it.')
+                ? 'Live homepage is using a user-initiated play trigger.'
+                : 'Live homepage may still auto-load the playable frame.'
+        );
     } catch (error) {
         add(results, 'FAIL', 'Live homepage content check', error.message);
+    }
+
+    try {
+        const categories = await fetchText(`${baseUrl}/categories.html`);
+        add(
+            results,
+            categories.status === 200 && categories.text.includes('off the main review path') && !/Support page<\/span>/.test(categories.text) ? 'PASS' : 'WARN',
+            'Live categories foreground flagship pages',
+            categories.status === 200
+                ? 'Live categories fetched.'
+                : `HTTP ${categories.status}`
+        );
+    } catch (error) {
+        add(results, 'FAIL', 'Live categories content check', error.message);
     }
 
     try {

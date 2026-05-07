@@ -39,8 +39,10 @@ This checklist is for the current SkillWarz site structure and should be run aft
 ## 5. Verify Content Quality Signals
 
 - [ ] The homepage presents the rebuilt editorial copy and guide links.
+- [ ] The homepage does not auto-load the playable third-party frame before the visitor chooses to open it.
 - [ ] Category pages show real counts, not inflated totals.
 - [ ] Random rating or fake play count widgets are gone.
+- [ ] Category pages foreground flagship editorial pages and keep support pages off the main review path.
 - [ ] At least 4-8 original guide pages are indexed and live.
 - [ ] Only a tighter set of stronger game pages is indexable.
 
