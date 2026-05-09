@@ -37,21 +37,38 @@ gtag('config', 'G-DNT670B4R3');
 </head>
 <body class="">
     <header class="header">
-        <a href="../index.html" class="logo">
-            <svg class="logo-icon" viewBox="0 0 50 50" width="45" height="45" aria-hidden="true">
-                <defs>
-                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#ff4500;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#ff8c00;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <rect x="10" y="15" width="30" height="20" rx="2" fill="none" stroke="url(#grad1)" stroke-width="3"/>
-                <path d="M15 20 L35 20 M15 25 L35 25 M15 30 L35 30" stroke="url(#grad1)" stroke-width="2"/>
-                <polygon points="25 10 30 15 20 15" fill="url(#grad1)"/>
-            </svg>
-            <span class="logo-text">skillwarz</span>
-        </a>
-        <nav class="nav-categories">
+        <div class="header-main">
+            <a href="../index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 50 50" width="45" height="45" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff4500;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff8c00;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="10" y="15" width="30" height="20" rx="2" fill="none" stroke="url(#grad1)" stroke-width="3"/>
+                    <path d="M15 20 L35 20 M15 25 L35 25 M15 30 L35 30" stroke="url(#grad1)" stroke-width="2"/>
+                    <polygon points="25 10 30 15 20 15" fill="url(#grad1)"/>
+                </svg>
+                <span class="logo-text">skillwarz</span>
+            </a>
+            <button
+                class="mobile-menu-toggle"
+                type="button"
+                data-mobile-menu-toggle="mobile-menu-action-night-club-security-html"
+                aria-expanded="false"
+                aria-controls="mobile-menu-action-night-club-security-html"
+                aria-label="Menu"
+            >
+                <span class="mobile-menu-toggle-label">Menu</span>
+                <span class="mobile-menu-toggle-bars" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+        </div>
+        <nav class="nav-categories nav-categories-desktop">
             <a href="../index.html" class="nav-item">Home</a>
             <a href="../skillwarz-beginner-guide.html" class="nav-item">Guides</a>
             <a href="../categories.html#fps" class="nav-item">FPS</a>
@@ -59,12 +76,46 @@ gtag('config', 'G-DNT670B4R3');
             <a href="../categories.html#sniper" class="nav-item">Sniper</a>
             <a href="../categories.html#multiplayer" class="nav-item">Multiplayer</a>
         </nav>
-        <div class="header-tools">
+        <div class="header-tools header-tools-desktop">
             <a href="../contact.html" class="header-pill"><i class="fas fa-envelope"></i>Support contact</a>
             <a href="../categories.html" class="header-pill secondary"><i class="fas fa-layer-group"></i>Browser catalog</a>
             <div class="lang-switch" aria-label="Language">
                 <span class="lang-switch-label">Language</span>
                 <div class="lang-switch-links"><a href="Night_Club_Security.html" class="lang-switch-link active" lang="en">EN</a><a href="../hi/Action/Night_Club_Security.html" class="lang-switch-link" lang="hi">हिन्दी</a></div>
+            </div>
+        </div>
+        <div class="mobile-menu-panel" id="mobile-menu-action-night-club-security-html" hidden>
+            <div class="mobile-menu-card">
+                <div class="mobile-menu-header">
+                    <strong>Site navigation</strong>
+                    <button
+                        class="mobile-menu-close"
+                        type="button"
+                        data-mobile-menu-toggle="mobile-menu-action-night-club-security-html"
+                        aria-expanded="true"
+                        aria-controls="mobile-menu-action-night-club-security-html"
+                        aria-label="Close menu"
+                    ><i class="fas fa-times"></i></button>
+                </div>
+                <nav class="mobile-nav-list">
+                    <a href="../index.html" class="nav-item">Home</a>
+            <a href="../skillwarz-beginner-guide.html" class="nav-item">Guides</a>
+            <a href="../categories.html#fps" class="nav-item">FPS</a>
+            <a href="../categories.html#battle-royale" class="nav-item">Battle Royale</a>
+            <a href="../categories.html#sniper" class="nav-item">Sniper</a>
+            <a href="../categories.html#multiplayer" class="nav-item">Multiplayer</a>
+                </nav>
+                <div class="mobile-menu-meta">
+                    <div class="mobile-menu-section-label">Quick actions</div>
+                    <div class="mobile-menu-actions">
+                        <a href="../contact.html" class="header-pill"><i class="fas fa-envelope"></i>Support contact</a>
+                        <a href="../categories.html" class="header-pill secondary"><i class="fas fa-layer-group"></i>Browser catalog</a>
+                    </div>
+                    <div class="lang-switch mobile-lang-switch" aria-label="Language">
+                        <span class="lang-switch-label">Language</span>
+                        <div class="lang-switch-links"><a href="Night_Club_Security.html" class="lang-switch-link active" lang="en">EN</a><a href="../hi/Action/Night_Club_Security.html" class="lang-switch-link" lang="hi">हिन्दी</a></div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -117,6 +168,10 @@ gtag('config', 'G-DNT670B4R3');
                     <span class="play-kicker">User-initiated browser session</span>
                     <h3>Load Night Club Security only after you have read the quick take</h3>
                     <p>This page keeps the original summary and player-fit notes visible first, then lets the visitor choose whether to open the playable browser frame.</p>
+                    <div class="play-mobile-note">
+                        <strong>Mobile-friendly</strong>
+                        <span>On phones, it is usually better to read the quick summary first and launch play only when you are ready.</span>
+                    </div>
                     <div class="button-row">
                         <button
                             class="button-link play-trigger"
@@ -125,7 +180,7 @@ gtag('config', 'G-DNT670B4R3');
                             data-iframe-url="https://html5.gamedistribution.com/09d017664cad49e9a36d455b3aa046e5/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
                             data-iframe-title="Night Club Security browser session"
                             data-expand-target="night-club-security-play-shell-expand"
-                        ><i class="fas fa-play"></i>Load Night Club Security</button>
+                        ><i class="fas fa-play"></i><span class="play-trigger-label-desktop">Load Night Club Security</span><span class="play-trigger-label-mobile">Open playable frame</span></button>
                         <a class="button-link secondary" href="../how-to-choose-browser-shooter.html">Use the game choice guide</a>
                     </div>
                     <div class="play-status">The playable frame loads only after the visitor chooses to open it.</div>
@@ -135,7 +190,10 @@ gtag('config', 'G-DNT670B4R3');
         <div class="game-controls">
             <div class="game-title-section">
                 <img src="../img/icon/Action/NightClubSecurity.jpg" class="game-icon" alt="Night Club Security icon">
-                <span class="game-title">Night Club Security browser session</span>
+                <div class="game-title-copy">
+                    <span class="game-title">Night Club Security browser session</span>
+                    <span class="game-title-note">Mobile-first tip: use this page to preview the game, then decide whether to open the playable frame.</span>
+                </div>
             </div>
             <div class="game-actions">
                 <button
@@ -149,6 +207,7 @@ gtag('config', 'G-DNT670B4R3');
             </div>
         </div>
         <div class="embed-note">The playable frame above may be supplied by a third-party browser distribution partner. SkillWarz uses this page to add context, original summary text, and cleaner navigation around the title.</div>
+        <div class="mobile-play-disclaimer">The game frame stays secondary on smaller screens so the page is easier to read and tap through.</div>
     </div>
                         </section>
 
@@ -211,6 +270,19 @@ gtag('config', 'G-DNT670B4R3');
     </footer>
     <script>
 (function () {
+    function setMenuState(panel, isOpen, trigger) {
+        panel.hidden = !isOpen;
+        document.body.classList.toggle('mobile-menu-open', isOpen);
+        if (trigger) {
+            trigger.setAttribute('aria-expanded', String(isOpen));
+        }
+
+        const triggers = document.querySelectorAll('[data-mobile-menu-toggle="' + panel.id + '"]');
+        triggers.forEach(function (item) {
+            item.setAttribute('aria-expanded', String(isOpen));
+        });
+    }
+
     function loadPlayableFrame(trigger) {
         const targetId = trigger.getAttribute('data-play-target');
         const shell = document.getElementById(targetId);
@@ -240,6 +312,15 @@ gtag('config', 'G-DNT670B4R3');
     }
 
     document.addEventListener('click', function (event) {
+        const menuTrigger = event.target.closest('[data-mobile-menu-toggle]');
+        if (menuTrigger) {
+            const panel = document.getElementById(menuTrigger.getAttribute('data-mobile-menu-toggle'));
+            if (panel) {
+                setMenuState(panel, panel.hidden, menuTrigger);
+            }
+            return;
+        }
+
         const loadTrigger = event.target.closest('[data-play-target]');
         if (loadTrigger) {
             loadPlayableFrame(loadTrigger);
@@ -258,6 +339,18 @@ gtag('config', 'G-DNT670B4R3');
         }
 
         iframe.requestFullscreen();
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') {
+            return;
+        }
+
+        document.querySelectorAll('.mobile-menu-panel').forEach(function (panel) {
+            if (!panel.hidden) {
+                setMenuState(panel, false);
+            }
+        });
     });
 }());
 </script>

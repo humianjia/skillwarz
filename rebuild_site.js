@@ -68,6 +68,23 @@ const UI = {
     loadLabel: lt('Load', 'लोड करें'),
     browseAllCategories: lt('Browse all categories', 'सभी श्रेणियां देखें'),
     startWithGuide: lt('Start with the beginner guide', 'शुरुआती गाइड से शुरू करें'),
+    menu: lt('Menu', 'मेनू'),
+    closeMenu: lt('Close menu', 'मेनू बंद करें'),
+    menuLabel: lt('Site navigation', 'साइट नेविगेशन'),
+    mobileActions: lt('Quick actions', 'त्वरित क्रियाएं'),
+    mobilePlayNote: lt(
+        'On phones, it is usually better to read the quick summary first and launch play only when you are ready.',
+        'फ़ोन पर पहले त्वरित सारांश पढ़ना और तैयार होने पर ही play शुरू करना बेहतर रहता है।'
+    ),
+    mobilePlaySummary: lt(
+        'Mobile-first tip: use this page to preview the game, then decide whether to open the playable frame.',
+        'मोबाइल टिप: पहले इस पेज से गेम को समझें, फिर तय करें कि playable frame खोलनी है या नहीं।'
+    ),
+    mobileOpenPlay: lt('Open playable frame', 'Playable frame खोलें'),
+    mobilePlayExplain: lt(
+        'The game frame stays secondary on smaller screens so the page is easier to read and tap through.',
+        'छोटी स्क्रीन पर game frame को secondary रखा जाता है ताकि पेज पढ़ना और tap करना आसान रहे।'
+    ),
 };
 
 const DATASETS = [
@@ -1299,30 +1316,78 @@ function buildHeader(locale, pagePath, activeKey = '') {
         return `<a href="${crossLocaleHref(locale, pagePath, targetLocale, pagePath)}" class="${activeClass.trim()}" lang="${targetLocale.lang}">${escapeHtml(targetLocale.switchLabel)}</a>`;
     }).join('');
 
+    const mobileMenuId = `mobile-menu-${slugFromName(pagePath.replace(/[^a-z0-9]+/gi, '-')) || 'home'}`;
+
     return `<header class="header">
-        <a href="${sameLocaleHref(locale, pagePath, 'index.html')}" class="logo">
-            <svg class="logo-icon" viewBox="0 0 50 50" width="45" height="45" aria-hidden="true">
-                <defs>
-                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#ff4500;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#ff8c00;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <rect x="10" y="15" width="30" height="20" rx="2" fill="none" stroke="url(#grad1)" stroke-width="3"/>
-                <path d="M15 20 L35 20 M15 25 L35 25 M15 30 L35 30" stroke="url(#grad1)" stroke-width="2"/>
-                <polygon points="25 10 30 15 20 15" fill="url(#grad1)"/>
-            </svg>
-            <span class="logo-text">skillwarz</span>
-        </a>
-        <nav class="nav-categories">
+        <div class="header-main">
+            <a href="${sameLocaleHref(locale, pagePath, 'index.html')}" class="logo">
+                <svg class="logo-icon" viewBox="0 0 50 50" width="45" height="45" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff4500;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff8c00;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="10" y="15" width="30" height="20" rx="2" fill="none" stroke="url(#grad1)" stroke-width="3"/>
+                    <path d="M15 20 L35 20 M15 25 L35 25 M15 30 L35 30" stroke="url(#grad1)" stroke-width="2"/>
+                    <polygon points="25 10 30 15 20 15" fill="url(#grad1)"/>
+                </svg>
+                <span class="logo-text">skillwarz</span>
+            </a>
+            <button
+                class="mobile-menu-toggle"
+                type="button"
+                data-mobile-menu-toggle="${mobileMenuId}"
+                aria-expanded="false"
+                aria-controls="${mobileMenuId}"
+                aria-label="${escapeHtml(t(locale, UI.menu))}"
+            >
+                <span class="mobile-menu-toggle-label">${escapeHtml(t(locale, UI.menu))}</span>
+                <span class="mobile-menu-toggle-bars" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+        </div>
+        <nav class="nav-categories nav-categories-desktop">
             ${nav}
         </nav>
-        <div class="header-tools">
+        <div class="header-tools header-tools-desktop">
             <a href="${sameLocaleHref(locale, pagePath, 'contact.html')}" class="header-pill"><i class="fas fa-envelope"></i>${escapeHtml(t(locale, UI.supportContact))}</a>
             <a href="${sameLocaleHref(locale, pagePath, 'categories.html')}" class="header-pill secondary"><i class="fas fa-layer-group"></i>${escapeHtml(t(locale, UI.curatedCatalog))}</a>
             <div class="lang-switch" aria-label="${escapeHtml(t(locale, UI.language))}">
                 <span class="lang-switch-label">${escapeHtml(t(locale, UI.language))}</span>
                 <div class="lang-switch-links">${languageSwitch}</div>
+            </div>
+        </div>
+        <div class="mobile-menu-panel" id="${mobileMenuId}" hidden>
+            <div class="mobile-menu-card">
+                <div class="mobile-menu-header">
+                    <strong>${escapeHtml(t(locale, UI.menuLabel))}</strong>
+                    <button
+                        class="mobile-menu-close"
+                        type="button"
+                        data-mobile-menu-toggle="${mobileMenuId}"
+                        aria-expanded="true"
+                        aria-controls="${mobileMenuId}"
+                        aria-label="${escapeHtml(t(locale, UI.closeMenu))}"
+                    ><i class="fas fa-times"></i></button>
+                </div>
+                <nav class="mobile-nav-list">
+                    ${nav}
+                </nav>
+                <div class="mobile-menu-meta">
+                    <div class="mobile-menu-section-label">${escapeHtml(t(locale, UI.mobileActions))}</div>
+                    <div class="mobile-menu-actions">
+                        <a href="${sameLocaleHref(locale, pagePath, 'contact.html')}" class="header-pill"><i class="fas fa-envelope"></i>${escapeHtml(t(locale, UI.supportContact))}</a>
+                        <a href="${sameLocaleHref(locale, pagePath, 'categories.html')}" class="header-pill secondary"><i class="fas fa-layer-group"></i>${escapeHtml(t(locale, UI.curatedCatalog))}</a>
+                    </div>
+                    <div class="lang-switch mobile-lang-switch" aria-label="${escapeHtml(t(locale, UI.language))}">
+                        <span class="lang-switch-label">${escapeHtml(t(locale, UI.language))}</span>
+                        <div class="lang-switch-links">${languageSwitch}</div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>`;
@@ -1545,6 +1610,10 @@ function buildDeferredPlayShell({
                     <span class="play-kicker">${escapeHtml(t(locale, UI.userInitiatedSession))}</span>
                     <h3>${escapeHtml(heading)}</h3>
                     <p>${escapeHtml(description)}</p>
+                    <div class="play-mobile-note">
+                        <strong>${escapeHtml(locale.code === 'hi' ? 'मोबाइल-फ्रेंडली' : 'Mobile-friendly')}</strong>
+                        <span>${escapeHtml(t(locale, UI.mobilePlayNote))}</span>
+                    </div>
                     <div class="button-row">
                         <button
                             class="button-link play-trigger"
@@ -1553,7 +1622,7 @@ function buildDeferredPlayShell({
                             data-iframe-url="${escapeHtml(iframeUrl)}"
                             data-iframe-title="${escapeHtml(title)}"
                             data-expand-target="${shellId}-expand"
-                        ><i class="fas fa-play"></i>${escapeHtml(buttonLabel)}</button>
+                        ><i class="fas fa-play"></i><span class="play-trigger-label-desktop">${escapeHtml(buttonLabel)}</span><span class="play-trigger-label-mobile">${escapeHtml(t(locale, UI.mobileOpenPlay))}</span></button>
                         ${secondaryLink}
                     </div>
                     <div class="play-status">${escapeHtml(locale.code === 'hi' ? 'Playable frame तभी लोड होगा जब visitor इसे खोलने का निर्णय करेगा।' : 'The playable frame loads only after the visitor chooses to open it.')}</div>
@@ -1563,7 +1632,10 @@ function buildDeferredPlayShell({
         <div class="game-controls">
             <div class="game-title-section">
                 <img src="${assetHref(locale, pagePath, imageUrl)}" class="game-icon" alt="${escapeHtml(imageAlt)}">
-                <span class="game-title">${escapeHtml(title)}</span>
+                <div class="game-title-copy">
+                    <span class="game-title">${escapeHtml(title)}</span>
+                    <span class="game-title-note">${escapeHtml(t(locale, UI.mobilePlaySummary))}</span>
+                </div>
             </div>
             <div class="game-actions">
                 <button
@@ -1577,6 +1649,7 @@ function buildDeferredPlayShell({
             </div>
         </div>
         <div class="embed-note">${escapeHtml(disclosure)}</div>
+        <div class="mobile-play-disclaimer">${escapeHtml(t(locale, UI.mobilePlayExplain))}</div>
     </div>`;
 }
 
@@ -1585,6 +1658,19 @@ function buildPlayActivationScript(locale) {
 
     return `<script>
 (function () {
+    function setMenuState(panel, isOpen, trigger) {
+        panel.hidden = !isOpen;
+        document.body.classList.toggle('mobile-menu-open', isOpen);
+        if (trigger) {
+            trigger.setAttribute('aria-expanded', String(isOpen));
+        }
+
+        const triggers = document.querySelectorAll('[data-mobile-menu-toggle="' + panel.id + '"]');
+        triggers.forEach(function (item) {
+            item.setAttribute('aria-expanded', String(isOpen));
+        });
+    }
+
     function loadPlayableFrame(trigger) {
         const targetId = trigger.getAttribute('data-play-target');
         const shell = document.getElementById(targetId);
@@ -1614,6 +1700,15 @@ function buildPlayActivationScript(locale) {
     }
 
     document.addEventListener('click', function (event) {
+        const menuTrigger = event.target.closest('[data-mobile-menu-toggle]');
+        if (menuTrigger) {
+            const panel = document.getElementById(menuTrigger.getAttribute('data-mobile-menu-toggle'));
+            if (panel) {
+                setMenuState(panel, panel.hidden, menuTrigger);
+            }
+            return;
+        }
+
         const loadTrigger = event.target.closest('[data-play-target]');
         if (loadTrigger) {
             loadPlayableFrame(loadTrigger);
@@ -1632,6 +1727,18 @@ function buildPlayActivationScript(locale) {
         }
 
         iframe.requestFullscreen();
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') {
+            return;
+        }
+
+        document.querySelectorAll('.mobile-menu-panel').forEach(function (panel) {
+            if (!panel.hidden) {
+                setMenuState(panel, false);
+            }
+        });
     });
 }());
 </script>`;

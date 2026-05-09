@@ -37,21 +37,38 @@ gtag('config', 'G-DNT670B4R3');
 </head>
 <body class="">
     <header class="header">
-        <a href="index.html" class="logo">
-            <svg class="logo-icon" viewBox="0 0 50 50" width="45" height="45" aria-hidden="true">
-                <defs>
-                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#ff4500;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#ff8c00;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <rect x="10" y="15" width="30" height="20" rx="2" fill="none" stroke="url(#grad1)" stroke-width="3"/>
-                <path d="M15 20 L35 20 M15 25 L35 25 M15 30 L35 30" stroke="url(#grad1)" stroke-width="2"/>
-                <polygon points="25 10 30 15 20 15" fill="url(#grad1)"/>
-            </svg>
-            <span class="logo-text">skillwarz</span>
-        </a>
-        <nav class="nav-categories">
+        <div class="header-main">
+            <a href="index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 50 50" width="45" height="45" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff4500;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff8c00;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="10" y="15" width="30" height="20" rx="2" fill="none" stroke="url(#grad1)" stroke-width="3"/>
+                    <path d="M15 20 L35 20 M15 25 L35 25 M15 30 L35 30" stroke="url(#grad1)" stroke-width="2"/>
+                    <polygon points="25 10 30 15 20 15" fill="url(#grad1)"/>
+                </svg>
+                <span class="logo-text">skillwarz</span>
+            </a>
+            <button
+                class="mobile-menu-toggle"
+                type="button"
+                data-mobile-menu-toggle="mobile-menu-terms-html"
+                aria-expanded="false"
+                aria-controls="mobile-menu-terms-html"
+                aria-label="Menu"
+            >
+                <span class="mobile-menu-toggle-label">Menu</span>
+                <span class="mobile-menu-toggle-bars" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+        </div>
+        <nav class="nav-categories nav-categories-desktop">
             <a href="index.html" class="nav-item">Home</a>
             <a href="skillwarz-beginner-guide.html" class="nav-item">Guides</a>
             <a href="categories.html#fps" class="nav-item">FPS</a>
@@ -59,12 +76,46 @@ gtag('config', 'G-DNT670B4R3');
             <a href="categories.html#sniper" class="nav-item">Sniper</a>
             <a href="categories.html#multiplayer" class="nav-item">Multiplayer</a>
         </nav>
-        <div class="header-tools">
+        <div class="header-tools header-tools-desktop">
             <a href="contact.html" class="header-pill"><i class="fas fa-envelope"></i>Support contact</a>
             <a href="categories.html" class="header-pill secondary"><i class="fas fa-layer-group"></i>Browser catalog</a>
             <div class="lang-switch" aria-label="Language">
                 <span class="lang-switch-label">Language</span>
                 <div class="lang-switch-links"><a href="terms.html" class="lang-switch-link active" lang="en">EN</a><a href="hi/terms.html" class="lang-switch-link" lang="hi">हिन्दी</a></div>
+            </div>
+        </div>
+        <div class="mobile-menu-panel" id="mobile-menu-terms-html" hidden>
+            <div class="mobile-menu-card">
+                <div class="mobile-menu-header">
+                    <strong>Site navigation</strong>
+                    <button
+                        class="mobile-menu-close"
+                        type="button"
+                        data-mobile-menu-toggle="mobile-menu-terms-html"
+                        aria-expanded="true"
+                        aria-controls="mobile-menu-terms-html"
+                        aria-label="Close menu"
+                    ><i class="fas fa-times"></i></button>
+                </div>
+                <nav class="mobile-nav-list">
+                    <a href="index.html" class="nav-item">Home</a>
+            <a href="skillwarz-beginner-guide.html" class="nav-item">Guides</a>
+            <a href="categories.html#fps" class="nav-item">FPS</a>
+            <a href="categories.html#battle-royale" class="nav-item">Battle Royale</a>
+            <a href="categories.html#sniper" class="nav-item">Sniper</a>
+            <a href="categories.html#multiplayer" class="nav-item">Multiplayer</a>
+                </nav>
+                <div class="mobile-menu-meta">
+                    <div class="mobile-menu-section-label">Quick actions</div>
+                    <div class="mobile-menu-actions">
+                        <a href="contact.html" class="header-pill"><i class="fas fa-envelope"></i>Support contact</a>
+                        <a href="categories.html" class="header-pill secondary"><i class="fas fa-layer-group"></i>Browser catalog</a>
+                    </div>
+                    <div class="lang-switch mobile-lang-switch" aria-label="Language">
+                        <span class="lang-switch-label">Language</span>
+                        <div class="lang-switch-links"><a href="terms.html" class="lang-switch-link active" lang="en">EN</a><a href="hi/terms.html" class="lang-switch-link" lang="hi">हिन्दी</a></div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
