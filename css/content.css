@@ -763,7 +763,7 @@ a.logo {
         display: inline-flex;
     }
 
-    .mobile-menu-panel {
+    .mobile-menu-panel:not([hidden]) {
         display: block;
     }
 
@@ -792,6 +792,20 @@ a.logo {
 
     .play-frame-shell {
         min-height: 0;
+    }
+
+    .play-frame-shell[data-loaded='true'] {
+        display: block;
+        aspect-ratio: auto;
+        min-height: 400px;
+    }
+
+    .play-frame-shell[data-loaded='true'] iframe {
+        display: block;
+        height: 70vh;
+        min-height: 400px;
+        max-height: 620px;
+        margin-bottom: 0;
     }
 
     .catalog-grid,
@@ -943,6 +957,15 @@ a.logo {
     .play-placeholder {
         padding: 16px;
         gap: 16px;
+    }
+
+    .play-frame-shell[data-loaded='true'] {
+        min-height: 360px;
+    }
+
+    .play-frame-shell[data-loaded='true'] iframe {
+        height: 64vh;
+        min-height: 360px;
     }
 
     .play-placeholder-thumb {
