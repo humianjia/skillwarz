@@ -66,6 +66,8 @@ function countGameRobots() {
     return { indexed, noindexed };
 }
 
+const debugRobotCounts = countGameRobots();
+
 function runLocalChecks() {
     const results = [];
 
@@ -156,6 +158,15 @@ function runLocalChecks() {
             : 'Homepage still appears to auto-load the playable frame.'
     );
 
+    add(
+        results,
+        !/being rebuilt|coverage expands|coverage is expanded/i.test(home) ? 'PASS' : 'FAIL',
+        'Homepage avoids site-under-construction wording',
+        !/being rebuilt|coverage expands|coverage is expanded/i.test(home)
+            ? 'No site-under-construction wording found on the homepage.'
+            : 'Homepage still contains wording that suggests the site is incomplete.'
+    );
+
     const categories = exists('categories.html') ? read('categories.html') : '';
     add(
         results,
@@ -166,11 +177,30 @@ function runLocalChecks() {
 
     add(
         results,
-        categories.includes('off the main review path') && !/Support page<\/span>/.test(categories) ? 'PASS' : 'WARN',
+        /curated page/i.test(categories) && !/Catalog page<\/span>/.test(categories) ? 'PASS' : 'WARN',
         'Category page foregrounds flagship editorial pages',
-        categories.includes('off the main review path')
-            ? 'Categories emphasize stronger editorial pages and de-emphasize support entries.'
+        /curated page/i.test(categories) && !/Catalog page<\/span>/.test(categories)
+            ? 'Categories emphasize a narrow set of curated public pages.'
             : 'Categories may still be surfacing too many support entries.'
+    );
+
+    add(
+        results,
+        !/being rebuilt|support pages|original coverage expands|coverage grows/i.test(categories) ? 'PASS' : 'FAIL',
+        'Category page avoids low-confidence review wording',
+        !/being rebuilt|support pages|original coverage expands|coverage grows/i.test(categories)
+            ? 'Categories avoid review-hostile wording.'
+            : 'Categories still contain wording that can suggest incomplete or low-priority content.'
+    );
+
+    const privacy = exists('privacy.html') ? read('privacy.html') : '';
+    add(
+        results,
+        !/If advertising is enabled in the future/i.test(privacy) ? 'PASS' : 'FAIL',
+        'Privacy policy matches current advertising intent',
+        !/If advertising is enabled in the future/i.test(privacy)
+            ? 'Privacy policy no longer treats advertising as future-only.'
+            : 'Privacy policy still says advertising may be enabled in the future.'
     );
 
     const legacyTargets = [
@@ -200,9 +230,9 @@ function runLocalChecks() {
     const robotsCount = countGameRobots();
     add(
         results,
-        robotsCount.indexed > 0 && robotsCount.noindexed > 0 ? 'PASS' : 'FAIL',
+        robotsCount.indexed > 0 && robotsCount.noindexed > 0 && robotsCount.indexed <= 12 ? 'PASS' : 'FAIL',
         'Indexable vs support page split',
-        `Indexed game pages: ${robotsCount.indexed}; noindex support pages: ${robotsCount.noindexed}`
+        `Indexed game pages: ${robotsCount.indexed}; noindex support pages: ${robotsCount.noindexed}; debug snapshot: ${debugRobotCounts.indexed}/${debugRobotCounts.noindexed}`
     );
 
     const allGamePages = [];

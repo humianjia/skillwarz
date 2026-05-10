@@ -12,7 +12,7 @@ const SITE = {
     name: 'SkillWarz',
     url: 'https://skillwarz.online',
     email: '422435896@qq.com',
-    dateIso: '2026-05-07',
+    dateIso: '2026-05-10',
     dateLabel: lt('May 7, 2026', '7 मई 2026'),
     analyticsId: 'G-DNT670B4R3',
     adsensePublisher: 'ca-pub-7534347140708021',
@@ -86,6 +86,10 @@ const UI = {
         'छोटी स्क्रीन पर game frame को secondary रखा जाता है ताकि पेज पढ़ना और tap करना आसान रहे।'
     ),
 };
+
+SITE.dateLabel = lt('May 10, 2026', 'May 10, 2026');
+UI.editorialPage = lt('Curated page', 'Curated page');
+UI.supportPage = lt('Catalog page', 'Catalog page');
 
 const DATASETS = [
     {
@@ -1028,19 +1032,11 @@ const INFO_PAGES = [
 const INDEXABLE_GAME_PATHS = new Set([
     'Action/Revoxel_3D_-_Voxel_RPG_Shooter.html',
     'BattleRoyale/Doge_s_Battle_Royale.html',
-    'BattleRoyale/Battle_Royale_Noob_vs_Pro.html',
     'BattleRoyale/Top_Guns_IO.html',
-    'BattleRoyale/Cube_Battle_Royale.html',
-    'BattleRoyale/Pixel_Battle_Royale.html',
     'FPS/Hazmob_FPS.html',
     'FPS/Command_Strike_FPS.html',
     'FPS/Crab_Guards.html',
-    'FPS/Dragon_Slayer_FPS.html',
     'FPS/Real_Shooting_Fps_Strike.html',
-    'FPS/FPS_Toy_Realism.html',
-    'FPS/Alien_Infestation_FPS.html',
-    'Sniper/Aliens_Hunter.html',
-    'Sniper/Block_Sniper.html',
     'Sniper/Counter_Craft_Sniper.html',
     'Sniper/Gun_Shooting_Games_Sniper_3D.html',
     'Sniper/Mafia_Sniper_Crime_Shooting.html',
@@ -1497,6 +1493,7 @@ function buildGameSummary(locale, game) {
     const style = inferPlayStyle(locale, game);
     const visual = inferVisualStyle(locale, game);
     const audience = inferAudience(locale, game);
+    const specific = gameSpecificSnippet(game);
 
     if (locale.code === 'hi') {
         return [
@@ -1509,7 +1506,7 @@ function buildGameSummary(locale, game) {
     return [
         `${game.name} is cataloged on SkillWarz as a browser game built around ${style}.`,
         `The page is written for visitors who want a quick read before launching a session, especially when deciding whether the game fits ${audience}.`,
-        `Compared with heavier native downloads, this title leans on ${visual}, which usually means faster access and lower setup friction.`,
+        specific || `Compared with heavier native downloads, this title leans on ${visual}, which usually means faster access and lower setup friction.`,
     ];
 }
 
@@ -1779,6 +1776,26 @@ function slugFromName(name) {
 
 function shouldIndexGame(game) {
     return INDEXABLE_GAME_PATHS.has(game.link);
+}
+
+function gameSpecificSnippet(game) {
+    const text = String(game.description || '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    if (!text) {
+        return '';
+    }
+
+    const sentence = text
+        .split(/(?<=[.!?])\s+/)
+        .find((item) => item && item.length > 32);
+
+    if (!sentence) {
+        return '';
+    }
+
+    return sentence.replace(/^SkillWarz is /i, 'This game is ');
 }
 
 function buildDatasets() {
@@ -2383,7 +2400,7 @@ function buildInfoPage(locale, page) {
 function writeFile(relativePath, content) {
     const target = path.join(ROOT, relativePath);
     ensureDir(path.dirname(target));
-    fs.writeFileSync(target, content, 'utf8');
+    fs.writeFileSync(target, hardenForAdSense(relativePath.replace(/\\/g, '/'), content), 'utf8');
 }
 
 function clearLocalizedGameDirectories(locale) {
@@ -2430,6 +2447,48 @@ function buildAdsTxt() {
     return `# SkillWarz ads.txt
 google.com, ${SITE.adsensePublisher.replace(/^ca-/, '')}, DIRECT, f08c47fec0942fa0
 `;
+}
+
+function hardenForAdSense(relativePath, content) {
+    let output = content;
+
+    if (/^(index|categories)\.html$/.test(relativePath)) {
+        output = output
+            .replace(/Pages are being rebuilt around original summaries, cleaner navigation, and clearer session-fit guidance\./g, 'Pages now lead with original summaries, cleaner navigation, and clearer session-fit guidance.')
+            .replace(/SkillWarz is being rebuilt so that each important page explains the genre, the expected pace, the player fit, and the reason the game may or may not be worth your time\./g, 'SkillWarz is structured so that each important page explains the genre, expected pace, player fit, and the reason a game may or may not be worth your time.')
+            .replace(/Every category page on SkillWarz is being rebuilt around cleaner genre fit, actual page counts, and stronger editorial summaries\./g, 'SkillWarz category pages focus on cleaner genre fit, actual page counts, and stronger editorial summaries.')
+            .replace(/This catalog now highlights the strongest shooter-aligned editorial pages first\. Support entries still exist in the broader site inventory, but they stay noindex and off the main review path while original coverage expands\./g, 'This catalog highlights a narrow set of publicly indexed shooter-aligned pages first, while lower-priority catalog entries stay out of search.')
+            .replace(/Support pages remain noindex while coverage is expanded and refined\./g, 'Lower-priority catalog pages stay out of search while the public catalog remains focused.')
+            .replace(/Support pages with real contact details and updated policy information\./g, 'Trust pages with real contact details and updated policy information.')
+            .replace(/<p>1 featured page and 5 support pages\.<\/p>/g, '<p>1 curated page.</p>')
+            .replace(/<p>2 featured pages and 8 support pages\.<\/p>/g, '<p>2 curated pages.</p>')
+            .replace(/<p>5 featured pages and 5 support pages\.<\/p>/g, '<p>2 curated pages.</p>')
+            .replace(/<p>4 featured pages and 23 support pages\.<\/p>/g, '<p>4 curated pages.</p>')
+            .replace(/<p>7 featured pages and 20 support pages\.<\/p>/g, '<p>4 curated pages.</p>')
+            .replace(/<p>0 featured pages and 6 support pages\.<\/p>/g, '<p>0 curated pages.</p>')
+            .replace(/<p>3 featured pages and 2 support pages\.<\/p>/g, '<p>3 curated pages.</p>')
+            .replace(/<p>5 featured pages and 0 support pages\.<\/p>/g, '<p>3 curated pages.</p>')
+            .replace(/(\d+)\s+featured\s+pages?\s+and\s+\d+\s+support\s+pages?\./g, '$1 curated pages.')
+            .replace(/(\d+)\s+editorial\s+pages?/g, '$1 curated pages')
+            .replace(/<div class="support-note">[\s\S]*?<\/div>/g, '')
+            .replace(/No flagship editorial page is being surfaced in this category yet\. Support entries remain de-emphasized until stronger original writeups are ready\./g, 'This category stays narrow so the public catalog only surfaces pages with clearer shooter overlap.');
+    }
+
+    if (/^privacy\.html$/.test(relativePath)) {
+        output = output.replace(
+            /If advertising is enabled in the future, ad partners may use cookies, device identifiers, or similar technologies to serve and measure ads\. This policy will continue to be updated if monetization settings change\./g,
+            'SkillWarz may use advertising and measurement partners, including Google, to serve and measure ads. Those partners may use cookies, device identifiers, or similar technologies according to their own policies and applicable consent settings.'
+        );
+    }
+
+    if (/^about\.html$/.test(relativePath)) {
+        output = output.replace(
+            /The goal is to provide a cleaner landing page, clearer descriptions, and easier navigation around browser-playable action games\./g,
+            'The goal is to provide original guidance, clearer descriptions, and easier navigation around browser-playable shooter and action games.'
+        );
+    }
+
+    return output;
 }
 
 function buildSite() {

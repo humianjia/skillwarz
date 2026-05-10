@@ -1,0 +1,257 @@
+            text: locale.code === 'hi'
+                ? 'Browser shooters, sniper games, battle royale picks और quick-start editorial notes�?
+                : 'Browser shooters, sniper games, battle royale picks, and quick-start editorial notes.',
+        },
+        {
+            title: locale.code === 'hi' ? 'यह version क्यो�?महत्वपूर्ण है' : 'Why this version matters',
+            text: locale.code === 'hi'
+                ? 'Pages को original summaries, cleaner navigation और clearer session-fit guidance के आसपा�?फि�?से बनाय�?जा रह�?है�?
+                : 'Pages are being rebuilt around original summaries, cleaner navigation, and clearer session-fit guidance.',
+        },
+        {
+            title: locale.code === 'hi' ? 'सपोर्ट संपर्क' : 'Support contact',
+            text: SITE.email,
+        },
+    ];
+
+    const statCards = stats.map((item) => `<div class="stat-card"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.text)}</p></div>`).join('');
+    const guideCards = GUIDES.map((guide) => buildGuideCard(locale, pagePath, guide)).join('');
+    const featuredCards = featuredGames.slice(0, 8).map((game) => buildCatalogCard(locale, pagePath, game)).join('');
+    const homePlayShell = buildDeferredPlayShell({
+        locale,
+        pagePath,
+        shellId: 'home-play-shell',
+        iframeUrl: homeGame.iframeUrl,
+        title: locale.code === 'hi' ? 'SkillWarz ब्राउज़र सेशन' : 'SkillWarz browser session',
+        imageUrl: homeGame.imageUrl,
+        imageAlt: locale.code === 'hi' ? 'SkillWarz आइकन' : 'SkillWarz icon',
+        heading: locale.code === 'hi'
+            ? 'जब आप तैया�?हो�? तभी playable browser session लो�?करें'
+            : 'Load the playable browser session only when you are ready',
+        description: locale.code === 'hi'
+            ? 'इससे homepage पहले original guidance पर केंद्रित रहता है और visitor चाहे�?तो बा�?मे�?browser build खो�?सकते हैं।'
+            : 'This keeps the homepage focused on original guidance first while still letting visitors launch the browser build on demand.',
+        buttonLabel: locale.code === 'hi' ? 'Playable browser session लो�?करें' : 'Load playable browser session',
+        disclosure: locale.code === 'hi'
+            ? 'जब उपलब्ध हो, playable browser sessions third-party distribution partner के माध्यम से दी जा सकती हैं। इस साइट का editorial text visitors को controls, genre fit और session style समझाने के लि�?स्वतंत्र रू�?से लिखा गय�?है�?
+            : 'Playable browser sessions may be delivered through a third-party distribution partner when available. The editorial text on this site is written independently to help visitors understand controls, genre fit, and session style before they play.',
+        secondaryHref: sameLocaleHref(locale, pagePath, 'skillwarz-beginner-guide.html'),
+        secondaryLabel: locale.code === 'hi' ? 'पहले शुरुआती गाइड पढ़े�? : 'Read the beginner guide first',
+    });
+
+    const head = standardHead({
+        locale,
+        pagePath,
+        title: locale.code === 'hi'
+            ? 'SkillWarz - ब्राउज़र शूटर गाइड, रिव्यू और चुने हु�?प्ले पे�?
+            : 'SkillWarz - Browser Shooter Guides, Reviews, and Curated Play Pages',
+        description: locale.code === 'hi'
+            ? 'SkillWarz एक browser shooter discovery site है जिसमें original SkillWarz guides, चुने हु�?FPS picks, battle royale recommendations और editorial game pages शामि�?हैं।'
+            : 'SkillWarz is a browser shooter discovery site with original SkillWarz guides, curated FPS picks, battle royale recommendations, and editorial game pages.',
+        ogTitle: locale.code === 'hi'
+            ? 'SkillWarz - ब्राउज़र शूटर गाइड और चुने हु�?गे�?पे�?
+            : 'SkillWarz - Browser Shooter Guides and Curated Game Pages',
+        ogDescription: locale.code === 'hi'
+            ? 'Original SkillWarz guides पढ़े�? curated shooter pages की तुलन�?करें और जब तैया�?हो�?तभी browser sessions लो�?करें�?
+            : 'Read original SkillWarz guides, compare curated shooter pages, and load browser sessions only when you are ready to play.',
+        ogImage: 'img/skillwarz.avif',
+    });
+
+    const mainContent = `        <div class="main-content">
+            <div class="content-section">
+                <div class="game-info page-copy">
+                    <h1>${escapeHtml(locale.code === 'hi' ? 'SkillWarz ब्राउज़र गाइड और शूटर डिस्कवरी हब' : 'SkillWarz Browser Guide And Shooter Discovery Hub')}</h1>
+                    <div class="info-header">${escapeHtml(locale.code === 'hi'
+                        ? 'SkillWarz अब thin template content की जग�?editorial summaries, browser shooter discovery और clearer category pages पर ध्या�?देता है�?
+                        : 'SkillWarz now focuses on editorial summaries, browser shooter discovery, and clearer category pages instead of thin template content.')}</div>
+                    <div class="hero-grid">
+                        <section class="callout-card hero-card hero-card-primary">
+                            <p class="lead-copy">${escapeHtml(locale.code === 'hi'
+                                ? 'इस साइट का लक्ष्य सर�?है: खिलाड़ियों को यह समझन�?मे�?मद�?करना कि वे क्या क्लि�?करने वाले है�? कौ�?से games उनके mood के लि�?सही है�? और SkillWarz खु�?एक सीखन�?लायक browser FPS क्यो�?है�?
+                                : 'The goal of this site is simple: help players understand what they are about to click, which games fit their mood, and why SkillWarz itself stands out as a browser FPS worth learning.')}</p>
+                            <div class="button-row">
+                                <a class="button-link" href="${sameLocaleHref(locale, pagePath, 'skillwarz-beginner-guide.html')}"><i class="fas fa-book-open"></i>${escapeHtml(t(locale, UI.startWithGuide))}</a>
+                                <a class="button-link secondary" href="${sameLocaleHref(locale, pagePath, 'categories.html')}"><i class="fas fa-layer-group"></i>${escapeHtml(t(locale, UI.browseAllCategories))}</a>
+                            </div>
+                            <div class="stat-grid">
+                                ${statCards}
+                            </div>
+                        </section>
+                        <aside class="callout-card hero-card hero-card-secondary">
+                            <h2>${escapeHtml(locale.code === 'hi' ? 'रिव्यूअर सबसे पहले क्या देखे�? : 'What reviewers should see first')}</h2>
+                            <p>${escapeHtml(locale.code === 'hi'
+                                ? 'SkillWarz अब original guidance, ज्यादा focused shooter-only review path और किसी playable frame के लो�?होने से पहले सा�?trust signals को आग�?रखता है�?
+                                : 'SkillWarz now leads with original guidance, a tighter shooter-only review path, and clear trust signals before any playable frame is loaded.')}</p>
+                            <ul class="mini-list">
+                                <li>${escapeHtml(locale.code === 'hi' ? 'Original guides और comparison articles play trigger के ऊप�?रख�?गए हैं।' : 'Original guides and comparison articles sit above the play trigger.')}</li>
+                                <li>${escapeHtml(locale.code === 'hi' ? 'केवल मजबू�?shooter pages को flagship editorial pages के रू�?मे�?दिखाया जाता है�? : 'Only stronger shooter pages are surfaced as flagship editorial pages.')}</li>
+                                <li>${escapeHtml(locale.code === 'hi' ? 'Coverage बढ़त�?सम�?support pages noindex रहती हैं।' : 'Support pages remain noindex while coverage is expanded and refined.')}</li>
+                            </ul>
+                        </aside>
+                    </div>
+
+                    <div class="section-stack">
+                        <section class="section-block">
+                            <h2>${escapeHtml(locale.code === 'hi' ? 'SkillWarz क्या है' : 'What SkillWarz Is')}</h2>
+                            <p>${escapeHtml(locale.code === 'hi'
+                                ? 'SkillWarz को movement-driven browser FPS के रू�?मे�?समझन�?सबसे अच्छ�?है�?यह उन खिलाड़ियों को reward करता है जो अपने routes सा�?रखते है�? fight के बा�?angles reset करना सीखत�?है�?और map movement को combat का हिस्सा मानत�?हैं।'
+                                : 'SkillWarz is best approached as a movement-driven browser FPS. It rewards players who keep their routes clean, learn how to reset angles after a fight, and treat map movement as part of combat instead of something separate from it.')}</p>
+                            <p>${escapeHtml(locale.code === 'hi'
+                                ? 'जब खिलाड़ी हर duel को panic aim से जीतन�?की कोशि�?छोड़ देता है, तब game ज्यादा मजेदार हो जाती है�?बेहत�?routing, पहले crosshair placement और simple movement discipline flashy mechanics से ते�?सुधा�?देते हैं।'
+                                : 'The game becomes more enjoyable once the player stops trying to win every duel with panic aim alone. Better routing, earlier crosshair placement, and simple movement discipline create faster improvement than flashy mechanics.')}</p>
+                            <div class="page-anchor-links">
+                                <a href="${sameLocaleHref(locale, pagePath, 'skillwarz-controls-tips.html')}">${escapeHtml(locale.code === 'hi' ? 'Controls और movement टिप्�? : 'Controls and movement tips')}</a>
+                                <a href="${sameLocaleHref(locale, pagePath, 'best-browser-shooter-modes.html')}">${escapeHtml(locale.code === 'hi' ? 'Shooter mode गाइड' : 'Shooter mode guide')}</a>
+                                <a href="${sameLocaleHref(locale, pagePath, 'browser-fps-vs-battle-royale-guide.html')}">${escapeHtml(locale.code === 'hi' ? 'FPS बनाम battle royale गाइड' : 'FPS vs battle royale guide')}</a>
+                            </div>
+                        </section>
+
+                        <section class="section-block">
+                            <h2>${escapeHtml(locale.code === 'hi' ? 'यह साइट क्यो�?मौजू�?है' : 'Why This Site Exists')}</h2>
+                            <p>${escapeHtml(locale.code === 'hi'
+                                ? 'वे�?पर कई browser game pages visitors को लगभग बिना संदर्भ के सीधे embed मे�?भे�?देती हैं। SkillWarz को इस तर�?फि�?से बनाय�?जा रह�?है कि हर महत्वपूर्ण page genre, expected pace, player fit और यह कि game आपका सम�?लेनी चाहि�?या नही�? इन सबको पहले समझाए।'
+                                : 'Many browser game pages on the web send visitors straight into an embed with almost no context. SkillWarz is being rebuilt so that each important page explains the genre, the expected pace, the player fit, and the reason the game may or may not be worth your time.')}</p>
+                            <ul class="mini-list">
+                                <li>${escapeHtml(locale.code === 'hi' ? 'Generic one-line descriptions की जग�?original quick-take copy�? : 'Original quick-take copy instead of generic one-line descriptions.')}</li>
+                                <li>${escapeHtml(locale.code === 'hi' ? 'FPS, sniper और battle royale खिलाड़ियों के लि�?cleaner categories�? : 'Cleaner categories for FPS, sniper, and battle royale players.')}</li>
+                                <li>${escapeHtml(locale.code === 'hi' ? 'Real contact details और updated policy information वाले support pages�? : 'Support pages with real contact details and updated policy information.')}</li>
+                            </ul>
+                        </section>
+
+                        <section class="section-block">
+                            <h2>${escapeHtml(locale.code === 'hi' ? 'Playable browser session' : 'Playable Browser Session')}</h2>
+                            <p>${escapeHtml(locale.code === 'hi'
+                                ? 'Visitors अब भी homepage से SkillWarz launch कर सकते है�? लेकि�?browser frame केवल तब लो�?होती है जब वे खु�?request करें�?इससे page पहले original guidance पर केंद्रित रहता है और playable access बा�?मे�?आती है�?
+                                : 'Visitors can still launch SkillWarz from this homepage, but the browser frame is loaded only after they actively request it. That keeps the page centered on original guidance first and playable access second.')}</p>
+                            ${homePlayShell}
+                        </section>
+
+                        <section class="section-block">
+                            <h2>${escapeHtml(locale.code === 'hi' ? 'Featured guides' : 'Featured Guides')}</h2>
+                            <div class="guide-grid">
+                                ${guideCards}
+                            </div>
+                        </section>
+
+                        <section class="section-block">
+                            <h2>${escapeHtml(locale.code === 'hi' ? 'Featured browser shooter pages' : 'Featured Browser Shooter Pages')}</h2>
+                            <p>${escapeHtml(locale.code === 'hi'
+                                ? 'ये वे pages है�?जिन्हे�?हम मजबू�?editorial coverage मा�?रह�?है�? क्योंक�?इनमे�?category fit ज्यादा सा�?है और साइट के मुख्�?browser shooter theme से बेहत�?मे�?है�?
+                                : 'These are the pages we are treating as stronger editorial coverage, with tighter category fit and better alignment with the core browser shooter theme of the site.')}</p>
+                            <div class="catalog-grid">
+                                ${featuredCards}
+                            </div>
+                        </section>
+
+                        <section class="section-block">
+                            <h2>${escapeHtml(locale.code === 'hi' ? 'खेलन�?से पहले' : 'Before You Play')}</h2>
+                            <div class="info-grid">
+                                <div class="info-card">
+                                    <h3>${escapeHtml(locale.code === 'hi' ? 'पढ़न�?लायक लक्ष्य से शुरू करें' : 'Start with readable goals')}</h3>
+                                    <p>${escapeHtml(locale.code === 'hi' ? 'हर session मे�?सुधा�?के लि�?एक आद�?चुने�? movement resets, aim discipline या route choice�? : 'Pick one habit to improve per session: movement resets, aim discipline, or route choice.')}</p>
+                                </div>
+                                <div class="info-card">
+                                    <h3>${escapeHtml(locale.code === 'hi' ? 'Flicks को ज्यादा महत्�?�?दे�? : 'Do not overvalue flicks')}</h3>
+                                    <p>${escapeHtml(locale.code === 'hi' ? 'Crosshair placement और cleaner peeks, flashy emergency aim से ज्यादा wins दिलाते हैं।' : 'Crosshair placement and cleaner peeks usually create more wins than flashy emergency aim.')}</p>
+                                </div>
+                                <div class="info-card">
+                                    <h3>${escapeHtml(locale.code === 'hi' ? 'Category pages को समझदारी से उपयो�?करें' : 'Use category pages smartly')}</h3>
+                                    <p>${escapeHtml(locale.code === 'hi' ? 'अग�?आपको ते�?action चाहि�?तो FPS से शुरू करें�?अग�?patience और pressure चाहि�?तो sniper या battle royale pages से शुरू करें�? : 'If you want fast action, start with FPS. If you want patience and pressure, start with sniper or battle royale pages.')}</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+
+    return buildPageLayout({
+        locale,
+        head,
+        header: buildHeader(locale, pagePath, 'home'),
+        mainContent,
+        footer: buildFooter(locale, pagePath),
+        extraScripts: buildPlayActivationScript(locale),
+    });
+}
+
+function buildCategoryPage(locale, allGames) {
+    const pagePath = 'categories.html';
+    const grouped = DATASETS.map((dataset) => ({
+        ...dataset,
+        games: allGames.filter((game) => game.category === dataset.dir),
+    })).map((group) => ({
+        ...group,
+        featuredGames: group.games.filter((game) => game.indexable),
+        supportGames: group.games.filter((game) => !game.indexable),
+    }));
+
+    const jumpCards = grouped.map((group) => `<article class="jump-card">
+        <h3><a href="#${group.slug}">${escapeHtml(t(locale, group.label))}</a></h3>
+        <p>${escapeHtml(jumpCountText(locale, group.featuredGames.length, group.supportGames.length))}</p>
+    </article>`).join('');
+
+    const sections = grouped.map((group) => {
+        const cards = group.featuredGames.map((game) => buildCatalogCard(locale, pagePath, game)).join('');
+        const supportNote = group.supportGames.length
+            ? `<div class="support-note">
+                ${escapeHtml(supportNoteText(locale, group.supportGames.length))}
+            </div>`
+            : '';
+        const sectionBody = cards
+            ? `<div class="catalog-grid">
+                ${cards}
+            </div>`
+            : `<div class="site-note">
+                <p>${escapeHtml(noFlagshipText(locale))}</p>
+            </div>`;
+
+        return `<section class="catalog-section" id="${group.slug}">
+            <div class="catalog-section-header">
+                <div>
+                    <h2>${escapeHtml(t(locale, group.label))}</h2>
+                    <p>${escapeHtml(t(locale, group.intro))}</p>
+                </div>
+                <span class="catalog-badge"><i class="fas fa-gamepad"></i>${escapeHtml(editorialCountText(locale, group.featuredGames.length))}</span>
+            </div>
+            ${supportNote}
+            ${sectionBody}
+        </section>`;
+    }).join('\n');
+
+    const head = standardHead({
+        locale,
+        pagePath,
+        title: locale.code === 'hi' ? 'Game श्रेणिया�?- SkillWarz' : 'Game Categories - SkillWarz',
+        description: locale.code === 'hi'
+            ? 'Browser FPS, sniper, battle royale, action और multiplayer games के लि�?SkillWarz categories देखे�? जहां सा�?descriptions और category context मौजू�?है�?
+            : 'Browse SkillWarz categories for browser FPS, sniper, battle royale, action, and multiplayer games with cleaner descriptions and category context.',
+        ogTitle: locale.code === 'hi' ? 'SkillWarz श्रेणिया�? : 'SkillWarz Categories',
+        ogDescription: locale.code === 'hi'
+            ? 'Curated browser game categories देखे�?जिनमें मजबू�?shooter focus, वास्तविक counts और original editorial summaries हैं।'
+            : 'Explore curated browser game categories with stronger shooter focus, real counts, and original editorial summaries.',
+        ogImage: 'img/skillwarz.avif',
+    });
+
+    const mainContent = `        <div class="main-content">
+            <div class="content-section">
+                <div class="game-info page-copy">
+                    <div class="page-breadcrumb"><a href="${sameLocaleHref(locale, pagePath, 'index.html')}">${escapeHtml(t(locale, UI.home))}</a><span>/</span><span>${escapeHtml(t(locale, UI.categories))}</span></div>
+                    <h1>${escapeHtml(locale.code === 'hi' ? 'SkillWarz श्रेणिया�? : 'SkillWarz Categories')}</h1>
+                    <div class="info-header">${escapeHtml(locale.code === 'hi'
+                        ? 'SkillWarz का हर category page अब cleaner genre fit, वास्तविक page counts और मजबू�?editorial summaries के आसपा�?फि�?से बनाय�?जा रह�?है�?
+                        : 'Every category page on SkillWarz is being rebuilt around cleaner genre fit, actual page counts, and stronger editorial summaries.')}</div>
+                    <p class="lead-copy">${escapeHtml(locale.code === 'hi'
+                        ? 'यह catalog अब सबसे मजबू�?shooter-aligned editorial pages को पहले दिखाता है�?Broader site inventory मे�?support entries अभी भी मौजू�?है�? लेकि�?original coverage बढ़न�?तक वे noindex और मुख्�?review path से बाहर रहती हैं।'
+                        : 'This catalog now highlights the strongest shooter-aligned editorial pages first. Support entries still exist in the broader site inventory, but they stay noindex and off the main review path while original coverage expands.')}</p>
+                    <div class="catalog-note">${escapeHtml(locale.code === 'hi'
+                        ? 'अब आपको यहां बढ़ा-चढ़ाकर दिखा�?गए counts, random ratings या नकली play totals नही�?दिखेंगे। Category sections अब flagship pages को प्राथमिकता देती है�?और कमजो�?support entries की visibility घटाती हैं।'
+                        : 'You will no longer see inflated counts, random ratings, or fake play totals here. Category sections now prioritize flagship pages and reduce the visibility of weaker support entries.')}</div>
+
+                    <div class="category-jump-grid">
+                        ${jumpCards}
+                    </div>
+
+                    ${sections}
+                </div>
+            </div>
