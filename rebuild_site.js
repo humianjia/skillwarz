@@ -10,7 +10,7 @@ function lt(en, hi) {
 
 const SITE = {
     name: 'SkillWarz',
-    url: 'https://skillwarz.online',
+    url: 'https://www.skillwarz.online',
     email: '422435896@qq.com',
     dateIso: '2026-05-10',
     dateLabel: lt('May 7, 2026', '7 मई 2026'),
@@ -810,8 +810,8 @@ const INFO_PAGES = [
             'SkillWarz की privacy policy पढ़ें, जिसमें analytics usage, embedded third-party content, cookies और contact information शामिल हैं।'
         ),
         intro: lt(
-            'This Privacy Policy explains how SkillWarz collects and uses information when you browse the website at skillwarz.online.',
-            'यह Privacy Policy बताती है कि जब आप skillwarz.online पर browse करते हैं तो SkillWarz जानकारी कैसे एकत्र और उपयोग करता है।'
+            'This Privacy Policy explains how SkillWarz collects and uses information when you browse the website at www.skillwarz.online.',
+            'यह Privacy Policy बताती है कि जब आप www.skillwarz.online पर browse करते हैं तो SkillWarz जानकारी कैसे एकत्र और उपयोग करता है।'
         ),
         showUpdated: true,
         sections: [
@@ -1041,6 +1041,19 @@ const INDEXABLE_GAME_PATHS = new Set([
     'Sniper/Gun_Shooting_Games_Sniper_3D.html',
     'Sniper/Mafia_Sniper_Crime_Shooting.html',
 ]);
+
+const INDEXED_GAME_DETAIL_COPY = {
+    'Action/Revoxel_3D_-_Voxel_RPG_Shooter.html': 'Revoxel 3D stands out from the rest of the indexed set because its voxel presentation and light RPG framing make the page read more like a progression-focused shooter overview than a standard round-based match.',
+    'BattleRoyale/Doge_s_Battle_Royale.html': 'Doge\'s Battle Royale reads as a lighter, more novelty-driven survival page, so the summary focuses on meme-styled presentation and casual battle royale pacing instead of serious esports framing.',
+    'BattleRoyale/Top_Guns_IO.html': 'Top Guns IO is differentiated around aerial combat language, with the page positioned for visitors who want browser battle royale pressure through jet fights and faster high-altitude movement.',
+    'FPS/Hazmob_FPS.html': 'Hazmob FPS is one of the more direct competitive entries in the set, so the copy emphasizes match flow, aiming rhythm, and whether the browser session feels suitable for repeat PvP rounds.',
+    'FPS/Command_Strike_FPS.html': 'Command Strike FPS is framed as a straightforward military-style browser shooter, making the page more useful for players who want familiar FPS structure without extra progression systems to parse first.',
+    'FPS/Crab_Guards.html': 'Crab Guards gets more personality-led copy because the title and art direction suggest a less standard shooter theme, which helps the page avoid sounding interchangeable with the other modern FPS entries.',
+    'FPS/Real_Shooting_Fps_Strike.html': 'Real Shooting Fps Strike is presented as a no-frills entry for visitors comparing core gunplay pages, with the summary centered on direct access, readable controls, and quick session testing.',
+    'Sniper/Counter_Craft_Sniper.html': 'Counter Craft Sniper is described through its blocky craft-inspired presentation and distance-shot focus, which separates it clearly from the site\'s conventional military sniper pages.',
+    'Sniper/Gun_Shooting_Games_Sniper_3D.html': 'Gun Shooting Games Sniper 3D is positioned as a simpler patience-and-accuracy page, helping visitors decide whether they want a slower sniper session rather than a multi-mode arcade shooter.',
+    'Sniper/Mafia_Sniper_Crime_Shooting.html': 'Mafia Sniper Crime Shooting is framed around mission flavor and urban crime-theme targeting, giving the page a more scenario-based identity than the other indexed sniper entries.',
+};
 
 const EXTRA_GAMES = [
     {
@@ -1779,23 +1792,22 @@ function shouldIndexGame(game) {
 }
 
 function gameSpecificSnippet(game) {
-    const text = String(game.description || '')
-        .replace(/\s+/g, ' ')
-        .trim();
+    if (game && game.link && INDEXED_GAME_DETAIL_COPY[game.link]) {
+        return INDEXED_GAME_DETAIL_COPY[game.link];
+    }
 
-    if (!text) {
+    const tags = Array.isArray(game.tags)
+        ? game.tags
+            .map((tag) => String(tag || '').trim())
+            .filter(Boolean)
+        : [];
+
+    if (!tags.length) {
         return '';
     }
 
-    const sentence = text
-        .split(/(?<=[.!?])\s+/)
-        .find((item) => item && item.length > 32);
-
-    if (!sentence) {
-        return '';
-    }
-
-    return sentence.replace(/^SkillWarz is /i, 'This game is ');
+    const topTags = tags.slice(0, 3).join(', ');
+    return `${game.name} is grouped on SkillWarz with tags such as ${topTags}, which helps visitors judge the page theme before opening the playable frame.`;
 }
 
 function buildDatasets() {

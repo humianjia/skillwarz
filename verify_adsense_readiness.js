@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = __dirname;
-const DEFAULT_SITE = 'https://skillwarz.online';
+const DEFAULT_SITE = 'https://www.skillwarz.online';
 
 const staticPages = [
     'index.html',
@@ -91,9 +91,9 @@ function runLocalChecks() {
     const robots = exists('robots.txt') ? read('robots.txt') : '';
     add(
         results,
-        robots.includes('Sitemap: https://skillwarz.online/sitemap.xml') ? 'PASS' : 'FAIL',
+        robots.includes('Sitemap: https://www.skillwarz.online/sitemap.xml') ? 'PASS' : 'FAIL',
         'robots.txt points to live sitemap',
-        robots.includes('Sitemap: https://skillwarz.online/sitemap.xml')
+        robots.includes('Sitemap: https://www.skillwarz.online/sitemap.xml')
             ? 'Correct sitemap URL found.'
             : 'Expected sitemap URL not found in robots.txt.'
     );

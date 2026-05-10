@@ -28,7 +28,7 @@ This checklist is for the current SkillWarz site structure and should be run aft
 - [ ] `sitemap.xml` is live and contains the homepage, trust pages, guide pages, and only the selected indexable game pages.
 - [ ] Indexable pages contain `index, follow`.
 - [ ] Support pages contain `noindex, follow`.
-- [ ] Canonical URLs point to `https://skillwarz.online/...`
+- [ ] Canonical URLs point to `https://www.skillwarz.online/...`
 
 ## 4. Verify Trust And Contact Signals
 
