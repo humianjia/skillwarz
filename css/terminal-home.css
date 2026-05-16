@@ -1,0 +1,993 @@
+:root {
+    --terminal-bg: #040812;
+    --terminal-bg-soft: rgba(6, 12, 22, 0.9);
+    --terminal-panel: rgba(9, 16, 28, 0.78);
+    --terminal-panel-strong: rgba(8, 14, 24, 0.94);
+    --terminal-line: rgba(135, 203, 255, 0.16);
+    --terminal-line-strong: rgba(255, 122, 61, 0.4);
+    --terminal-glow: rgba(103, 216, 255, 0.18);
+    --terminal-orange: #ff7a3d;
+    --terminal-gold: #ffc864;
+    --terminal-cyan: #73dbff;
+    --terminal-text: #f4f7fb;
+    --terminal-muted: rgba(228, 236, 246, 0.68);
+    --terminal-shadow: 0 28px 90px rgba(0, 0, 0, 0.44);
+}
+
+body.tactical-home {
+    font-family: 'Inter', sans-serif;
+    color: var(--terminal-text);
+    background:
+        radial-gradient(circle at top center, rgba(255, 122, 61, 0.14), transparent 18%),
+        radial-gradient(circle at 15% 18%, rgba(115, 219, 255, 0.12), transparent 24%),
+        linear-gradient(180deg, #050913 0%, #07101c 42%, #04070f 100%);
+    min-height: 100vh;
+}
+
+body.tactical-home::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.016) 1px, transparent 1px),
+        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 4px);
+    background-size: 48px 48px, 48px 48px, 100% 4px;
+    opacity: 0.38;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), transparent 95%);
+    z-index: 0;
+}
+
+body.tactical-home::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(115, 219, 255, 0.08), transparent 16%),
+        radial-gradient(circle at 80% 22%, rgba(255, 122, 61, 0.08), transparent 14%);
+    filter: blur(20px);
+    opacity: 0.7;
+    z-index: 0;
+}
+
+body.tactical-home .header,
+body.tactical-home .main-container,
+body.tactical-home .footer {
+    position: relative;
+    z-index: 1;
+}
+
+body.tactical-home .header.topbar {
+    position: sticky;
+    top: 0;
+    max-width: 1420px;
+    margin: 0 auto;
+    padding: 10px 18px 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+}
+
+.topbar-inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 18px;
+    min-height: 64px;
+    padding: 10px 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)),
+        rgba(7, 12, 22, 0.72);
+    box-shadow: var(--terminal-shadow);
+    backdrop-filter: blur(18px);
+    transition: background 0.24s ease, border-color 0.24s ease, transform 0.24s ease;
+}
+
+.topbar.is-scrolled .topbar-inner {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+        rgba(4, 8, 16, 0.92);
+    border-color: rgba(115, 219, 255, 0.14);
+}
+
+body.tactical-home .header-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+body.tactical-home .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+body.tactical-home .logo-icon {
+    width: 42px;
+    height: 42px;
+    filter: drop-shadow(0 0 18px rgba(255, 122, 61, 0.3));
+    transition: filter 0.24s ease, transform 0.24s ease;
+}
+
+body.tactical-home .logo:hover .logo-icon {
+    filter: drop-shadow(0 0 22px rgba(255, 122, 61, 0.42));
+    transform: translateY(-1px);
+}
+
+body.tactical-home .logo-text {
+    font-family: 'Oxanium', sans-serif;
+    font-size: 1.12rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f8fbff;
+}
+
+.topbar-nav {
+    justify-content: center;
+    gap: 8px;
+}
+
+body.tactical-home .nav-item {
+    position: relative;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(236, 243, 252, 0.74);
+    background: transparent;
+}
+
+body.tactical-home .nav-item::before {
+    display: none;
+}
+
+body.tactical-home .nav-item::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 6px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--terminal-cyan), transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.22s ease;
+}
+
+body.tactical-home .nav-item:hover,
+body.tactical-home .nav-item.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.035);
+    transform: none;
+}
+
+body.tactical-home .nav-item:hover::after,
+body.tactical-home .nav-item.active::after {
+    transform: scaleX(1);
+}
+
+body.tactical-home .nav-item.active {
+    box-shadow: inset 0 0 0 1px rgba(115, 219, 255, 0.18);
+}
+
+.topbar-actions {
+    justify-content: flex-end;
+    gap: 8px;
+    margin-left: 0;
+}
+
+body.tactical-home .header-pill,
+body.tactical-home .game-action-button,
+body.tactical-home .search-drawer-close {
+    font-family: 'Oxanium', sans-serif;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018)),
+        rgba(13, 20, 34, 0.78);
+    color: #f6fbff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+body.tactical-home .header-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 14px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+body.tactical-home .header-pill:hover,
+body.tactical-home .game-action-button:hover,
+body.tactical-home .search-drawer-close:hover {
+    transform: translateY(-1px);
+    border-color: rgba(115, 219, 255, 0.22);
+    box-shadow: 0 0 18px rgba(115, 219, 255, 0.14);
+}
+
+body.tactical-home .header-pill.secondary {
+    color: #dceeff;
+}
+
+body.tactical-home .header-pill:not(.secondary),
+body.tactical-home .button-link:not(.secondary) {
+    border-color: rgba(255, 122, 61, 0.22);
+    background:
+        linear-gradient(135deg, rgba(255, 200, 100, 0.18), rgba(255, 122, 61, 0.16)),
+        rgba(17, 24, 38, 0.86);
+    box-shadow: inset 0 0 0 1px rgba(255, 122, 61, 0.12), 0 0 20px rgba(255, 122, 61, 0.12);
+}
+
+body.tactical-home .lang-switch {
+    padding: 4px;
+    gap: 8px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+body.tactical-home .lang-switch-label {
+    padding-left: 8px;
+}
+
+body.tactical-home .lang-switch-link {
+    min-width: 42px;
+    border-radius: 8px;
+}
+
+body.tactical-home .lang-switch-link.active {
+    color: #050913;
+    background: linear-gradient(135deg, var(--terminal-gold), var(--terminal-orange));
+}
+
+body.tactical-home .mobile-menu-card,
+body.tactical-home .search-drawer,
+body.tactical-home .game-stage,
+body.tactical-home .game-info,
+body.tactical-home .loadout-strip {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+        var(--terminal-panel);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: var(--terminal-shadow);
+    backdrop-filter: blur(18px);
+}
+
+body.tactical-home .main-container.tactical-shell {
+    max-width: 1420px;
+    padding: 14px 22px 28px;
+}
+
+.search-drawer {
+    margin-bottom: 18px;
+    padding: 18px;
+    border-radius: 20px;
+}
+
+.search-drawer-head,
+.stage-heading,
+.loadout-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.search-drawer-head h2,
+.stage-heading h2,
+.loadout-head h2,
+.game-info h2 {
+    margin: 10px 0 0;
+    font-family: 'Oxanium', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #f7fbff;
+}
+
+.search-drawer-close {
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+}
+
+.search-field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    padding: 0 14px;
+    min-height: 52px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.18);
+}
+
+.search-field i {
+    color: var(--terminal-cyan);
+}
+
+.search-field input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #f7fbff;
+    font-size: 15px;
+}
+
+.search-field input::placeholder {
+    color: rgba(255, 255, 255, 0.42);
+}
+
+.search-drawer-note {
+    margin-top: 12px;
+    color: var(--terminal-muted);
+    font-size: 13px;
+}
+
+.search-results-grid,
+.popular-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.search-card {
+    overflow: hidden;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.search-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+.search-card-body {
+    display: grid;
+    gap: 10px;
+    padding: 16px;
+}
+
+.search-card-body h3 {
+    margin: 0;
+    color: #fbfdff;
+}
+
+.search-card-body p {
+    margin: 0;
+    color: var(--terminal-muted);
+    line-height: 1.65;
+}
+
+.hero-compact {
+    padding: 18px 0 16px;
+    display: grid;
+    gap: 14px;
+}
+
+.hero-copy {
+    display: grid;
+    gap: 8px;
+    max-width: 900px;
+    animation: heroUp 0.5s ease both;
+}
+
+.hero-kicker,
+body.tactical-home .page-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-family: 'Oxanium', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #ffdfa6;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-copy h1 {
+    margin: 0;
+    font-family: 'Oxanium', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 4.6rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    color: #fbfdff;
+    text-shadow: 0 0 22px rgba(115, 219, 255, 0.12);
+    animation: heroUp 0.6s ease both;
+}
+
+.hero-copy p {
+    margin: 0;
+    max-width: 880px;
+    color: var(--terminal-muted);
+    line-height: 1.7;
+    animation: heroUp 0.72s ease both;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    animation: heroUp 0.84s ease both;
+}
+
+body.tactical-home .button-link {
+    min-height: 50px;
+    padding: 0 18px;
+    border-radius: 12px;
+    font-family: 'Oxanium', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+body.tactical-home .button-link.secondary {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+        rgba(10, 16, 28, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #eef7ff;
+}
+
+.hero-telemetry {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    animation: heroUp 0.96s ease both;
+}
+
+.hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #edf6ff;
+    text-decoration: none;
+}
+
+.hero-chip strong {
+    font-family: 'Oxanium', sans-serif;
+    color: #ffffff;
+}
+
+.game-stage {
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+    border-radius: 28px;
+}
+
+.game-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(115deg, rgba(255, 255, 255, 0.02), transparent 24%),
+        radial-gradient(circle at 12% 0%, rgba(115, 219, 255, 0.09), transparent 20%);
+}
+
+.stage-heading {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 16px;
+}
+
+.stage-heading p,
+.loadout-head p,
+.info-copy p {
+    margin: 10px 0 0;
+    color: var(--terminal-muted);
+    line-height: 1.7;
+}
+
+.stage-heading-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stage-link,
+body.tactical-home .portal-inline-link,
+body.tactical-home .hub-card-link,
+body.tactical-home .catalog-link {
+    color: #ffe0bd;
+    text-decoration: none;
+}
+
+.combat-frame-shell {
+    position: relative;
+    min-height: min(68vh, 760px);
+    border-radius: 24px;
+    border: 1px solid rgba(115, 219, 255, 0.14);
+    background:
+        linear-gradient(180deg, rgba(9, 14, 24, 0.64), rgba(2, 5, 10, 0.92)),
+        #04070f;
+    overflow: hidden;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+        0 0 0 1px rgba(255, 122, 61, 0.05),
+        0 24px 70px rgba(0, 0, 0, 0.5);
+}
+
+.combat-frame-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(180deg, rgba(115, 219, 255, 0.04), transparent 18%),
+        linear-gradient(90deg, rgba(115, 219, 255, 0.05), transparent 12%, transparent 88%, rgba(255, 122, 61, 0.05));
+}
+
+.combat-frame-shell iframe {
+    position: relative;
+    z-index: 1;
+}
+
+.combat-frame-shell.is-loaded .combat-loading {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.combat-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    gap: 18px;
+    background:
+        radial-gradient(circle at center, rgba(115, 219, 255, 0.08), transparent 24%),
+        rgba(3, 6, 12, 0.9);
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.combat-radar {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    border: 1px solid rgba(115, 219, 255, 0.28);
+    box-shadow: 0 0 0 10px rgba(115, 219, 255, 0.05), inset 0 0 24px rgba(115, 219, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.combat-radar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: conic-gradient(from 0deg, transparent 0 300deg, rgba(115, 219, 255, 0.6) 340deg 360deg);
+    animation: radarSpin 1.4s linear infinite;
+}
+
+.combat-radar::after {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border-radius: 50%;
+    border: 1px solid rgba(115, 219, 255, 0.2);
+}
+
+.combat-loading-copy {
+    display: grid;
+    gap: 6px;
+    text-align: center;
+}
+
+.combat-loading-copy span {
+    font-family: 'Oxanium', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(255, 255, 255, 0.54);
+}
+
+.combat-loading-copy strong {
+    font-family: 'Oxanium', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.06em;
+    color: #f8fcff;
+}
+
+.frame-corner {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    z-index: 2;
+    border-color: rgba(115, 219, 255, 0.38);
+}
+
+.corner-a {
+    top: 14px;
+    left: 14px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+}
+
+.corner-b {
+    top: 14px;
+    right: 14px;
+    border-top: 2px solid;
+    border-right: 2px solid;
+}
+
+.corner-c {
+    right: 14px;
+    bottom: 14px;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+}
+
+.corner-d {
+    left: 14px;
+    bottom: 14px;
+    border-left: 2px solid;
+    border-bottom: 2px solid;
+}
+
+.stage-meta-bar {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.stage-meta-item,
+.info-card,
+.rack-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stage-meta-item {
+    padding: 14px 15px;
+}
+
+.stage-meta-item::before,
+.info-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--terminal-cyan), var(--terminal-orange));
+}
+
+.stage-label,
+.info-card span {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.48);
+}
+
+.stage-meta-item strong,
+.info-card strong {
+    display: block;
+    color: #fbfdff;
+}
+
+.game-info {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 24px;
+}
+
+.info-copy {
+    max-width: 860px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.info-card {
+    padding: 16px 16px 16px 18px;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.info-card:hover,
+.rack-card:hover,
+.search-card:hover,
+body.tactical-home .catalog-card:hover,
+body.tactical-home .hub-category-card:hover,
+body.tactical-home .hub-mini-card:hover,
+body.tactical-home .jump-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(115, 219, 255, 0.18);
+    box-shadow: 0 0 22px rgba(115, 219, 255, 0.08);
+}
+
+.loadout-strip {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 24px;
+}
+
+.category-rack {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.rack-card {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    text-decoration: none;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.rack-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--hub-accent-soft, rgba(255, 122, 61, 0.12)), transparent 72%);
+    opacity: 0.5;
+}
+
+.rack-icon,
+.home-hero-category-icon,
+body.tactical-home .hub-category-icon {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--hub-accent-soft, rgba(255, 122, 61, 0.12));
+    color: var(--hub-accent, var(--terminal-orange));
+}
+
+.rack-copy,
+body.tactical-home .home-hero-category-copy {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 5px;
+}
+
+.rack-copy strong {
+    color: #fbfdff;
+}
+
+.rack-copy small {
+    color: var(--terminal-muted);
+    line-height: 1.55;
+}
+
+.rack-count {
+    position: relative;
+    z-index: 1;
+    font-family: 'Oxanium', sans-serif;
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+body.tactical-home .catalog-card,
+body.tactical-home .hub-mini-card,
+body.tactical-home .hub-category-card,
+body.tactical-home .jump-card,
+body.tactical-home .site-note,
+body.tactical-home .hub-rail,
+body.tactical-home .portal-strip,
+body.tactical-home .portal-board-main,
+body.tactical-home .portal-side-panel,
+body.tactical-home .directory-lead-panel,
+body.tactical-home .directory-jump-panel {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+        rgba(8, 14, 24, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+}
+
+body.tactical-home .catalog-card img,
+body.tactical-home .hub-mini-card img {
+    height: 180px;
+}
+
+body.tactical-home .catalog-card-body,
+body.tactical-home .hub-mini-card-body,
+body.tactical-home .hub-category-body {
+    gap: 10px;
+}
+
+body.tactical-home .catalog-card-top h3,
+body.tactical-home .hub-mini-card-body h3,
+body.tactical-home .hub-category-body h3,
+body.tactical-home .jump-card h3,
+body.tactical-home .hub-rail-header h3,
+body.tactical-home .catalog-section-header h2 {
+    color: #fbfdff;
+}
+
+body.tactical-home .catalog-card-body p,
+body.tactical-home .hub-mini-card-body p,
+body.tactical-home .hub-category-body p,
+body.tactical-home .jump-card p,
+body.tactical-home .hub-rail-header p,
+body.tactical-home .catalog-section-header p,
+body.tactical-home .site-note p {
+    color: var(--terminal-muted);
+}
+
+body.tactical-home .catalog-badge,
+body.tactical-home .meta-badge,
+body.tactical-home .portal-chip-row span,
+body.tactical-home .catalog-tags span {
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.tactical-home .catalog-badge {
+    color: #def8ff;
+}
+
+body.tactical-home .meta-badge {
+    color: #ffe2c9;
+}
+
+body.tactical-home .footer {
+    max-width: 1420px;
+    margin: 0 auto;
+    padding: 26px 22px 24px;
+}
+
+body.tactical-home .footer-links,
+body.tactical-home .footer-summary,
+body.tactical-home .footer-meta {
+    color: rgba(255, 255, 255, 0.62);
+}
+
+@keyframes radarSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes heroUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1180px) {
+    .topbar-inner {
+        grid-template-columns: auto 1fr;
+    }
+
+    .topbar-actions {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+    }
+
+    .category-rack {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .info-grid,
+    .stage-meta-bar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    body.tactical-home .header.topbar {
+        padding: 10px 14px 0;
+    }
+
+    .topbar-inner {
+        grid-template-columns: 1fr auto;
+        min-height: 58px;
+        padding: 10px 12px;
+    }
+
+    body.tactical-home .main-container.tactical-shell,
+    body.tactical-home .footer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .search-drawer,
+    .game-stage,
+    .game-info,
+    .loadout-strip {
+        padding: 16px;
+        border-radius: 20px;
+    }
+
+    .combat-frame-shell {
+        min-height: 52vh;
+        border-radius: 18px;
+    }
+
+    .category-rack,
+    .search-results-grid,
+    .popular-grid,
+    .info-grid,
+    .stage-meta-bar {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-actions,
+    .stage-heading-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    body.tactical-home .button-link,
+    body.tactical-home .header-pill {
+        width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    .hero-copy h1 {
+        font-size: 2.4rem;
+    }
+
+    .topbar-inner {
+        gap: 12px;
+    }
+
+    .rack-card {
+        grid-template-columns: 42px minmax(0, 1fr);
+    }
+
+    .rack-count {
+        display: none;
+    }
+}
