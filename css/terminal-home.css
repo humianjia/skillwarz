@@ -372,12 +372,6 @@ body.tactical-home .main-container.tactical-shell {
     color: #fbfdff;
 }
 
-.search-card-body p {
-    margin: 0;
-    color: var(--terminal-muted);
-    line-height: 1.65;
-}
-
 .hero-compact {
     padding: 18px 0 16px;
     display: grid;
@@ -551,6 +545,53 @@ body.tactical-home .catalog-link {
 .combat-frame-shell iframe {
     position: relative;
     z-index: 1;
+}
+
+.frame-fullscreen-button {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+        rgba(3, 7, 14, 0.86);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    color: #f7fbff;
+    font-family: 'Oxanium', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.frame-fullscreen-button:hover {
+    transform: translateY(-1px);
+    border-color: rgba(115, 219, 255, 0.26);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)),
+        rgba(6, 12, 22, 0.92);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(115, 219, 255, 0.12);
+}
+
+.combat-frame-shell:fullscreen,
+.combat-frame-shell:-webkit-full-screen {
+    min-height: 100vh;
+    border-radius: 0;
+}
+
+.combat-frame-shell:fullscreen iframe,
+.combat-frame-shell:-webkit-full-screen iframe {
+    height: 100%;
+    margin-bottom: 0;
 }
 
 .combat-frame-shell.is-loaded .combat-loading {
@@ -834,6 +875,12 @@ body.tactical-home .hub-category-body {
     gap: 10px;
 }
 
+body.tactical-home .catalog-card-body,
+body.tactical-home .hub-mini-card-body,
+.search-card-body {
+    align-content: start;
+}
+
 body.tactical-home .catalog-card-top h3,
 body.tactical-home .hub-mini-card-body h3,
 body.tactical-home .hub-category-body h3,
@@ -954,6 +1001,13 @@ body.tactical-home .footer-meta {
         border-radius: 18px;
     }
 
+    .frame-fullscreen-button {
+        right: 14px;
+        bottom: 14px;
+        min-height: 38px;
+        padding: 0 12px;
+    }
+
     .category-rack,
     .search-results-grid,
     .popular-grid,
@@ -988,6 +1042,10 @@ body.tactical-home .footer-meta {
     }
 
     .rack-count {
+        display: none;
+    }
+
+    .frame-fullscreen-button span {
         display: none;
     }
 }

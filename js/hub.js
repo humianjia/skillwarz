@@ -384,6 +384,7 @@
         var bodyClass = options.compact ? 'hub-mini-card-body' : 'catalog-card-body';
         var badgeLabel = options.badgeLabel || 'Game Page';
         var linkLabel = options.linkLabel || 'Open game page';
+        var showSummary = options.showSummary === true;
 
         return [
             '<article class="' + cardClass + '" style="--hub-accent:' + game.categoryAccent + ';--hub-accent-soft:' + game.categorySoft + ';">',
@@ -394,7 +395,7 @@
             '<span class="meta-badge"><i class="fas fa-gamepad"></i>' + escapeHtml(badgeLabel) + '</span>',
             '</div>',
             '<span class="catalog-badge"><i class="fas ' + escapeHtml(game.categoryIcon) + '"></i>' + escapeHtml(game.categoryTitle) + '</span>',
-            '<p>' + escapeHtml(buildSummary(game)) + '</p>',
+            showSummary ? '<p>' + escapeHtml(buildSummary(game)) + '</p>' : '',
             '<div class="catalog-tags">' + buildTagMarkup(game.tags || [], options.compact ? 2 : 3) + '</div>',
             '<a class="catalog-link hub-card-link" href="' + escapeHtml(game.link) + '">' + escapeHtml(linkLabel) + '</a>',
             '</div>',
@@ -459,7 +460,7 @@
             '<div class="search-card-body">',
             '<span class="catalog-badge"><i class="fas ' + escapeHtml(game.categoryIcon) + '"></i>' + escapeHtml(game.categoryTitle) + '</span>',
             '<h3>' + escapeHtml(game.name) + '</h3>',
-            '<p>' + escapeHtml(buildSummary(game)) + '</p>',
+            '<div class="catalog-tags">' + buildTagMarkup(game.tags || [], 3) + '</div>',
             '<a class="hub-card-link" href="' + escapeHtml(game.link) + '">Open game page</a>',
             '</div>',
             '</article>'
@@ -640,7 +641,8 @@
                 return buildGameCard(game, {
                     compact: false,
                     badgeLabel: 'Featured Pick',
-                    linkLabel: 'Open game page'
+                    linkLabel: 'Open game page',
+                    showSummary: false
                 });
             }).join('');
         }
@@ -658,7 +660,8 @@
                 return buildGameCard(game, {
                     compact: false,
                     badgeLabel: 'Popular Pick',
-                    linkLabel: 'Open game page'
+                    linkLabel: 'Open game page',
+                    showSummary: false
                 });
             }).join('');
         }
@@ -810,7 +813,7 @@
 
         var shell = document.getElementById(fullscreenTrigger.getAttribute('data-fullscreen-target'));
         var iframe = shell && shell.querySelector('iframe');
-        var fullscreenTarget = iframe || shell;
+        var fullscreenTarget = shell || iframe;
 
         if (fullscreenTarget && fullscreenTarget.requestFullscreen) {
             fullscreenTarget.requestFullscreen();
