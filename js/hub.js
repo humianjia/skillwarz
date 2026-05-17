@@ -235,6 +235,49 @@
         return allGames;
     }
 
+    function getCategoryByKey(categories, key) {
+        return categories.find(function (category) {
+            return category.key === key;
+        }) || null;
+    }
+
+    function getRatingValue(game) {
+        var rating = parseFloat(game && game.rating);
+
+        return isNaN(rating) ? 0 : rating;
+    }
+
+    function getTopRatedGames(games, limit) {
+        return games.slice().sort(function (a, b) {
+            var ratingDelta = getRatingValue(b) - getRatingValue(a);
+
+            if (Math.abs(ratingDelta) > 0.001) {
+                return ratingDelta;
+            }
+
+            return String(a.name || '').localeCompare(String(b.name || ''));
+        }).slice(0, limit || games.length);
+    }
+
+    function getNewestGames(categories, limit) {
+        var allGames = getAllGames(categories).slice().reverse();
+        var seen = new Map();
+        var latestGames = [];
+
+        allGames.forEach(function (game) {
+            if (latestGames.length >= (limit || 8)) {
+                return;
+            }
+
+            if (!seen.has(game.id)) {
+                seen.set(game.id, true);
+                latestGames.push(game);
+            }
+        });
+
+        return latestGames;
+    }
+
     function getFeaturedGames(categories, limit) {
         var allGames = getAllGames(categories);
         var gameMap = new Map();
@@ -380,49 +423,57 @@
     }
 
     function buildGameCard(game, options) {
-        var cardClass = options.compact ? 'hub-mini-card' : 'catalog-card';
-        var bodyClass = options.compact ? 'hub-mini-card-body' : 'catalog-card-body';
-        var badgeLabel = options.badgeLabel || 'Game Page';
-        var linkLabel = options.linkLabel || 'Open game page';
-        var showSummary = options.showSummary === true;
+        var cardClass = options && options.compact ? 'game-card game-card-compact' : 'game-card';
+        var linkLabel = (options && options.linkLabel) || 'Play Now';
+        var rating = getRatingValue(game);
 
         return [
-            '<article class="' + cardClass + '" style="--hub-accent:' + game.categoryAccent + ';--hub-accent-soft:' + game.categorySoft + ';">',
+            '<a class="' + cardClass + '" href="' + escapeHtml(game.link) + '" aria-label="Play ' + escapeHtml(game.name) + '" style="--hub-accent:' + game.categoryAccent + ';--hub-accent-soft:' + game.categorySoft + ';">',
+            '<span class="game-card-media">',
             '<img src="' + escapeHtml(game.imageUrl) + '" alt="' + escapeHtml(game.name) + '" loading="lazy">',
-            '<div class="' + bodyClass + '">',
-            '<div class="catalog-card-top">',
-            '<h3>' + escapeHtml(game.name) + '</h3>',
-            '<span class="meta-badge"><i class="fas fa-gamepad"></i>' + escapeHtml(badgeLabel) + '</span>',
-            '</div>',
+            '<span class="game-card-play"><i class="fas fa-play"></i>' + escapeHtml(linkLabel) + '</span>',
+            '</span>',
+            '<span class="game-card-body">',
+            '<span class="game-card-top">',
             '<span class="catalog-badge"><i class="fas ' + escapeHtml(game.categoryIcon) + '"></i>' + escapeHtml(game.categoryTitle) + '</span>',
-            showSummary ? '<p>' + escapeHtml(buildSummary(game)) + '</p>' : '',
-            '<div class="catalog-tags">' + buildTagMarkup(game.tags || [], options.compact ? 2 : 3) + '</div>',
-            '<a class="catalog-link hub-card-link" href="' + escapeHtml(game.link) + '">' + escapeHtml(linkLabel) + '</a>',
-            '</div>',
-            '</article>'
+            '<span class="game-card-rating"><i class="fas fa-star"></i>' + escapeHtml(rating.toFixed(1)) + '</span>',
+            '</span>',
+            '<strong>' + escapeHtml(game.name) + '</strong>',
+            '<span class="game-card-meta"><span>Browser</span><span>Instant play</span></span>',
+            '<span class="catalog-tags">' + buildTagMarkup(game.tags || [], options && options.compact ? 2 : 3) + '</span>',
+            '</span>',
+            '</a>'
         ].join('');
     }
 
     function buildCategoryCard(category) {
-        var leadGame = category.games[0];
-        var imageUrl = leadGame ? leadGame.imageUrl : resolveImageUrl('img/skillwarz.avif');
-
         return [
-            '<article class="hub-category-card" style="--hub-accent:' + category.accent + ';--hub-accent-soft:' + category.soft + ';">',
-            '<a class="hub-category-thumb" href="' + escapeHtml(getCategoryHref(category.anchor)) + '">',
-            '<img src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(category.title) + ' preview" loading="lazy">',
-            '<span class="hub-category-count">' + escapeHtml(String(category.games.length)) + ' games</span>',
-            '</a>',
-            '<div class="hub-category-body">',
-            '<div class="hub-category-meta">',
-            '<span class="hub-category-icon"><i class="fas ' + escapeHtml(category.icon) + '"></i></span>',
-            '<span class="hub-category-kicker">SkillWarz collection</span>',
-            '</div>',
-            '<h3>' + escapeHtml(category.title) + '</h3>',
-            '<p>' + escapeHtml(category.description) + '</p>',
-            '<div class="catalog-tags">' + buildTagMarkup(category.tags, 3) + '</div>',
-            '<a class="hub-card-link" href="' + escapeHtml(getCategoryHref(category.anchor)) + '">Explore ' + escapeHtml(category.title) + '</a>',
-            '</div>',
+            '<a class="category-card" href="' + escapeHtml(getCategoryHref(category.anchor)) + '" style="--hub-accent:' + category.accent + ';--hub-accent-soft:' + category.soft + ';">',
+            '<span class="category-card-icon"><i class="fas ' + escapeHtml(category.icon) + '"></i></span>',
+            '<strong>' + escapeHtml(category.title) + '</strong>',
+            '<span class="category-card-count">' + escapeHtml(String(category.games.length)) + ' games</span>',
+            '<span class="catalog-tags">' + buildTagMarkup(category.tags, 2) + '</span>',
+            '<span class="category-card-arrow"><i class="fas fa-arrow-right"></i></span>',
+            '</a>'
+        ].join('');
+    }
+
+    function buildModeCard(mode) {
+        return [
+            '<article class="mode-card" style="--hub-accent:' + mode.accent + ';--hub-accent-soft:' + mode.soft + ';">',
+            '<span class="mode-card-icon"><i class="fas ' + escapeHtml(mode.icon) + '"></i></span>',
+            '<strong>' + escapeHtml(mode.title) + '</strong>',
+            '<span>' + escapeHtml(mode.note) + '</span>',
+            '</article>'
+        ].join('');
+    }
+
+    function buildWeaponCard(weapon) {
+        return [
+            '<article class="weapon-card" style="--hub-accent:' + weapon.accent + ';--hub-accent-soft:' + weapon.soft + ';">',
+            '<span class="weapon-card-icon"><i class="fas ' + escapeHtml(weapon.icon) + '"></i></span>',
+            '<strong>' + escapeHtml(weapon.title) + '</strong>',
+            '<span>' + escapeHtml(weapon.note) + '</span>',
             '</article>'
         ].join('');
     }
@@ -454,24 +505,17 @@
     }
 
     function buildSearchCard(game) {
-        return [
-            '<article class="search-card" style="--hub-accent:' + game.categoryAccent + ';--hub-accent-soft:' + game.categorySoft + ';">',
-            '<img src="' + escapeHtml(game.imageUrl) + '" alt="' + escapeHtml(game.name) + '" loading="lazy">',
-            '<div class="search-card-body">',
-            '<span class="catalog-badge"><i class="fas ' + escapeHtml(game.categoryIcon) + '"></i>' + escapeHtml(game.categoryTitle) + '</span>',
-            '<h3>' + escapeHtml(game.name) + '</h3>',
-            '<div class="catalog-tags">' + buildTagMarkup(game.tags || [], 3) + '</div>',
-            '<a class="hub-card-link" href="' + escapeHtml(game.link) + '">Open game page</a>',
-            '</div>',
-            '</article>'
-        ].join('');
+        return buildGameCard(game, {
+            compact: true,
+            linkLabel: 'Open game'
+        });
     }
 
     function buildJumpCard(category) {
         return [
             '<article class="jump-card" style="--hub-accent:' + category.accent + ';--hub-accent-soft:' + category.soft + ';">',
+            '<span class="jump-card-icon"><i class="fas ' + escapeHtml(category.icon) + '"></i></span>',
             '<h3><a href="#' + escapeHtml(category.anchor) + '">' + escapeHtml(category.title) + '</a></h3>',
-            '<p>' + escapeHtml(category.description) + '</p>',
             '<div class="jump-card-meta"><span>' + escapeHtml(String(category.games.length)) + ' games</span><a href="#' + escapeHtml(category.anchor) + '">Jump in</a></div>',
             '</article>'
         ].join('');
@@ -621,47 +665,164 @@
 
     function renderHome(categories) {
         var featuredGames = getFeaturedGames(categories, 8);
-        var heroCategoryList = document.getElementById('home-hero-category-list');
-        var homeCategoryGrid = document.getElementById('home-category-grid');
         var homeFeaturedGrid = document.getElementById('home-featured-grid');
-        var homeRails = document.getElementById('home-rails');
-        var homeCategoryRack = document.getElementById('home-category-rack');
-        var homePopularGrid = document.getElementById('home-popular-grid');
+        var homeCategoryGrid = document.getElementById('home-category-grid');
+        var homeModesGrid = document.getElementById('home-modes-grid');
+        var homeWeaponsRail = document.getElementById('home-weapons-rail');
+        var homeTrendingGrid = document.getElementById('home-trending-grid');
+        var homeFpsGrid = document.getElementById('home-fps-grid');
+        var homeBattleGrid = document.getElementById('home-battle-grid');
+        var homeSniperGrid = document.getElementById('home-sniper-grid');
+        var homeNewGrid = document.getElementById('home-new-grid');
 
-        if (heroCategoryList) {
-            heroCategoryList.innerHTML = categories.map(buildHeroCategoryShortcut).join('');
+        if (homeFeaturedGrid) {
+            homeFeaturedGrid.innerHTML = featuredGames.map(function (game) {
+                return buildGameCard(game, {
+                    compact: false,
+                    linkLabel: 'Play Now'
+                });
+            }).join('');
         }
 
         if (homeCategoryGrid) {
             homeCategoryGrid.innerHTML = categories.map(buildCategoryCard).join('');
         }
 
-        if (homeFeaturedGrid) {
-            homeFeaturedGrid.innerHTML = featuredGames.map(function (game) {
+        if (homeModesGrid) {
+            homeModesGrid.innerHTML = [
+                {
+                    title: 'Team Deathmatch',
+                    note: 'Fast objective pressure',
+                    icon: 'fa-swords',
+                    accent: '#00e5ff',
+                    soft: 'rgba(0, 229, 255, 0.16)'
+                },
+                {
+                    title: 'Sniper Arena',
+                    note: 'Precision first shots',
+                    icon: 'fa-crosshairs',
+                    accent: '#ff3b30',
+                    soft: 'rgba(255, 59, 48, 0.16)'
+                },
+                {
+                    title: 'Squad Battle',
+                    note: 'Team-up and push',
+                    icon: 'fa-users',
+                    accent: '#6ee7a8',
+                    soft: 'rgba(110, 231, 168, 0.16)'
+                },
+                {
+                    title: 'Battle Royale',
+                    note: 'Last player standing',
+                    icon: 'fa-skull',
+                    accent: '#ff9f43',
+                    soft: 'rgba(255, 159, 67, 0.16)'
+                },
+                {
+                    title: 'Gun Game',
+                    note: 'Rapid weapon swaps',
+                    icon: 'fa-bolt',
+                    accent: '#9dd6ff',
+                    soft: 'rgba(157, 214, 255, 0.16)'
+                }
+            ].map(buildModeCard).join('');
+        }
+
+        if (homeWeaponsRail) {
+            homeWeaponsRail.innerHTML = [
+                {
+                    title: 'AK-47',
+                    note: 'Reliable auto fire',
+                    icon: 'fa-bullseye',
+                    accent: '#00e5ff',
+                    soft: 'rgba(0, 229, 255, 0.16)'
+                },
+                {
+                    title: 'Sniper Rifle',
+                    note: 'Long-range precision',
+                    icon: 'fa-crosshairs',
+                    accent: '#ff3b30',
+                    soft: 'rgba(255, 59, 48, 0.16)'
+                },
+                {
+                    title: 'Shotgun',
+                    note: 'Close-range burst',
+                    icon: 'fa-burst',
+                    accent: '#ff9f43',
+                    soft: 'rgba(255, 159, 67, 0.16)'
+                },
+                {
+                    title: 'SMG',
+                    note: 'Fast spray control',
+                    icon: 'fa-bolt',
+                    accent: '#6ee7a8',
+                    soft: 'rgba(110, 231, 168, 0.16)'
+                },
+                {
+                    title: 'Energy Rifle',
+                    note: 'Sci-fi fire lanes',
+                    icon: 'fa-circle-nodes',
+                    accent: '#9dd6ff',
+                    soft: 'rgba(157, 214, 255, 0.16)'
+                }
+            ].map(buildWeaponCard).join('');
+        }
+
+        if (homeTrendingGrid) {
+            var multiplayerCategory = getCategoryByKey(categories, 'multiplayer');
+            var trendingGames = multiplayerCategory ? getTopRatedGames(multiplayerCategory.games, 6) : [];
+
+            homeTrendingGrid.innerHTML = trendingGames.map(function (game) {
                 return buildGameCard(game, {
                     compact: false,
-                    badgeLabel: 'Featured Pick',
-                    linkLabel: 'Open game page',
-                    showSummary: false
+                    linkLabel: 'Play Now'
                 });
             }).join('');
         }
 
-        if (homeRails) {
-            homeRails.innerHTML = categories.map(buildRail).join('');
-        }
+        if (homeFpsGrid) {
+            var fpsCategory = getCategoryByKey(categories, 'fps');
+            var topFpsGames = fpsCategory ? getTopRatedGames(fpsCategory.games, 6) : [];
 
-        if (homeCategoryRack) {
-            homeCategoryRack.innerHTML = categories.map(buildCategoryRackCard).join('');
-        }
-
-        if (homePopularGrid) {
-            homePopularGrid.innerHTML = featuredGames.slice(0, 6).map(function (game) {
+            homeFpsGrid.innerHTML = topFpsGames.map(function (game) {
                 return buildGameCard(game, {
                     compact: false,
-                    badgeLabel: 'Popular Pick',
-                    linkLabel: 'Open game page',
-                    showSummary: false
+                    linkLabel: 'Play Now'
+                });
+            }).join('');
+        }
+
+        if (homeBattleGrid) {
+            var battleRoyaleCategory = getCategoryByKey(categories, 'battleRoyale');
+            var battleRoyaleGames = battleRoyaleCategory ? getTopRatedGames(battleRoyaleCategory.games, 6) : [];
+
+            homeBattleGrid.innerHTML = battleRoyaleGames.map(function (game) {
+                return buildGameCard(game, {
+                    compact: false,
+                    linkLabel: 'Play Now'
+                });
+            }).join('');
+        }
+
+        if (homeSniperGrid) {
+            var sniperCategory = getCategoryByKey(categories, 'sniper');
+            var sniperGames = sniperCategory ? getTopRatedGames(sniperCategory.games, 6) : [];
+
+            homeSniperGrid.innerHTML = sniperGames.map(function (game) {
+                return buildGameCard(game, {
+                    compact: false,
+                    linkLabel: 'Play Now'
+                });
+            }).join('');
+        }
+
+        if (homeNewGrid) {
+            var newestGames = getNewestGames(categories, 8);
+
+            homeNewGrid.innerHTML = newestGames.map(function (game) {
+                return buildGameCard(game, {
+                    compact: false,
+                    linkLabel: 'Play Now'
                 });
             }).join('');
         }

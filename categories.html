@@ -1,209 +1,269 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
+
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkillWarz Categories - Full Browser Game Directory</title>
-    <meta name="description" content="Browse the full SkillWarz browser game directory across FPS, battle royale, sniper, multiplayer, and action categories.">
-    <meta name="robots" content="index, follow, max-image-preview:large">
-    <meta name="author" content="SkillWarz Editorial Team">
+    <title>Game Categories - SkillWarz | Free Online Shooter Games</title>
+    <meta name="description" content="Game Categories is an exciting online game that offers engaging gameplay and immersive experiences. Players can enjoy hours of entertainment with this action-packed game. With its stunning graphics, intuitive controls, and challenging gameplay, Game Categories is sure to provide hours of fun for players of all ages.">
+    <meta name="keywords" content="skillwarz, game categories, io games, FPS games, battle royale, sniper games, multiplayer games, action games">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="SkillWarz">
     <link rel="canonical" href="https://www.skillwarz.online/categories.html">
-    <link rel="alternate" hreflang="en" href="https://www.skillwarz.online/categories.html">
-    <link rel="alternate" hreflang="hi" href="https://www.skillwarz.online/hi/categories.html">
-    <link rel="alternate" hreflang="x-default" href="https://www.skillwarz.online/categories.html">
-    <meta property="og:title" content="SkillWarz Categories - Full Browser Game Directory">
-    <meta property="og:description" content="Open the full directory of browser games and browse each SkillWarz collection category in one place.">
+    <meta property="og:title" content="Game Categories - SkillWarz">
+    <meta property="og:description" content="Game Categories is an exciting online game that offers engaging gameplay and immersive experiences. Players can enjoy hours of entertainment with this action-packed game. With its stunning graphics, intuitive controls, and challenging gameplay, Game Categories is sure to provide hours of fun for players of all ages.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.skillwarz.online/categories.html">
-    <meta property="og:image" content="https://www.skillwarz.online/img/skillwarz.avif">
-    <meta property="og:site_name" content="SkillWarz">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SkillWarz Categories - Full Browser Game Directory">
-    <meta name="twitter:description" content="Browse the full browser game directory across FPS, battle royale, sniper, multiplayer, and action pages.">
-    <meta name="twitter:image" content="https://www.skillwarz.online/img/skillwarz.avif">
-    <meta name="google-adsense-account" content="ca-pub-7534347140708021">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta property="og:url" content="https://skillwarz.io/categories">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23ff4500'/><stop offset='100%25' stop-color='%23ff8c00'/></linearGradient></defs><rect x='10' y='15' width='30' height='20' rx='2' fill='none' stroke='url(%23g)' stroke-width='3'/><path d='M15 20 L35 20 M15 25 L35 25 M15 30 L35 30' stroke='url(%23g)' stroke-width='2'/><polygon points='25 10 30 15 20 15' fill='url(%23g)'/></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/css.css">
-    <link rel="stylesheet" href="css/content.css">
-    <link rel="stylesheet" href="css/hub-theme.css">
+    <link rel="stylesheet" href="categories.css">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DNT670B4R3"></script>
 <script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-DNT670B4R3');
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DNT670B4R3');
 </script>
 </head>
-<body class="catalog-page portal-catalog">
+<body>
+    <!-- 粒子背景 -->
+    <div class="particles" id="particles"></div>
+    <!-- 鼠标跟随光效 -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+    
+    <!-- 顶部导航 -->
     <header class="header">
-        <div class="header-main">
-            <a href="index.html" class="logo">
-                <svg class="logo-icon" viewBox="0 0 50 50" width="45" height="45" aria-hidden="true">
-                    <defs>
-                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#ff4500;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#ff8c00;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <rect x="10" y="15" width="30" height="20" rx="2" fill="none" stroke="url(#grad1)" stroke-width="3"/>
-                    <path d="M15 20 L35 20 M15 25 L35 25 M15 30 L35 30" stroke="url(#grad1)" stroke-width="2"/>
-                    <polygon points="25 10 30 15 20 15" fill="url(#grad1)"/>
-                </svg>
-                <span class="logo-text">skillwarz</span>
-            </a>
-            <button
-                class="mobile-menu-toggle"
-                type="button"
-                data-mobile-menu-toggle="mobile-menu-categories-html"
-                aria-expanded="false"
-                aria-controls="mobile-menu-categories-html"
-                aria-label="Menu"
-            >
-                <span class="mobile-menu-toggle-label">Menu</span>
-                <span class="mobile-menu-toggle-bars" aria-hidden="true">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
-            </button>
-        </div>
-        <nav class="nav-categories nav-categories-desktop">
-            <a href="index.html" class="nav-item">Home</a>
-            <a href="categories.html" class="nav-item active">All Games</a>
-            <a href="categories.html#fps" class="nav-item">FPS</a>
-            <a href="categories.html#battle-royale" class="nav-item">Battle Royale</a>
-            <a href="categories.html#sniper" class="nav-item">Sniper</a>
-            <a href="categories.html#multiplayer" class="nav-item">Multiplayer</a>
-            <a href="categories.html#action" class="nav-item">Action</a>
+        <a href="index.html" class="logo">
+            <svg class="logo-icon" viewBox="0 0 50 50" width="45" height="45">
+                <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff4500;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ff8c00;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <rect x="10" y="15" width="30" height="20" rx="2" fill="none" stroke="url(#grad1)" stroke-width="3"/>
+                <path d="M15 20 L35 20 M15 25 L35 25 M15 30 L35 30" stroke="url(#grad1)" stroke-width="2"/>
+                <polygon points="25 10 30 15 20 15" fill="url(#grad1)"/>
+            </svg>
+            <span class="logo-text">skillwarz</span>
+        </a>
+        <nav class="nav-categories"> 
+            <a href="categories.html?category=all" class="nav-item">All Games</a>
+            <a href="categories.html?category=fps" class="nav-item">First-Person Shooters</a>
+            <a href="categories.html?category=battle-royale" class="nav-item">Battle Royale</a>
+            <a href="categories.html?category=sniper" class="nav-item">Sniper Games</a>
+            <a href="categories.html?category=multiplayer" class="nav-item">Multiplayer Shooters</a>
+            <a href="categories.html?category=action" class="nav-item">Action Shooters</a>
         </nav>
-        <div class="header-tools header-tools-desktop">
-            <a href="index.html#play-now" class="header-pill"><i class="fas fa-play"></i>Featured Play</a>
-            <a href="index.html" class="header-pill secondary"><i class="fas fa-house"></i>Back Home</a>
-            <div class="lang-switch" aria-label="Language">
-                <span class="lang-switch-label">Language</span>
-                <div class="lang-switch-links"><a href="categories.html" class="lang-switch-link active" lang="en">EN</a><a href="hi/categories.html" class="lang-switch-link" lang="hi">HI</a></div>
-            </div>
-        </div>
-        <div class="mobile-menu-panel" id="mobile-menu-categories-html" hidden>
-            <div class="mobile-menu-card">
-                <div class="mobile-menu-header">
-                    <strong>Site navigation</strong>
-                    <button
-                        class="mobile-menu-close"
-                        type="button"
-                        data-mobile-menu-toggle="mobile-menu-categories-html"
-                        aria-expanded="true"
-                        aria-controls="mobile-menu-categories-html"
-                        aria-label="Close menu"
-                    ><i class="fas fa-times"></i></button>
-                </div>
-                <nav class="mobile-nav-list">
-                    <a href="index.html" class="nav-item">Home</a>
-                    <a href="categories.html" class="nav-item active">All Games</a>
-                    <a href="categories.html#fps" class="nav-item">FPS</a>
-                    <a href="categories.html#battle-royale" class="nav-item">Battle Royale</a>
-                    <a href="categories.html#sniper" class="nav-item">Sniper</a>
-                    <a href="categories.html#multiplayer" class="nav-item">Multiplayer</a>
-                    <a href="categories.html#action" class="nav-item">Action</a>
-                </nav>
-                <div class="mobile-menu-meta">
-                    <div class="mobile-menu-section-label">Quick actions</div>
-                    <div class="mobile-menu-actions">
-                        <a href="index.html#play-now" class="header-pill"><i class="fas fa-play"></i>Featured Play</a>
-                        <a href="index.html" class="header-pill secondary"><i class="fas fa-house"></i>Back Home</a>
-                    </div>
-                    <div class="lang-switch mobile-lang-switch" aria-label="Language">
-                        <span class="lang-switch-label">Language</span>
-                        <div class="lang-switch-links"><a href="categories.html" class="lang-switch-link active" lang="en">EN</a><a href="hi/categories.html" class="lang-switch-link" lang="hi">HI</a></div>
-                    </div>
-                </div>
-            </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search games...">
+            <i class="fas fa-search"></i>
         </div>
     </header>
-    <main class="main-container">
-        <div class="main-content">
-            <div class="content-section">
-                <div class="game-info page-copy catalog-shell">
-                    <section class="directory-stage">
-                        <aside class="directory-lead">
-                            <div class="directory-lead-panel">
-                                <div class="page-breadcrumb"><a href="index.html">Home</a><span>/</span><span>Categories</span></div>
-                                <span class="page-eyebrow">Full Directory</span>
-                                <h1>Open the whole collection like a library wall.</h1>
-                                <p class="lead-copy">This page is no longer just a secondary category screen. It now behaves like the main game directory, built for quick scanning and fast jumps between genres.</p>
-                                <div class="button-row">
-                                    <a class="button-link" href="index.html#play-now"><i class="fas fa-play"></i>Play featured game</a>
-                                    <a class="button-link secondary" href="#catalog-sections"><i class="fas fa-arrow-down"></i>Browse all sections</a>
-                                </div>
-                            </div>
-                            <div class="directory-stat-wall">
-                                <article class="directory-stat-card">
-                                    <strong data-total-games>54</strong>
-                                    <span>Total game pages</span>
-                                </article>
-                                <article class="directory-stat-card">
-                                    <strong data-total-categories>5</strong>
-                                    <span>Active categories</span>
-                                </article>
-                                <article class="directory-stat-card">
-                                    <strong data-shooter-games>42</strong>
-                                    <span>Shooter-focused pages</span>
-                                </article>
-                            </div>
-                        </aside>
 
-                        <section class="directory-jump-panel">
-                            <div class="portal-strip-head">
-                                <div>
-                                    <span class="page-eyebrow">Quick Jump</span>
-                                    <h2>Drop into the right lane</h2>
-                                </div>
-                            </div>
-                            <div id="catalog-jump-grid" class="directory-jump-grid">
-                                <div class="site-note">
-                                    <p>Loading category overview...</p>
-                                </div>
-                            </div>
-                        </section>
-                    </section>
-
-                    <section class="directory-flow" id="catalog-directory">
-                        <div class="portal-strip-head">
-                            <div>
-                                <span class="page-eyebrow">Category Flow</span>
-                                <h2>Everything in one pass</h2>
-                            </div>
-                            <a class="portal-inline-link" href="index.html">Back to launch portal</a>
-                        </div>
-                        <div id="catalog-sections" class="catalog-stream">
-                            <div class="site-note">
-                                <p>Loading full catalog...</p>
-                            </div>
-                        </div>
-                    </section>
-                </div>
+    <!-- 主容器 -->
+    <div class="main-container">
+        <main class="main-content">
+            <!-- 页面标题 -->
+            <div class="page-header">
+                <h1 class="page-title">Game Categories</h1>
+                <p class="page-subtitle">Explore our collection of free online shooter games</p>
             </div>
-        </div>
-    </main>
+
+            <!-- 分类网格 -->
+            <section class="categories-grid">
+                <a href="categories.html?category=all" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>All Games</h3>
+                    <p>1000+ Games</p>
+                    <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
+                </a>
+
+                <a href="categories.html?category=fps" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <h3>First-Person Shooters</h3>
+                    <p>150+ Games</p>
+                    <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
+                </a>
+
+                <a href="categories.html?category=battle-royale" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-skull"></i>
+                    </div>
+                    <h3>Battle Royale</h3>
+                    <p>80+ Games</p>
+                    <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
+                </a>
+
+                <a href="categories.html?category=sniper" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Sniper Games</h3>
+                    <p>120+ Games</p>
+                    <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
+                </a>
+
+                <a href="categories.html?category=multiplayer" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Multiplayer Shooters</h3>
+                    <p>300+ Games</p>
+                    <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
+                </a>
+
+                <a href="categories.html?category=action" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-fist-raised"></i>
+                    </div>
+                    <h3>Action Shooters</h3>
+                    <p>250+ Games</p>
+                    <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
+                </a>
+            </section>
+
+            <!-- 游戏列表 -->
+            <section class="games-section">
+                <h3 class="section-title" id="games-section-title">All Games</h3>
+                <div class="games-list" id="games-list-container">
+                    <!-- 游戏列表将由JavaScript动态生成 -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 页脚 -->
     <footer class="footer">
         <div class="footer-links">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-            <a href="dmca.html">DMCA</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
+            <a href="#">About skillwarz</a>
+            <a href="#">Contact Us</a>
+            <a href="#">DMCA</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
         </div>
-        <div class="footer-summary">The SkillWarz directory now works like a full browser game collection wall across all live categories.</div>
-        <div class="footer-meta">Editorial contact: <a href="mailto:422435896@qq.com">422435896@qq.com</a></div>
+        <div class="footer-copyright">© 2024 skillwarz - Free Online Shooter Games. All rights reserved.</div>
     </footer>
+
+    <!-- 游戏数据 -->
+    <script src="js/game_data/games.js"></script>
     <script src="js/game_data/action.js"></script>
-    <script src="js/game_data/fps.js"></script>
     <script src="js/game_data/battleRoyale.js"></script>
+    <script src="js/game_data/fps.js"></script>
     <script src="js/game_data/multiplayer.js"></script>
     <script src="js/game_data/sniper.js"></script>
-    <script src="js/hub.js"></script>
+    <!-- 主脚本 -->
+    <script src="init.js"></script>
+    <!-- 分类页面脚本 -->
+    <script>
+        // 获取URL参数
+        function getURLParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // 分类配置
+        const categories = {
+            'all': 'All Games',
+            'fps': 'First-Person Shooters',
+            'battle-royale': 'Battle Royale',
+            'sniper': 'Sniper Games',
+            'multiplayer': 'Multiplayer Shooters',
+            'action': 'Action Shooters'
+        };
+
+        // 分类到数据的映射
+        const categoryDataMap = {
+            'all': [...(window.gamesData || []), ...(window.actionGames || []), ...(window.battleRoyaleData || []), ...(window.fpsData || []), ...(window.multiplayerGames || []), ...(window.sniperData || [])],
+            'fps': window.fpsData || [],
+            'battle-royale': window.battleRoyaleData || [],
+            'sniper': window.sniperData || [],
+            'multiplayer': window.multiplayerGames || [],
+            'action': window.actionGames || []
+        };
+
+        // 加载游戏列表
+        function loadGamesByCategory() {
+            const container = document.getElementById('games-list-container');
+            const titleElement = document.getElementById('games-section-title');
+            if (!container || !titleElement) {
+                console.error('Container or title element not found');
+                return;
+            }
+
+            // 获取当前分类
+            const currentCategory = getURLParam('category') || 'all';
+            const categoryName = categories[currentCategory] || 'All Games';
+            console.log('Current category:', currentCategory, 'Games data:', window.multiplayerGames);
+
+            // 更新标题
+            titleElement.textContent = categoryName;
+
+            // 根据真实分类数据获取游戏
+            const allGames = categoryDataMap[currentCategory] || [];
+            console.log('Games loaded:', allGames.length, 'Games:', allGames);
+
+            container.innerHTML = '';
+            allGames.forEach((game, index) => {
+                const gameItem = document.createElement('div');
+                gameItem.className = 'game-item';
+                gameItem.innerHTML = `
+                    <div class="game-item-image">
+                        <img src="${game.imageUrl}" alt="${game.name}" onerror="console.error('Image failed:', '${game.imageUrl}')">
+                    </div>
+                    <div class="game-item-info">
+                        <h4 class="game-item-title">${game.name}</h4>
+                        <div class="game-item-category">${categoryName}</div>
+                        <div class="game-item-stats">
+                            <span><i class="fas fa-play"></i> ${Math.floor(Math.random() * 100000)}</span>
+                            <span><i class="fas fa-star"></i> ${(4 + Math.random()).toFixed(1)}</span>
+                        </div>
+                    </div>
+                `;
+                gameItem.addEventListener('click', () => {
+                    if (game.link) {
+                        window.location.href = game.link;
+                    } else if (window.parent.loadGame) {
+                        window.parent.loadGame(game.originalIndex || index);
+                    } else {
+                        window.location.href = `index.html?game=${game.originalIndex || index}`;
+                    }
+                });
+                container.appendChild(gameItem);
+            });
+        }
+
+        // 高亮当前分类导航
+        function highlightCurrentCategory() {
+            const currentCategory = getURLParam('category') || 'all';
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href.includes(`category=${currentCategory}`)) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 延迟初始化，提高页面加载速度
+            setTimeout(() => {
+                loadGamesByCategory();
+                highlightCurrentCategory();
+            }, 100);
+        });
+    </script>
 </body>
 </html>
