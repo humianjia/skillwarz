@@ -178,7 +178,7 @@ function loadGameById(gameId) {
 }
 
 // 页面加载完成后初始化
-document.addEventListener('DOMContentLoaded', function() {
+function bootstrapHomePage() {
     // 加载主页游戏
     loadMainGame();
     
@@ -201,7 +201,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootstrapHomePage);
+} else {
+    bootstrapHomePage();
+}
 
 // 粒子背景效果
 function initParticles() {

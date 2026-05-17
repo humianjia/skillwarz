@@ -188,12 +188,17 @@ const gamePageTemplate = `<!DOCTYPE html>
             });
         }
 
-        window.addEventListener('load', function() {
+        function bootstrapDetailPage() {
             loadRelatedGames();
-        });
+            initParticles();
+            initCursorGlow();
+        }
 
-        initParticles();
-        initCursorGlow();
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', bootstrapDetailPage);
+        } else {
+            bootstrapDetailPage();
+        }
     </script>
 </body>
 </html>`;

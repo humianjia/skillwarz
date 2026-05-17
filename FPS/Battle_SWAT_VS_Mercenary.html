@@ -107,7 +107,7 @@
             <a href="../#">Privacy Policy</a>
             <a href="../#">Terms of Service</a>
         </div>
-        <div class="footer-copyright">© 2024 skillwarz - Free Online Shooter Games. All rights reserved.</div>
+        <div class="footer-copyright">漏 2024 skillwarz - Free Online Shooter Games. All rights reserved.</div>
     </footer>
     <script src="../js/game_data/games.js"></script>
     <script src="../js/game_data/action.js"></script>
@@ -192,13 +192,17 @@
                 glow.style.top = e.clientY - 100 + 'px';
             });
         }
-
-        window.addEventListener('load', function() {
+        function bootstrapDetailPage() {
             loadRelatedGames();
-        });
+            initParticles();
+            initCursorGlow();
+        }
 
-        initParticles();
-        initCursorGlow();
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', bootstrapDetailPage);
+        } else {
+            bootstrapDetailPage();
+        }
     </script>
 </body>
 </html>
