@@ -64,7 +64,7 @@ body.tactical-home .header.topbar {
     top: 0;
     max-width: 1420px;
     margin: 0 auto;
-    padding: 10px 18px 0;
+    padding: 8px 18px 0;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -76,8 +76,8 @@ body.tactical-home .header.topbar {
     grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 18px;
-    min-height: 64px;
-    padding: 10px 18px;
+    min-height: 56px;
+    padding: 8px 16px;
     border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background:
@@ -131,7 +131,7 @@ body.tactical-home .logo-text {
 
 .topbar-nav {
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 body.tactical-home .nav-item {
@@ -205,8 +205,8 @@ body.tactical-home .header-pill {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    min-height: 40px;
-    padding: 0 14px;
+    min-height: 36px;
+    padding: 0 12px;
     font-size: 11px;
     cursor: pointer;
 }
@@ -272,9 +272,9 @@ body.tactical-home .main-container.tactical-shell {
 }
 
 .search-drawer {
-    margin-bottom: 18px;
-    padding: 18px;
-    border-radius: 20px;
+    margin-bottom: 12px;
+    padding: 14px 16px;
+    border-radius: 18px;
 }
 
 .search-drawer-head,
@@ -291,7 +291,7 @@ body.tactical-home .main-container.tactical-shell {
 .stage-heading h2,
 .loadout-head h2,
 .game-info h2 {
-    margin: 10px 0 0;
+    margin: 6px 0 0;
     font-family: 'Oxanium', sans-serif;
     font-weight: 700;
     letter-spacing: 0.02em;
@@ -373,9 +373,9 @@ body.tactical-home .main-container.tactical-shell {
 }
 
 .hero-compact {
-    padding: 18px 0 16px;
+    padding: 10px 0 10px;
     display: grid;
-    gap: 14px;
+    gap: 10px;
 }
 
 .hero-copy {
@@ -405,7 +405,7 @@ body.tactical-home .page-eyebrow {
 .hero-copy h1 {
     margin: 0;
     font-family: 'Oxanium', sans-serif;
-    font-size: clamp(2.4rem, 5vw, 4.6rem);
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
     font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 0.9;
@@ -418,20 +418,20 @@ body.tactical-home .page-eyebrow {
     margin: 0;
     max-width: 880px;
     color: var(--terminal-muted);
-    line-height: 1.7;
+    line-height: 1.6;
     animation: heroUp 0.72s ease both;
 }
 
 .hero-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
     animation: heroUp 0.84s ease both;
 }
 
 body.tactical-home .button-link {
-    min-height: 50px;
-    padding: 0 18px;
+    min-height: 42px;
+    padding: 0 14px;
     border-radius: 12px;
     font-family: 'Oxanium', sans-serif;
     font-size: 12px;
@@ -475,8 +475,8 @@ body.tactical-home .button-link.secondary {
 .game-stage {
     position: relative;
     overflow: hidden;
-    padding: 20px;
-    border-radius: 28px;
+    padding: 16px;
+    border-radius: 22px;
 }
 
 .game-stage::before {
@@ -492,15 +492,15 @@ body.tactical-home .button-link.secondary {
 .stage-heading {
     position: relative;
     z-index: 1;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .stage-heading p,
 .loadout-head p,
 .info-copy p {
-    margin: 10px 0 0;
+    margin: 6px 0 0;
     color: var(--terminal-muted);
-    line-height: 1.7;
+    line-height: 1.55;
 }
 
 .stage-heading-actions {
@@ -519,8 +519,8 @@ body.tactical-home .catalog-link {
 
 .combat-frame-shell {
     position: relative;
-    min-height: min(68vh, 760px);
-    border-radius: 24px;
+    min-height: min(72vh, 790px);
+    border-radius: 18px;
     border: 1px solid rgba(115, 219, 255, 0.14);
     background:
         linear-gradient(180deg, rgba(9, 14, 24, 0.64), rgba(2, 5, 10, 0.92)),
@@ -699,7 +699,7 @@ body.tactical-home .catalog-link {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 12px;
-    margin-top: 14px;
+    margin-top: 10px;
 }
 
 .stage-meta-item,
@@ -742,9 +742,9 @@ body.tactical-home .catalog-link {
 }
 
 .game-info {
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 24px;
+    margin-top: 14px;
+    padding: 16px;
+    border-radius: 20px;
 }
 
 .info-copy {
@@ -776,9 +776,9 @@ body.tactical-home .jump-card:hover {
 }
 
 .loadout-strip {
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 24px;
+    margin-top: 14px;
+    padding: 16px;
+    border-radius: 20px;
 }
 
 .category-rack {
@@ -872,13 +872,23 @@ body.tactical-home .hub-mini-card img {
 body.tactical-home .catalog-card-body,
 body.tactical-home .hub-mini-card-body,
 body.tactical-home .hub-category-body {
-    gap: 10px;
+    gap: 8px;
 }
 
 body.tactical-home .catalog-card-body,
 body.tactical-home .hub-mini-card-body,
 .search-card-body {
     align-content: start;
+}
+
+body.tactical-home .catalog-card-body p,
+body.tactical-home .hub-mini-card-body p,
+body.tactical-home .hub-category-body p,
+body.tactical-home .jump-card p,
+body.tactical-home .hub-rail-header p,
+body.tactical-home .catalog-section-header p,
+body.tactical-home .site-note p {
+    display: none;
 }
 
 body.tactical-home .catalog-card-top h3,
@@ -992,12 +1002,12 @@ body.tactical-home .footer-meta {
     .game-stage,
     .game-info,
     .loadout-strip {
-        padding: 16px;
-        border-radius: 20px;
+        padding: 14px;
+        border-radius: 18px;
     }
 
     .combat-frame-shell {
-        min-height: 52vh;
+        min-height: 58vh;
         border-radius: 18px;
     }
 
@@ -1030,7 +1040,7 @@ body.tactical-home .footer-meta {
 
 @media (max-width: 520px) {
     .hero-copy h1 {
-        font-size: 2.4rem;
+        font-size: 2.15rem;
     }
 
     .topbar-inner {
