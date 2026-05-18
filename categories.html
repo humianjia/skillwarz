@@ -82,7 +82,7 @@
                         <i class="fas fa-gamepad"></i>
                     </div>
                     <h3>All Games</h3>
-                    <p>1000+ Games</p>
+                    <p class="category-count" data-category-count="all">Loading...</p>
                     <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
                 </a>
 
@@ -91,7 +91,7 @@
                         <i class="fas fa-crosshairs"></i>
                     </div>
                     <h3>First-Person Shooters</h3>
-                    <p>150+ Games</p>
+                    <p class="category-count" data-category-count="fps">Loading...</p>
                     <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
                 </a>
 
@@ -100,7 +100,7 @@
                         <i class="fas fa-skull"></i>
                     </div>
                     <h3>Battle Royale</h3>
-                    <p>80+ Games</p>
+                    <p class="category-count" data-category-count="battle-royale">Loading...</p>
                     <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
                 </a>
 
@@ -109,7 +109,7 @@
                         <i class="fas fa-bullseye"></i>
                     </div>
                     <h3>Sniper Games</h3>
-                    <p>120+ Games</p>
+                    <p class="category-count" data-category-count="sniper">Loading...</p>
                     <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
                 </a>
 
@@ -118,7 +118,7 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <h3>Multiplayer Shooters</h3>
-                    <p>300+ Games</p>
+                    <p class="category-count" data-category-count="multiplayer">Loading...</p>
                     <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
                 </a>
 
@@ -127,7 +127,7 @@
                         <i class="fas fa-fist-raised"></i>
                     </div>
                     <h3>Action Shooters</h3>
-                    <p>250+ Games</p>
+                    <p class="category-count" data-category-count="action">Loading...</p>
                     <span class="category-arrow"><i class="fas fa-arrow-right"></i></span>
                 </a>
             </section>
@@ -161,6 +161,7 @@
     <script src="js/game_data/fps.js"></script>
     <script src="js/game_data/multiplayer.js"></script>
     <script src="js/game_data/sniper.js"></script>
+    <script src="js/game_data/gd_extra.js"></script>
     <!-- 主脚本 -->
     <script src="init.js"></script>
     <!-- 分类页面脚本 -->
@@ -191,6 +192,64 @@
             'action': window.actionGames || []
         };
 
+        function getGameKey(game) {
+            if (!game) return '';
+            return game.id || game.link || game.iframeUrl || game.name || '';
+        }
+
+        function dedupeGames(games) {
+            const seen = new Set();
+            return (games || []).filter(game => {
+                const key = getGameKey(game);
+                if (!key || seen.has(key)) {
+                    return false;
+                }
+                seen.add(key);
+                return true;
+            });
+        }
+
+        const gdExtraData = window.gdExtraGames || {};
+        const gdExtraAll = Object.values(gdExtraData).reduce((all, list) => all.concat(list || []), []);
+
+        categoryDataMap.all = dedupeGames([...(categoryDataMap.all || []), ...gdExtraAll]);
+        categoryDataMap.fps = dedupeGames([...(categoryDataMap.fps || []), ...(gdExtraData.fps || [])]);
+        categoryDataMap['battle-royale'] = dedupeGames([...(categoryDataMap['battle-royale'] || []), ...(gdExtraData['battle-royale'] || [])]);
+        categoryDataMap.sniper = dedupeGames([...(categoryDataMap.sniper || []), ...(gdExtraData.sniper || [])]);
+        categoryDataMap.multiplayer = dedupeGames([...(categoryDataMap.multiplayer || []), ...(gdExtraData.multiplayer || [])]);
+        categoryDataMap.action = dedupeGames([...(categoryDataMap.action || []), ...(gdExtraData.action || [])]);
+
+        function formatGameCount(count) {
+            return `${count} ${count === 1 ? 'Game' : 'Games'}`;
+        }
+
+        function getUniqueGameCount(games) {
+            const seen = new Set();
+            (games || []).forEach(game => {
+                const key = getGameKey(game);
+                if (key) {
+                    seen.add(key);
+                }
+            });
+            return seen.size;
+        }
+
+        function updateCategoryCounts() {
+            const counts = {
+                all: getUniqueGameCount(categoryDataMap.all || []),
+                fps: (categoryDataMap.fps || []).length,
+                'battle-royale': (categoryDataMap['battle-royale'] || []).length,
+                sniper: (categoryDataMap.sniper || []).length,
+                multiplayer: (categoryDataMap.multiplayer || []).length,
+                action: (categoryDataMap.action || []).length
+            };
+
+            document.querySelectorAll('[data-category-count]').forEach(element => {
+                const key = element.getAttribute('data-category-count');
+                element.textContent = formatGameCount(counts[key] || 0);
+            });
+        }
+
         // 加载游戏列表
         function loadGamesByCategory() {
             const container = document.getElementById('games-list-container');
@@ -214,6 +273,7 @@
 
             container.innerHTML = '';
             allGames.forEach((game, index) => {
+                const gameCategoryLabel = currentCategory === 'all' ? (game.gameType || categoryName) : categoryName;
                 const gameItem = document.createElement('div');
                 gameItem.className = 'game-item';
                 gameItem.innerHTML = `
@@ -222,7 +282,7 @@
                     </div>
                     <div class="game-item-info">
                         <h4 class="game-item-title">${game.name}</h4>
-                        <div class="game-item-category">${categoryName}</div>
+                        <div class="game-item-category">${gameCategoryLabel}</div>
                         <div class="game-item-stats">
                             <span><i class="fas fa-play"></i> ${Math.floor(Math.random() * 100000)}</span>
                             <span><i class="fas fa-star"></i> ${(4 + Math.random()).toFixed(1)}</span>
@@ -260,6 +320,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // 延迟初始化，提高页面加载速度
             setTimeout(() => {
+                updateCategoryCounts();
                 loadGamesByCategory();
                 highlightCurrentCategory();
             }, 100);

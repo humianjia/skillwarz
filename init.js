@@ -116,7 +116,7 @@ function shuffleArray(array) {
     return shuffled;
 }
 
-// 动态生成21个随机游戏卡片
+// 动态生成49个随机游戏卡片
 function loadRelatedGames() {
     const container = document.getElementById('related-games-container');
     if (!container) return;
@@ -133,8 +133,8 @@ function loadRelatedGames() {
     
     if (allGames.length === 0) return;
     
-    // 随机打乱游戏数据，取前21个
-    const shuffledGames = shuffleArray(allGames).slice(0, 21);
+    // 随机打乱游戏数据，取前49个
+    const shuffledGames = shuffleArray(allGames).slice(0, 49);
     
     // 清空容器
     container.innerHTML = '';
@@ -182,7 +182,7 @@ function bootstrapHomePage() {
     // 加载主页游戏
     loadMainGame();
     
-    // 加载21个随机游戏
+    // 加载49个随机游戏
     loadRelatedGames();
     
     // 初始化粒子背景
