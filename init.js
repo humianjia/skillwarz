@@ -1,246 +1,328 @@
-// 加载游戏到主页 iframe
+function getAllHomeGames() {
+    return [
+        ...(window.gamesData || []),
+        ...(window.actionGames || []),
+        ...(window.battleRoyaleData || []),
+        ...(window.fpsData || []),
+        ...(window.multiplayerGames || []),
+        ...(window.sniperData || [])
+    ];
+}
+
+function getHomeDefaultGame() {
+    return Array.isArray(window.gamesData) && window.gamesData.length > 0 ? window.gamesData[0] : null;
+}
+
+function setGameLoadingState(isLoading, message) {
+    const showcase = document.querySelector('.game-showcase');
+    const overlay = document.getElementById('game-loading-overlay');
+    const status = document.getElementById('game-load-status');
+
+    if (showcase) {
+        showcase.classList.toggle('is-loading', !!isLoading);
+        showcase.classList.toggle('is-loaded', !isLoading);
+    }
+
+    if (overlay) {
+        overlay.hidden = !isLoading;
+    }
+
+    if (status && message) {
+        status.textContent = message;
+    }
+}
+
 function loadMainGame() {
-    if (gamesData && gamesData.length > 0) {
-        const firstGame = gamesData[0];
-        const iframe = document.getElementById('game-iframe');
-        const title = document.getElementById('current-game-title');
-        const icon = document.getElementById('game-icon');
-        
-        if (iframe && firstGame.iframeUrl) {
-            iframe.src = firstGame.iframeUrl;
-        }
-        
-        if (title) {
-            title.textContent = firstGame.name || 'Game';
-        }
-        
-        if (icon && firstGame.imageUrl) {
-            icon.src = firstGame.imageUrl.replace('game_icon', 'icon');
-        }
+    const game = getHomeDefaultGame();
+    const iframe = document.getElementById('game-iframe');
+    const title = document.getElementById('current-game-title');
+    const icon = document.getElementById('game-icon');
+
+    if (!game) {
+        return;
+    }
+
+    if (iframe && game.iframeUrl && iframe.src !== game.iframeUrl) {
+        setGameLoadingState(true, 'Launching in browser...');
+        iframe.src = game.iframeUrl;
+    }
+
+    if (title) {
+        title.textContent = game.name || 'Game';
+    }
+
+    if (icon && game.imageUrl) {
+        icon.src = game.imageUrl;
+        icon.alt = game.name || 'Game icon';
     }
 }
 
-// 加载游戏（用于点击游戏卡片）
 function loadGame(gameIndex) {
-    if (gamesData && gamesData[gameIndex]) {
-        const game = gamesData[gameIndex];
-        const iframe = document.getElementById('game-iframe');
-        const title = document.getElementById('current-game-title');
-        const icon = document.getElementById('game-icon');
-        
-        if (iframe) {
-            iframe.src = game.iframeUrl || '';
-        }
-        
-        if (title) {
-            title.textContent = game.name || 'Game';
-        }
-        
-        if (icon && game.imageUrl) {
-            icon.src = game.imageUrl.replace('game_icon', 'icon');
-        }
+    if (!Array.isArray(window.gamesData) || !window.gamesData[gameIndex]) {
+        return;
+    }
+
+    const game = window.gamesData[gameIndex];
+    const iframe = document.getElementById('game-iframe');
+    const title = document.getElementById('current-game-title');
+    const icon = document.getElementById('game-icon');
+
+    if (iframe) {
+        setGameLoadingState(true, 'Loading selected game...');
+        iframe.src = game.iframeUrl || '';
+    }
+
+    if (title) {
+        title.textContent = game.name || 'Game';
+    }
+
+    if (icon && game.imageUrl) {
+        icon.src = game.imageUrl;
+        icon.alt = game.name || 'Game icon';
     }
 }
 
-// 全屏切换
 function toggleFullscreen() {
     const gameFrame = document.querySelector('.game-frame');
-    if (gameFrame) {
-        if (gameFrame.requestFullscreen) {
-            gameFrame.requestFullscreen();
-        } else if (gameFrame.webkitRequestFullscreen) {
-            gameFrame.webkitRequestFullscreen();
-        } else if (gameFrame.msRequestFullscreen) {
-            gameFrame.msRequestFullscreen();
-        }
+    if (!gameFrame) {
+        return;
+    }
+
+    if (gameFrame.requestFullscreen) {
+        gameFrame.requestFullscreen();
+    } else if (gameFrame.webkitRequestFullscreen) {
+        gameFrame.webkitRequestFullscreen();
+    } else if (gameFrame.msRequestFullscreen) {
+        gameFrame.msRequestFullscreen();
     }
 }
 
-document.addEventListener('fullscreenchange', function() {
+function syncFullscreenState() {
     const gameFrame = document.querySelector('.game-frame');
     const iframe = document.getElementById('game-iframe');
     const mask = document.querySelector('.iframe-bottom-mask');
-    if (document.fullscreenElement === gameFrame) {
-        gameFrame.classList.add('fullscreen-active');
-        if (mask) {
-            mask.classList.add('fullscreen-mask');
-        }
+
+    if (!gameFrame || !iframe) {
+        return;
+    }
+
+    const isFullscreen =
+        document.fullscreenElement === gameFrame ||
+        document.webkitFullscreenElement === gameFrame;
+
+    gameFrame.classList.toggle('fullscreen-active', isFullscreen);
+
+    if (mask) {
+        mask.classList.toggle('fullscreen-mask', isFullscreen);
+    }
+
+    if (isFullscreen) {
         iframe.style.height = '110vh';
         iframe.style.width = '100vw';
         iframe.style.objectFit = 'cover';
         iframe.style.objectPosition = 'top -40px';
     } else {
-        gameFrame.classList.remove('fullscreen-active');
-        if (mask) {
-            mask.classList.remove('fullscreen-mask');
-        }
         iframe.style.height = '';
         iframe.style.width = '';
         iframe.style.objectFit = '';
         iframe.style.objectPosition = '';
     }
-});
+}
 
-document.addEventListener('webkitfullscreenchange', function() {
-    const gameFrame = document.querySelector('.game-frame');
-    const iframe = document.getElementById('game-iframe');
-    const mask = document.querySelector('.iframe-bottom-mask');
-    if (document.webkitFullscreenElement === gameFrame) {
-        gameFrame.classList.add('fullscreen-active');
-        if (mask) {
-            mask.classList.add('fullscreen-mask');
-        }
-        iframe.style.height = '110vh';
-        iframe.style.width = '100vw';
-        iframe.style.objectFit = 'cover';
-        iframe.style.objectPosition = 'top -40px';
-    } else {
-        gameFrame.classList.remove('fullscreen-active');
-        if (mask) {
-            mask.classList.remove('fullscreen-mask');
-        }
-        iframe.style.height = '';
-        iframe.style.width = '';
-        iframe.style.objectFit = '';
-        iframe.style.objectPosition = '';
-    }
-});
+document.addEventListener('fullscreenchange', syncFullscreenState);
+document.addEventListener('webkitfullscreenchange', syncFullscreenState);
 
-// 打乱数组顺序（用于随机排序）
 function shuffleArray(array) {
     const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
 }
 
-// 动态生成49个随机游戏卡片
 function loadRelatedGames() {
     const container = document.getElementById('related-games-container');
-    if (!container) return;
-    
-    // 合并所有分类的游戏数据
-    const allGames = [
-        ...(window.gamesData || []),
-        ...(window.actionGames || []),
-        ...(window.battleRoyaleData || []),
-        ...(window.fpsData || []),
-        ...(window.multiplayerGames || []),
-        ...(window.sniperData || [])
-    ];
-    
-    if (allGames.length === 0) return;
-    
-    // 随机打乱游戏数据，取前49个
-    const shuffledGames = shuffleArray(allGames).slice(0, 49);
-    
-    // 清空容器
+    if (!container) {
+        return;
+    }
+
+    const games = shuffleArray(getAllHomeGames())
+        .filter((game) => game && game.id !== 'skillwarz')
+        .slice(0, 12);
+
     container.innerHTML = '';
-    
-    // 生成游戏卡片
-    shuffledGames.forEach((game) => {
+
+    games.forEach((game) => {
         const card = document.createElement('div');
         card.className = 'game-card';
         card.setAttribute('data-game', game.id);
-        const imageUrl = game.imageUrl;
         card.innerHTML = `
-            <img src="${imageUrl}" alt="${game.name}" onerror="this.src='img/icon/veckIo.jpg'">
-            <div class="game-card-title">${game.name}</div>
+            <img src="${game.imageUrl || 'img/icon/veckIo.jpg'}" alt="${game.name || 'Game'}" loading="lazy" onerror="this.src='img/icon/veckIo.jpg'">
+            <div class="game-card-title">${game.name || 'Game'}</div>
         `;
-        card.addEventListener('click', function() {
+        card.addEventListener('click', function () {
             loadGameById(game.id);
         });
         container.appendChild(card);
     });
 }
 
-// 根据游戏ID跳转到游戏页面
 function loadGameById(gameId) {
-    // 合并所有分类的游戏数据
-    const allGames = [
-        ...(window.gamesData || []),
-        ...(window.actionGames || []),
-        ...(window.battleRoyaleData || []),
-        ...(window.fpsData || []),
-        ...(window.multiplayerGames || []),
-        ...(window.sniperData || [])
-    ];
-
-    const game = allGames.find(g => g.id === gameId);
-    if (!game) return;
-
-    // 跳转到游戏页面
-    if (game.link) {
+    const game = getAllHomeGames().find((item) => item.id === gameId);
+    if (game && game.link) {
         window.location.href = game.link;
     }
 }
 
-// 页面加载完成后初始化
-function bootstrapHomePage() {
-    // 加载主页游戏
-    loadMainGame();
-    
-    // 加载49个随机游戏
-    loadRelatedGames();
-    
-    // 初始化粒子背景
-    initParticles();
-    
-    // 初始化鼠标跟随效果
-    initCursorGlow();
-    
-    // 为新游戏区域的卡片添加点击事件
-    const newGameCards = document.querySelectorAll('.series-game');
-    newGameCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const gameIndex = this.getAttribute('data-game');
-            if (gameIndex !== null) {
-                loadGame(parseInt(gameIndex));
+function initHomeSearch() {
+    const input = document.getElementById('home-search-input');
+    const icon = document.querySelector('.search-bar i');
+    if (!input) {
+        return;
+    }
+
+    const allGames = getAllHomeGames();
+
+    function findGame(query) {
+        const needle = String(query || '').trim().toLowerCase();
+        if (!needle) {
+            return null;
+        }
+
+        return allGames.find((game) => {
+            const haystack = [
+                game.name,
+                game.id,
+                game.gameType,
+                game.description,
+                game.keywords,
+                Array.isArray(game.tags) ? game.tags.join(' ') : ''
+            ].join(' ').toLowerCase();
+
+            return haystack.includes(needle);
+        }) || null;
+    }
+
+    function submitSearch() {
+        const match = findGame(input.value);
+        if (!match) {
+            return;
+        }
+
+        if (match.id === 'skillwarz') {
+            const target = document.getElementById('skillwarz-game');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-        });
+            return;
+        }
+
+        if (match.link) {
+            window.location.href = match.link;
+        }
+    }
+
+    input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            submitSearch();
+        }
     });
+
+    if (icon) {
+        icon.style.cursor = 'pointer';
+        icon.addEventListener('click', submitSearch);
+    }
+}
+
+function initScrollEnhancements() {
+    const progressBar = document.getElementById('reading-progress-bar');
+    const backToTop = document.getElementById('back-to-top');
+
+    function update() {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+
+        if (progressBar) {
+            progressBar.style.width = `${progress}%`;
+        }
+
+        if (backToTop) {
+            backToTop.classList.toggle('is-visible', scrollTop > 500);
+        }
+    }
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+}
+
+function initParticles() {
+    const container = document.getElementById('particles');
+    if (!container) {
+        return;
+    }
+
+    for (let i = 0; i < 30; i += 1) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.animationDelay = `${Math.random() * 20}s`;
+        particle.style.animationDuration = `${15 + Math.random() * 10}s`;
+        particle.style.width = `${3 + Math.random() * 4}px`;
+        particle.style.height = particle.style.width;
+        container.appendChild(particle);
+    }
+}
+
+function initCursorGlow() {
+    const glow = document.getElementById('cursorGlow');
+    if (!glow) {
+        return;
+    }
+
+    document.addEventListener('mousemove', function (event) {
+        glow.style.left = `${event.clientX}px`;
+        glow.style.top = `${event.clientY}px`;
+    });
+
+    document.addEventListener('mouseleave', function () {
+        glow.style.opacity = '0';
+    });
+
+    document.addEventListener('mouseenter', function () {
+        glow.style.opacity = '1';
+    });
+}
+
+function initGameFrameLoading() {
+    const iframe = document.getElementById('game-iframe');
+    if (!iframe) {
+        return;
+    }
+
+    iframe.addEventListener('load', function () {
+        setGameLoadingState(false, 'Live now. Jump into the match.');
+    });
+
+    window.setTimeout(function () {
+        setGameLoadingState(false, 'Ready to play. Click inside the frame if needed.');
+    }, 8000);
+}
+
+function bootstrapHomePage() {
+    initParticles();
+    initCursorGlow();
+    initHomeSearch();
+    initScrollEnhancements();
+    initGameFrameLoading();
+    loadMainGame();
+    loadRelatedGames();
 }
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', bootstrapHomePage);
 } else {
     bootstrapHomePage();
-}
-
-// 粒子背景效果
-function initParticles() {
-    const container = document.getElementById('particles');
-    if (!container) return;
-    
-    for (let i = 0; i < 30; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 20 + 's';
-        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-        particle.style.width = (3 + Math.random() * 4) + 'px';
-        particle.style.height = particle.style.width;
-        container.appendChild(particle);
-    }
-}
-
-// 鼠标跟随光效
-function initCursorGlow() {
-    const glow = document.getElementById('cursorGlow');
-    if (!glow) return;
-    
-    document.addEventListener('mousemove', (e) => {
-        glow.style.left = e.clientX + 'px';
-        glow.style.top = e.clientY + 'px';
-    });
-    
-    document.addEventListener('mouseleave', () => {
-        glow.style.opacity = '0';
-    });
-    
-    document.addEventListener('mouseenter', () => {
-        glow.style.opacity = '1';
-    });
 }

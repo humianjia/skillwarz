@@ -3,24 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkillWarz Online - Fast-Paced FPS Multiplayer Shooter | Play Free</title>
-    <meta name="description" content="Play SkillWarz Online for free! Experience fast-paced FPS action with advanced movement mechanics, 8+ game modes (Deathmatch, Gun Game, Skull Hunt), 40+ maps, and cross-platform multiplayer. No download required - play in your browser now!">
+    <title>SkillWarz - Free Browser FPS Game | Play Now</title>
+    <meta name="description" content="Play SkillWarz free online - fast browser FPS with 8+ modes, 40+ maps, and no download needed. Jump into multiplayer battles now!">
     <meta name="keywords" content="SkillWarz, SkillWarz online, SkillWarz free, SkillWarz FPS, SkillWarz shooter, browser FPS, free online games, multiplayer shooter, Deathmatch, Gun Game, Skull Hunt, first person shooter, browser game, no download">
     <meta name="robots" content="index, follow">
     <meta name="author" content="SkillWarz">
     <link rel="canonical" href="https://skillwarz.online/">
-    <meta property="og:title" content="SkillWarz Online - Fast-Paced FPS Multiplayer Shooter">
-    <meta property="og:description" content="Play SkillWarz Online for free! Fast-paced FPS with advanced movement, 8+ game modes, 40+ maps. No download required.">
+    <meta property="og:title" content="SkillWarz - Free Browser FPS Game | Play Now">
+    <meta property="og:description" content="Play SkillWarz free online - fast browser FPS with 8+ modes, 40+ maps, and no download needed.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://skillwarz.online/">
+    <meta property="og:image" content="https://skillwarz.online/img/skillwarz.avif">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SkillWarz Online - Fast-Paced FPS Multiplayer Shooter">
-    <meta name="twitter:description" content="Play SkillWarz Online for free! Experience fast-paced FPS action with advanced movement mechanics.">
+    <meta name="twitter:title" content="SkillWarz - Free Browser FPS Game | Play Now">
+    <meta name="twitter:description" content="Play SkillWarz free online - fast browser FPS with 8+ modes, 40+ maps, and no download needed.">
+    <link rel="preconnect" href="https://ext.minijuegosgratis.com">
+    <link rel="preconnect" href="https://s2.minijuegosgratis.com">
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://i.ytimg.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/css.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "SkillWarz",
+      "genre": ["First-Person Shooter", "Multiplayer", "Action"],
+      "gamePlatform": ["Web Browser", "PC", "Mobile"],
+      "url": "https://skillwarz.online/",
+      "image": "https://skillwarz.online/img/skillwarz.avif",
+      "description": "Play SkillWarz free online - fast browser FPS with 8+ modes, 40+ maps, and no download needed.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://skillwarz.online/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "FPS Games",
+          "item": "https://skillwarz.online/categories.html?category=fps"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SkillWarz",
+          "item": "https://skillwarz.online/"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is SkillWarz free to play?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. SkillWarz is free to play in your browser with no download required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you play SkillWarz in a browser?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. SkillWarz runs directly in a browser on desktop and mobile."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What game modes does SkillWarz have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SkillWarz includes Deathmatch, Gun Game, Skull Hunt, Elimination, Team modes, Domination, and Training."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you need to install SkillWarz?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. You can launch SkillWarz instantly in the browser without installation."
+          }
+        }
+      ]
+    }
+    </script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DNT670B4R3"></script>
 <script>
@@ -56,39 +145,91 @@
             <a href="categories.html?category=action" class="nav-item">Action Shooters</a>
         </nav>
         <div class="search-bar">
-            <input type="text" placeholder="Search games...">
+            <input id="home-search-input" type="search" placeholder="Search SkillWarz games..." aria-label="Search SkillWarz games" autocomplete="off">
             <i class="fas fa-search"></i>
         </div>
     </header>
 
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="categories.html?category=fps">FPS Games</a>
+        <span>/</span>
+        <span>SkillWarz</span>
+    </nav>
+
     <div class="main-container">
         <main class="main-content">
-            <div class="game-showcase">
+            <section class="launch-hero" id="launch-hero">
+                <div class="launch-copy">
+                    <span class="launch-eyebrow">Free browser FPS</span>
+                    <h2 class="page-title">Play SkillWarz Online Free - Browser FPS Game</h2>
+                    <h2 class="launch-subtitle">The Ultimate Free SkillWarz Browser Shooter Experience</h2>
+                    <p>Jump into SkillWarz free online with instant multiplayer battles, 8+ modes, 40+ maps, and no download required.</p>
+                    <div class="launch-actions">
+                        <a class="primary-cta" href="#skillwarz-game">Play Now</a>
+                        <a class="secondary-cta" href="#skillwarz-faq">How to Play</a>
+                    </div>
+                    <div class="launch-tags">
+                        <span>Free</span>
+                        <span>No Download</span>
+                        <span>8+ Modes</span>
+                        <span>40+ Maps</span>
+                    </div>
+                </div>
+                <div class="launch-panel">
+                    <div class="launch-card">
+                        <strong>Quick Start</strong>
+                        <ol>
+                            <li>Press Play Now.</li>
+                            <li>Wait for SkillWarz to load.</li>
+                            <li>Choose a mode and start battling.</li>
+                        </ol>
+                    </div>
+                    <div class="launch-card launch-card-grid">
+                        <div><strong>Instant</strong><span>Browser play</span></div>
+                        <div><strong>Free</strong><span>No install</span></div>
+                        <div><strong>Mobile</strong><span>Touch ready</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="game-showcase" id="skillwarz-game">
                 <div class="game-frame">
-                    <iframe id="game-iframe" src="" allowfullscreen></iframe>
+                    <img class="game-poster" src="img/skillwarz.avif" alt="SkillWarz preview" loading="eager">
+                    <iframe id="game-iframe" src="https://ext.minijuegosgratis.com/cz/play.html?n=skillwarz&mp_assets=https%3A%2F%2Fs2.minijuegosgratis.com%2F&mp_embed=0&mp_game_id=251508&mp_game_uid=skillwarz-legacy-edition&mp_game_url=https%3A%2F%2Fwww.miniplay.com%2Fgame%2Fskillwarz-legacy-edition&mp_int=1&mp_locale=en_US&mp_player_type=IFRAME&mp_site_https_url=https%3A%2F%2Fwww.miniplay.com%2F&mp_site_name=miniplay.com&mp_site_url=https%3A%2F%2Fwww.miniplay.com%2F&mp_timezone=Asia%2FShanghai&mp_view_type=" loading="eager" fetchpriority="high" allow="autoplay; fullscreen; gamepad" allowfullscreen title="Play SkillWarz browser FPS game"></iframe>
+                    <div class="game-loading" id="game-loading-overlay" role="status" aria-live="polite">
+                        <span class="game-loading-eyebrow">Launching SkillWarz</span>
+                        <div class="game-loading-bar"><span></span></div>
+                        <p>Starting the browser session...</p>
+                    </div>
                     <div class="iframe-bottom-mask"></div>
                 </div>
                 <div class="game-controls">
                     <div class="game-title-section">
                         <img src="" id="game-icon" class="game-icon" alt="SkillWarz Icon">
-                        <span class="game-title" id="current-game-title">SkillWarz</span>
+                        <div class="game-title-copy">
+                            <span class="game-title" id="current-game-title">SkillWarz</span>
+                            <span class="game-load-status" id="game-load-status">Launching in browser...</span>
+                        </div>
                     </div>
                     <div class="game-actions">
+                        <a class="play-now-btn" href="#skillwarz-game">Play Now</a>
                         <i class="fas fa-expand" onclick="toggleFullscreen()"></i>
                     </div>
                 </div>
             </div>
 
             <div class="related-games">
-                <h3 class="section-title">Popular Shooter Games</h3>
+                <h3 class="section-title" id="related-title">Popular SkillWarz Shooter Games</h3>
                 <div class="games-grid" id="related-games-container"></div>
             </div>
 
             <div class="content-section">
                 <div class="game-info">
-                    <h1>SkillWarz Online</h1>
-                    
-                    <div class="info-header">Experience fast-paced FPS action with advanced movement mechanics and diverse game modes.</div>
+                    <h1>Play SkillWarz Online Free - Browser FPS Game</h1>
+                    <h2 class="section-subtitle">The Ultimate Free SkillWarz Browser Shooter Experience</h2>
+                    <div class="info-header">Experience fast-paced FPS action with advanced movement mechanics, instant browser play, and diverse game modes.</div>
 
                     <div class="info-content">
                         <h2 id="play-skillwarz">Play SkillWarz Online for Free</h2>
@@ -96,7 +237,7 @@
                         <a href="https://www.crazygames.com/game/skillwarz" target="_blank" rel="noopener noreferrer">Play Now on CrazyGames</a>
                         
                         <div class="video-container">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/NB6DcDoZd6U" title="SkillWarz Gameplay" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/NB6DcDoZd6U" title="SkillWarz Gameplay" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
 
                         <div class="feature-tags">
@@ -152,7 +293,7 @@
                         <p>Maps are built around movement, with bounce pads, teleports, and battle pickups to keep you mobile.</p>
                         
                         <div class="video-container">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/NB6DcDoZd6U" title="SkillWarz Maps & Movement" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/NB6DcDoZd6U" title="SkillWarz Maps & Movement" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
 
                         <ul>
@@ -176,7 +317,7 @@
                         <a href="https://www.crazygames.com/game/skillwarz" target="_blank" rel="noopener noreferrer">Play Now</a>
                         
                         <div class="video-container small-video">
-                            <iframe width="320" height="180" src="https://www.youtube.com/embed/KnFvHXTbzYw" title="SkillWarz Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe width="320" height="180" src="https://www.youtube.com/embed/KnFvHXTbzYw" title="SkillWarz Tutorial" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
 
                         <h3>Basic Controls</h3>
@@ -217,15 +358,15 @@
                         
                         <div class="video-grid">
                             <div class="video-card">
-                                <iframe width="320" height="180" src="https://www.youtube.com/embed/WDDfEgqZkag" title="Movement Tutorial" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/WDDfEgqZkag" title="Movement Tutorial" loading="lazy" frameborder="0" allowfullscreen></iframe>
                                 <p>Movement Guide</p>
                             </div>
                             <div class="video-card">
-                                <iframe width="320" height="180" src="https://www.youtube.com/embed/KnFvHXTbzYw" title="Aiming Guide" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/KnFvHXTbzYw" title="Aiming Guide" loading="lazy" frameborder="0" allowfullscreen></iframe>
                                 <p>Aiming Tips</p>
                             </div>
                             <div class="video-card">
-                                <iframe width="320" height="180" src="https://www.youtube.com/embed/wygf5nkAwLE" title="Tips & Tricks" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/wygf5nkAwLE" title="Tips & Tricks" loading="lazy" frameborder="0" allowfullscreen></iframe>
                                 <p>Advanced Tips</p>
                             </div>
                         </div>
@@ -236,27 +377,27 @@
                         
                         <div class="video-grid">
                             <div class="video-card">
-                                <iframe width="320" height="180" src="https://www.youtube.com/embed/NB6DcDoZd6U" title="Main Gameplay" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/NB6DcDoZd6U" title="Main Gameplay" loading="lazy" frameborder="0" allowfullscreen></iframe>
                                 <p>Main Gameplay</p>
                             </div>
                             <div class="video-card">
-                                <iframe width="320" height="180" src="https://www.youtube.com/embed/UqAagEno7IU" title="Mobile Gameplay" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/UqAagEno7IU" title="Mobile Gameplay" loading="lazy" frameborder="0" allowfullscreen></iframe>
                                 <p>Mobile Version</p>
                             </div>
                             <div class="video-card">
-                                <iframe width="320" height="180" src="https://www.youtube.com/embed/ac9IqDmP6ls" title="Highlights" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/ac9IqDmP6ls" title="Highlights" loading="lazy" frameborder="0" allowfullscreen></iframe>
                                 <p>Game Highlights</p>
                             </div>
                             <div class="video-card">
-                                <iframe width="320" height="180" src="https://www.youtube.com/embed/KnFvHXTbzYw" title="Aim Guide" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/KnFvHXTbzYw" title="Aim Guide" loading="lazy" frameborder="0" allowfullscreen></iframe>
                                 <p>Aiming Tutorial</p>
                             </div>
                             <div class="video-card">
-                                <iframe width="320" height="180" src="https://www.youtube.com/embed/WDDfEgqZkag" title="Movement Guide" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/WDDfEgqZkag" title="Movement Guide" loading="lazy" frameborder="0" allowfullscreen></iframe>
                                 <p>Movement Guide</p>
                             </div>
                             <div class="video-card">
-                                <iframe width="320" height="180" src="https://www.youtube.com/embed/CG6zXFBnkUA" title="Patch Notes" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="320" height="180" src="https://www.youtube.com/embed/CG6zXFBnkUA" title="Patch Notes" loading="lazy" frameborder="0" allowfullscreen></iframe>
                                 <p>Latest Updates</p>
                             </div>
                         </div>
@@ -266,51 +407,51 @@
                         
                         <div class="maps-gallery">
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-01.jpg" alt="SkillWarz FPS game wallpaper, first person shooter battle scene, Epic Online Battles, gaming background" loading="lazy">
+                                <img src="img/maps/skillwarz-01.jpg" alt="SkillWarz battle wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-01.jpg" download="skillwarz-epic-battle-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-02.jpg" alt="SkillWarz online battle wallpaper, gaming setup with RGB lights, cyberpunk arena, curved monitor" loading="lazy">
+                                <img src="img/maps/skillwarz-02.jpg" alt="SkillWarz cyber arena wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-02.jpg" download="skillwarz-cyber-arena-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-05.jpg" alt="SkillWarz futuristic city wallpaper, night battle scene, laser beams, military combat, FPS game" loading="lazy">
+                                <img src="img/maps/skillwarz-05.jpg" alt="SkillWarz futuristic city wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-05.jpg" download="skillwarz-futuristic-city-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-06.jpg" alt="SkillWarz gaming wallpaper, PC setup with keyboard and mouse, game screen showing battle scene" loading="lazy">
+                                <img src="img/maps/skillwarz-06.jpg" alt="SkillWarz gaming setup wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-06.jpg" download="skillwarz-gaming-setup-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-07.jpg" alt="SkillWarz desert warfare wallpaper, military combat, sandstorm, tactical soldiers, FPS game background" loading="lazy">
+                                <img src="img/maps/skillwarz-07.jpg" alt="SkillWarz desert warfare wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-07.jpg" download="skillwarz-desert-warfare-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-08.jpg" alt="SkillWarz underground ops wallpaper, bunker battle, dark tunnels, close quarters combat" loading="lazy">
+                                <img src="img/maps/skillwarz-08.jpg" alt="SkillWarz underground ops wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-08.jpg" download="skillwarz-underground-ops-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-09.jpg" alt="SkillWarz arctic combat wallpaper, snow battlefield, winter warfare, cold environment" loading="lazy">
+                                <img src="img/maps/skillwarz-09.jpg" alt="SkillWarz arctic combat wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-09.jpg" download="skillwarz-arctic-combat-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-10.jpg" alt="SkillWarz urban warfare wallpaper, destroyed city, street combat, ruins, military vehicles" loading="lazy">
+                                <img src="img/maps/skillwarz-10.jpg" alt="SkillWarz urban warfare wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-10.jpg" download="skillwarz-urban-warfare-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-11.jpg" alt="SkillWarz hero team wallpaper, anime style soldiers, female and male characters, futuristic weapons" loading="lazy">
+                                <img src="img/maps/skillwarz-11.jpg" alt="SkillWarz hero team wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-11.jpg" download="skillwarz-hero-team-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-12.jpg" alt="SkillWarz game preview wallpaper, fantasy warriors, magic spells, cyborg soldiers, battle arena" loading="lazy">
+                                <img src="img/maps/skillwarz-12.jpg" alt="SkillWarz game preview wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-12.jpg" download="skillwarz-game-preview-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-13.jpg" alt="SkillWarz cyberpunk wallpaper, purple neon lights, futuristic soldiers, floating platforms" loading="lazy">
+                                <img src="img/maps/skillwarz-13.jpg" alt="SkillWarz cyberpunk wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-13.jpg" download="skillwarz-cyber-arena-2-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                             <div class="map-card">
-                                <img src="img/maps/skillwarz-14.jpg" alt="SkillWarz mobile edition wallpaper, futuristic city night, mech soldier, laser beams, flying vehicles" loading="lazy">
+                                <img src="img/maps/skillwarz-14.jpg" alt="SkillWarz mobile edition wallpaper" loading="lazy">
                                 <a href="img/maps/skillwarz-14.jpg" download="skillwarz-mobile-edition-wallpaper.jpg" class="download-btn"><i class="fas fa-download"></i> download</a>
                             </div>
                         </div>
@@ -380,7 +521,7 @@
 
                         <div class="last-updated">
                             <h3>LAST UPDATED</h3>
-                            <p>Mar 19, 2026</p>
+                            <p>May 20, 2026</p>
                         </div>
                     </div>
 
@@ -417,5 +558,8 @@
     <script src="js/game_data/multiplayer.js"></script>
     <script src="js/game_data/sniper.js"></script>
     <script src="init.js"></script>
+    <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
+    <a class="mobile-play-fab" href="#skillwarz-game">Play Now</a>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">↑</button>
 </body>
 </html>
