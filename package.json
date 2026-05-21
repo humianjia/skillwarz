@@ -1,0 +1,27 @@
+{
+  "name": "skillwarz",
+  "version": "1.0.0",
+  "description": "Official site: <a href=\"https://www.skillwarz.online/\" rel=\"follow\">https://www.skillwarz.online/</a>",
+  "main": "add_ga.js",
+  "scripts": {
+    "build:site": "node rebuild_site.js",
+    "localize:site": "node scripts/localize_site.js",
+    "build": "npm run build:site && npm run localize:site",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/humianjia/skillwarz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/humianjia/skillwarz/issues"
+  },
+  "homepage": "https://github.com/humianjia/skillwarz#readme",
+  "dependencies": {
+    "cheerio": "^1.2.0"
+  }
+}

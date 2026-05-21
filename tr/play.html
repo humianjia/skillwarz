@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="tr"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Game | skillwarz</title>
+    <meta name="description" content="Play free browser games on skillwarz. Explore extra GameDistribution shooter, battle royale, sniper, multiplayer, and action games.">
+    <meta name="keywords" content="skillwarz, browser games, GameDistribution, fps, battle royale, sniper, multiplayer, action">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="skillwarz">
+    <link rel="canonical" href="https://www.skillwarz.online/tr/play.html">
+    <meta property="og:title" content="Play Game | skillwarz">
+    <meta property="og:description" content="Play free browser games on skillwarz with more shooter and action recommendations.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.skillwarz.online/tr/play.html">
+    <link rel="alternate" hreflang="en" href="https://www.skillwarz.online/play.html">
+    <link rel="alternate" hreflang="hi" href="https://www.skillwarz.online/hi/play.html">
+    <link rel="alternate" hreflang="ur" href="https://www.skillwarz.online/ur/play.html">
+    <link rel="alternate" hreflang="tr" href="https://www.skillwarz.online/tr/play.html">
+    <link rel="alternate" hreflang="pt-br" href="https://www.skillwarz.online/pt-br/play.html">
+    <link rel="alternate" hreflang="it" href="https://www.skillwarz.online/it/play.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.skillwarz.online/play.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Play Game | skillwarz">
+    <meta name="twitter:description" content="Play free browser games on skillwarz with more shooter and action recommendations.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23ff4500'/><stop offset='100%25' stop-color='%23ff8c00'/></linearGradient></defs><rect x='10' y='15' width='30' height='20' rx='2' fill='none' stroke='url(%23g)' stroke-width='3'/><path d='M15 20 L35 20 M15 25 L35 25 M15 30 L35 30' stroke='url(%23g)' stroke-width='2'/><polygon points='25 10 30 15 20 15' fill='url(%23g)'/></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/css.css">
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-DNT670B4R3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-DNT670B4R3');
+    </script>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <header class="header">
+        <a href="index.html" class="logo">
+            <svg class="logo-icon" viewBox="0 0 50 50" width="45" height="45">
+                <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff4500;stop-opacity:1"></stop>
+                        <stop offset="100%" style="stop-color:#ff8c00;stop-opacity:1"></stop>
+                    </linearGradient>
+                </defs>
+                <rect x="10" y="15" width="30" height="20" rx="2" fill="none" stroke="url(#grad1)" stroke-width="3"></rect>
+                <path d="M15 20 L35 20 M15 25 L35 25 M15 30 L35 30" stroke="url(#grad1)" stroke-width="2"></path>
+                <polygon points="25 10 30 15 20 15" fill="url(#grad1)"></polygon>
+            </svg>
+            <span class="logo-text">skillwarz</span>
+        </a>
+        <nav class="nav-categories">
+            <a href="categories.html?category=all" class="nav-item" data-i18n-category="all">All Games</a>
+            <a href="categories.html?category=fps" class="nav-item" data-i18n-category="fps">First-Person Shooters</a>
+            <a href="categories.html?category=battle-royale" class="nav-item" data-i18n-category="battle-royale">Battle Royale</a>
+            <a href="categories.html?category=sniper" class="nav-item" data-i18n-category="sniper">Sniper Games</a>
+            <a href="categories.html?category=multiplayer" class="nav-item" data-i18n-category="multiplayer">Multiplayer Shooters</a>
+            <a href="categories.html?category=action" class="nav-item" data-i18n-category="action">Action Shooters</a>
+        </nav>
+        <div class="search-bar">
+            <input type="text" placeholder="Search games..." disabled="" aria-label="Search games">
+            <i class="fas fa-search"></i>
+        </div>
+    </header>
+    <div class="main-container">
+        <main class="main-content">
+            <div class="game-showcase">
+                <div class="game-frame">
+                    <iframe id="game-iframe" src="" allowfullscreen="" title="Game player"></iframe>
+                </div>
+                <div class="game-controls">
+                    <div class="game-title-section">
+                        <img src="../img/icon/veckIo.jpg" id="game-icon" class="game-icon" alt="Game icon">
+                        <span class="game-title" id="current-game-title">Loading Game</span>
+                    </div>
+                    <div class="game-actions">
+                        <i class="fas fa-expand" onclick="toggleFullscreen()"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="related-games">
+                <h3 class="section-title" id="related-title">More Games</h3>
+                <div class="games-grid" id="related-games-container"></div>
+            </div>
+            <div class="content-section">
+                <div class="game-info">
+                    <div class="info-header" id="game-header-copy">Play a hand-picked browser game from our expanded GameDistribution collection.</div>
+                    <div class="info-content">
+                        <h2 id="game-about-title">WHAT IS THIS GAME?</h2>
+                        <p id="game-description">Loading game details...</p>
+                        <p id="game-instruction" style="display:none;"></p>
+                    </div>
+                    <div class="tags" id="game-tags"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">About skillwarz</a>
+            <a href="#">Contact Us</a>
+            <a href="#">DMCA</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+        <div class="footer-copyright">© 2024 skillwarz - Free Online Shooter Games. All rights reserved.</div>
+    </footer>
+
+    <script src="../js/game_data/games.js"></script>
+    <script src="../js/game_data/action.js"></script>
+    <script src="../js/game_data/battleRoyale.js"></script>
+    <script src="../js/game_data/fps.js"></script>
+    <script src="../js/game_data/multiplayer.js"></script>
+    <script src="../js/game_data/sniper.js"></script>
+    <script src="../js/game_data/gd_extra.js"></script>
+    <script src="../js/site-locale.js"></script>
+    <script src="../js/site-language-switch.js"></script>
+    <script>
+        const localeApi = window.SkillWarzLocale || null;
+        const localeMessages = localeApi ? localeApi.messages : null;
+
+        const categoryLabels = localeMessages && localeMessages.categories
+            ? localeMessages.categories.labels
+            : {
+                all: 'All Games',
+                fps: 'First-Person Shooters',
+                'battle-royale': 'Battle Royale',
+                sniper: 'Sniper Games',
+                multiplayer: 'Multiplayer Shooters',
+                action: 'Action Shooters'
+            };
+
+        function playText(key, values) {
+            return localeApi ? localeApi.t('play', key, values || {}) : '';
+        }
+
+        function resolveLink(path) {
+            return localeApi ? localeApi.resolvePageLink(path) : path;
+        }
+
+        function resolveImage(path) {
+            return localeApi ? localeApi.resolveGameImageUrl(path) : path;
+        }
+
+        function applyStaticLocaleCopy() {
+            document.querySelectorAll('[data-i18n-category]').forEach(element => {
+                const key = element.getAttribute('data-i18n-category');
+                if (categoryLabels[key]) {
+                    element.textContent = categoryLabels[key];
+                }
+            });
+
+            const searchInput = document.querySelector('.search-bar input');
+            if (searchInput) {
+                searchInput.placeholder = (categoryLabels.all ? categoryLabels.all + '...' : 'Search games...');
+            }
+
+            const titleElement = document.getElementById('current-game-title');
+            if (titleElement && titleElement.textContent === 'Loading Game') {
+                titleElement.textContent = playText('loadingGame') || 'Loading Game';
+            }
+
+            const relatedTitle = document.getElementById('related-title');
+            if (relatedTitle && relatedTitle.textContent === 'More Games') {
+                relatedTitle.textContent = playText('moreGames') || 'More Games';
+            }
+        }
+
+        function getURLParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function getGameKey(game) {
+            if (!game) return '';
+            return game.id || game.link || game.iframeUrl || game.name || '';
+        }
+
+        function dedupeGames(games) {
+            const seen = new Set();
+            return (games || []).filter(game => {
+                const key = getGameKey(game);
+                if (!key || seen.has(key)) {
+                    return false;
+                }
+                seen.add(key);
+                return true;
+            });
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function createTagElement(iconClass, text) {
+            const tag = document.createElement('span');
+            tag.className = 'tag';
+            tag.innerHTML = `<i class="${iconClass}"></i> ${text}`;
+            return tag;
+        }
+
+        function getAllGames() {
+            const gdExtraData = window.gdExtraGames || {};
+            const gdExtraAll = Object.values(gdExtraData).reduce((all, list) => all.concat(list || []), []);
+            return dedupeGames([
+                ...(window.gamesData || []),
+                ...(window.actionGames || []),
+                ...(window.battleRoyaleData || []),
+                ...(window.fpsData || []),
+                ...(window.multiplayerGames || []),
+                ...(window.sniperData || []),
+                ...gdExtraAll
+            ]);
+        }
+
+        function getCurrentGame() {
+            const gdSlug = getURLParam('gd');
+            const allGames = getAllGames();
+            if (!gdSlug) return null;
+            return allGames.find(game => game.slug === gdSlug || getGameKey(game) === `gd:${gdSlug}`) || null;
+        }
+
+        function renderPageMeta(game, categoryKey) {
+            const categoryName = categoryLabels[categoryKey] || game.gameType || playText('browserGame') || 'Browser Game';
+            const title = playText('detailTitle', { name: game.name }) || `${game.name} - Play Free Online | skillwarz`;
+            const description = game.description || playText('detailDescription', { name: game.name }) || `Play ${game.name} online for free on skillwarz.`;
+
+            document.title = title;
+            const metaDescription = document.querySelector('meta[name="description"]');
+            if (metaDescription) metaDescription.setAttribute('content', description);
+
+            const ogTitle = document.querySelector('meta[property="og:title"]');
+            if (ogTitle) ogTitle.setAttribute('content', title);
+
+            const ogDescription = document.querySelector('meta[property="og:description"]');
+            if (ogDescription) ogDescription.setAttribute('content', description);
+
+            const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+            if (twitterTitle) twitterTitle.setAttribute('content', title);
+
+            const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+            if (twitterDescription) twitterDescription.setAttribute('content', description);
+
+            const canonical = document.querySelector('link[rel="canonical"]');
+            if (canonical) {
+                canonical.setAttribute('href', `${window.location.origin}${window.location.pathname}?gd=${encodeURIComponent(game.slug)}&category=${encodeURIComponent(categoryKey || game.categoryKey || '')}`);
+            }
+
+            const titleElement = document.getElementById('current-game-title');
+            if (titleElement) titleElement.textContent = game.name;
+
+            const gameIcon = document.getElementById('game-icon');
+            if (gameIcon) {
+                gameIcon.src = resolveImage(game.imageUrl);
+                gameIcon.alt = game.name;
+                gameIcon.onerror = function() { this.src = 'img/icon/veckIo.jpg'; };
+            }
+
+            const gameHeader = document.getElementById('game-header-copy');
+            if (gameHeader) {
+                gameHeader.textContent = playText('expandedSelection', {
+                    name: game.name,
+                    category: categoryName
+                }) || `${game.name} is part of our expanded ${categoryName} selection powered by GameDistribution.`;
+            }
+
+            const gameAboutTitle = document.getElementById('game-about-title');
+            if (gameAboutTitle) {
+                gameAboutTitle.textContent = playText('whatIs', { name: game.name }) || `WHAT IS ${game.name.toUpperCase()}?`;
+            }
+
+            const gameDescription = document.getElementById('game-description');
+            if (gameDescription) {
+                gameDescription.textContent = description;
+            }
+
+            const gameInstruction = document.getElementById('game-instruction');
+            if (gameInstruction) {
+                if (game.instruction) {
+                    gameInstruction.textContent = playText('howToPlay', {
+                        instruction: game.instruction
+                    }) || `How to play: ${game.instruction}`;
+                    gameInstruction.style.display = 'block';
+                } else {
+                    gameInstruction.style.display = 'none';
+                }
+            }
+
+            const relatedTitle = document.getElementById('related-title');
+            if (relatedTitle) {
+                relatedTitle.textContent = playText('recommendations', {
+                    category: categoryName
+                }) || `${categoryName} Recommendations`;
+            }
+
+            const tagsContainer = document.getElementById('game-tags');
+            if (tagsContainer) {
+                tagsContainer.innerHTML = '';
+                tagsContainer.appendChild(createTagElement('fas fa-gamepad', categoryName.toUpperCase()));
+                tagsContainer.appendChild(createTagElement('fas fa-globe', (playText('browserGame') || 'Browser Game').toUpperCase()));
+                tagsContainer.appendChild(createTagElement('fas fa-crosshairs', (playText('gameDistribution') || 'GameDistribution').toUpperCase()));
+                (game.tags || []).slice(0, 4).forEach(tagText => {
+                    tagsContainer.appendChild(createTagElement('fas fa-tag', String(tagText).toUpperCase()));
+                });
+            }
+        }
+
+        function renderGameFrame(game) {
+            const iframe = document.getElementById('game-iframe');
+            if (!iframe) return;
+            iframe.src = game.iframeUrl;
+            iframe.title = game.name;
+        }
+
+        function loadRelatedGames(currentGame, categoryKey) {
+            const container = document.getElementById('related-games-container');
+            if (!container) return;
+
+            const gdExtraData = window.gdExtraGames || {};
+            const primaryPool = dedupeGames([
+                ...((gdExtraData[categoryKey] || [])),
+                ...(window[categoryKey === 'battle-royale' ? 'battleRoyaleData' :
+                    categoryKey === 'fps' ? 'fpsData' :
+                    categoryKey === 'sniper' ? 'sniperData' :
+                    categoryKey === 'multiplayer' ? 'multiplayerGames' :
+                    categoryKey === 'action' ? 'actionGames' : 'gamesData'] || [])
+            ]);
+            const fallbackPool = getAllGames();
+            const mergedPool = dedupeGames([...primaryPool, ...fallbackPool])
+                .filter(game => getGameKey(game) !== getGameKey(currentGame))
+                .slice(0, 200);
+
+            const recommendations = shuffleArray(mergedPool).slice(0, 24);
+            container.innerHTML = '';
+
+            recommendations.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+
+                const image = document.createElement('img');
+                image.src = resolveImage(game.imageUrl);
+                image.alt = game.name;
+                image.onerror = function() { this.src = 'img/icon/veckIo.jpg'; };
+
+                const title = document.createElement('div');
+                title.className = 'game-card-title';
+                title.textContent = game.name;
+
+                card.appendChild(image);
+                card.appendChild(title);
+                card.addEventListener('click', () => {
+                    if (game.link) {
+                        window.location.href = resolveLink(game.link);
+                    }
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        function toggleFullscreen() {
+            const iframe = document.getElementById('game-iframe');
+            if (!iframe) return;
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            }
+        }
+
+        function initParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particle.style.width = (3 + Math.random() * 4) + 'px';
+                particle.style.height = particle.style.width;
+                container.appendChild(particle);
+            }
+        }
+
+        function initCursorGlow() {
+            const glow = document.getElementById('cursorGlow');
+            if (!glow) return;
+            document.addEventListener('mousemove', (event) => {
+                glow.style.left = event.clientX - 100 + 'px';
+                glow.style.top = event.clientY - 100 + 'px';
+            });
+        }
+
+        function bootstrapPlayPage() {
+            applyStaticLocaleCopy();
+            const currentGame = getCurrentGame();
+            if (!currentGame) {
+                window.location.href = resolveLink('categories.html?category=all');
+                return;
+            }
+
+            const categoryKey = getURLParam('category') || currentGame.categoryKey || 'all';
+            renderPageMeta(currentGame, categoryKey);
+            renderGameFrame(currentGame);
+            loadRelatedGames(currentGame, categoryKey);
+            initParticles();
+            initCursorGlow();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', bootstrapPlayPage);
+        } else {
+            bootstrapPlayPage();
+        }
+    </script>
+
+
+</body></html>

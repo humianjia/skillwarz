@@ -9,6 +9,25 @@ function getAllHomeGames() {
     ];
 }
 
+function getLocaleApi() {
+    return window.SkillWarzLocale || null;
+}
+
+function getHomeLocaleText(key) {
+    const localeApi = getLocaleApi();
+    return localeApi ? localeApi.t('home', key) : '';
+}
+
+function resolveHomeImageUrl(path) {
+    const localeApi = getLocaleApi();
+    return localeApi ? localeApi.resolveGameImageUrl(path) : path;
+}
+
+function resolveHomePageLink(path) {
+    const localeApi = getLocaleApi();
+    return localeApi ? localeApi.resolvePageLink(path) : path;
+}
+
 function getHomeDefaultGame() {
     return Array.isArray(window.gamesData) && window.gamesData.length > 0 ? window.gamesData[0] : null;
 }
@@ -43,17 +62,17 @@ function loadMainGame() {
     }
 
     if (iframe && game.iframeUrl && iframe.src !== game.iframeUrl) {
-        setGameLoadingState(true, 'Launching in browser...');
+        setGameLoadingState(true, getHomeLocaleText('launchingBrowser') || 'Launching in browser...');
         iframe.src = game.iframeUrl;
     }
 
     if (title) {
-        title.textContent = game.name || 'Game';
+        title.textContent = game.name || getHomeLocaleText('genericGame') || 'Game';
     }
 
     if (icon && game.imageUrl) {
-        icon.src = game.imageUrl;
-        icon.alt = game.name || 'Game icon';
+        icon.src = resolveHomeImageUrl(game.imageUrl);
+        icon.alt = game.name || getHomeLocaleText('genericGameIcon') || 'Game icon';
     }
 }
 
@@ -68,17 +87,17 @@ function loadGame(gameIndex) {
     const icon = document.getElementById('game-icon');
 
     if (iframe) {
-        setGameLoadingState(true, 'Loading selected game...');
+        setGameLoadingState(true, getHomeLocaleText('loadingSelectedGame') || 'Loading selected game...');
         iframe.src = game.iframeUrl || '';
     }
 
     if (title) {
-        title.textContent = game.name || 'Game';
+        title.textContent = game.name || getHomeLocaleText('genericGame') || 'Game';
     }
 
     if (icon && game.imageUrl) {
-        icon.src = game.imageUrl;
-        icon.alt = game.name || 'Game icon';
+        icon.src = resolveHomeImageUrl(game.imageUrl);
+        icon.alt = game.name || getHomeLocaleText('genericGameIcon') || 'Game icon';
     }
 }
 
@@ -158,8 +177,8 @@ function loadRelatedGames() {
         card.className = 'game-card';
         card.setAttribute('data-game', game.id);
         card.innerHTML = `
-            <img src="${game.imageUrl || 'img/icon/veckIo.jpg'}" alt="${game.name || 'Game'}" loading="lazy" onerror="this.src='img/icon/veckIo.jpg'">
-            <div class="game-card-title">${game.name || 'Game'}</div>
+            <img src="${resolveHomeImageUrl(game.imageUrl || 'img/icon/veckIo.jpg')}" alt="${game.name || (getHomeLocaleText('genericGame') || 'Game')}" loading="lazy" onerror="this.src='/img/icon/veckIo.jpg'">
+            <div class="game-card-title">${game.name || (getHomeLocaleText('genericGame') || 'Game')}</div>
         `;
         card.addEventListener('click', function () {
             loadGameById(game.id);
@@ -171,7 +190,7 @@ function loadRelatedGames() {
 function loadGameById(gameId) {
     const game = getAllHomeGames().find((item) => item.id === gameId);
     if (game && game.link) {
-        window.location.href = game.link;
+        window.location.href = resolveHomePageLink(game.link);
     }
 }
 
@@ -219,7 +238,7 @@ function initHomeSearch() {
         }
 
         if (match.link) {
-            window.location.href = match.link;
+            window.location.href = resolveHomePageLink(match.link);
         }
     }
 
@@ -303,11 +322,11 @@ function initGameFrameLoading() {
     }
 
     iframe.addEventListener('load', function () {
-        setGameLoadingState(false, 'Live now. Jump into the match.');
+        setGameLoadingState(false, getHomeLocaleText('liveNow') || 'Live now. Jump into the match.');
     });
 
     window.setTimeout(function () {
-        setGameLoadingState(false, 'Ready to play. Click inside the frame if needed.');
+        setGameLoadingState(false, getHomeLocaleText('readyToPlay') || 'Ready to play. Click inside the frame if needed.');
     }, 8000);
 }
 

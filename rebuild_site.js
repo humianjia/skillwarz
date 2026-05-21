@@ -24,6 +24,10 @@ const ROOT = __dirname;
 const LOCALES = [
     { code: 'en', lang: 'en', baseDir: '', switchLabel: 'EN', name: 'English' },
     { code: 'hi', lang: 'hi', baseDir: 'hi', switchLabel: 'हिन्दी', name: 'हिन्दी' },
+    { code: 'ur', lang: 'ur', baseDir: 'ur', switchLabel: 'اردو', name: 'اردو' },
+    { code: 'tr', lang: 'tr', baseDir: 'tr', switchLabel: 'Türkçe', name: 'Türkçe' },
+    { code: 'pt-br', lang: 'pt-BR', baseDir: 'pt-br', switchLabel: 'Português', name: 'Português (Brasil)' },
+    { code: 'it', lang: 'it', baseDir: 'it', switchLabel: 'Italiano', name: 'Italiano' },
 ];
 
 const LOCALE_MAP = Object.fromEntries(LOCALES.map((locale) => [locale.code, locale]));
