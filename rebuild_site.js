@@ -1182,7 +1182,7 @@ function publicAssetUrl(assetPath) {
 function publicUrl(locale, pagePath) {
     const normalized = normalizePagePath(pagePath);
     if (normalized === 'index.html') {
-        return locale.baseDir ? `${SITE.url}/${locale.baseDir}/` : `${SITE.url}/`;
+        return locale.baseDir ? `${SITE.url}/${locale.baseDir}/index.html` : `${SITE.url}/`;
     }
     return `${SITE.url}/${localizedOutputPath(locale, normalized).replace(/\\/g, '/')}`;
 }
