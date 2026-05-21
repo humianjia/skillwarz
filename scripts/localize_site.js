@@ -30,6 +30,8 @@ const CHUNK_MAX_ITEMS = 8;
 const CHUNK_MAX_CHARS = 900;
 const cache = loadCache();
 let lastRequestAt = 0;
+const IS_CI = ['1', 'true'].includes(String(process.env.CI || '').toLowerCase()) || process.env.VERCEL === '1';
+const ALLOW_REMOTE_TRANSLATION = process.env.ALLOW_REMOTE_TRANSLATION === '1' || (!IS_CI && process.env.ALLOW_REMOTE_TRANSLATION !== '0');
 
 if (!process.env.NODE_OPTIONS || !process.env.NODE_OPTIONS.includes('--dns-result-order=ipv4first')) {
     const current = process.env.NODE_OPTIONS ? `${process.env.NODE_OPTIONS} ` : '';
@@ -409,6 +411,10 @@ async function translateRaw(text, locale) {
     const fallback = applyTextFallback(text, locale);
     if (fallback) {
         return fallback;
+    }
+
+    if (!ALLOW_REMOTE_TRANSLATION) {
+        return text;
     }
 
     const payload = new URLSearchParams({
