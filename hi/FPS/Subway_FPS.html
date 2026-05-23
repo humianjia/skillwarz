@@ -165,31 +165,8 @@ gtag('config', 'G-DNT670B4R3');
                             <h2>खेलने योग्य ब्राउज़र फ्रेम</h2>
                             <p>Browser frame केवल तब लोड होती है जब visitor उसे खोलने का निर्णय करता है। इससे editorial summary और player-fit notes किसी भी third-party session से पहले दिखाई देती रहती हैं।</p>
                             <div class="game-showcase deferred-play-shell">
-        <div class="game-frame play-frame-shell" id="subway-fps-play-shell">
-            <div class="play-placeholder">
-                <img src="../../img/icon/FPS/SubwayFPS.jpeg" class="play-placeholder-thumb" alt="Subway FPS आइकन" loading="lazy">
-                <div class="play-placeholder-copy">
-                    <span class="play-kicker">उपयोगकर्ता द्वारा शुरू किया गया ब्राउज़र सेशन</span>
-                    <h3>Quick take पढ़ने के बाद ही Subway FPS लोड करें</h3>
-                    <p>यह पेज पहले original summary और player-fit notes दिखाता है, फिर visitor चाहे तो playable browser frame खोल सकता है।</p>
-                    <div class="play-mobile-note">
-                        <strong>मोबाइल-फ्रेंडली</strong>
-                        <span>फ़ोन पर पहले त्वरित सारांश पढ़ना और तैयार होने पर ही play शुरू करना बेहतर रहता है।</span>
-                    </div>
-                    <div class="button-row">
-                        <button
-                            class="button-link play-trigger"
-                            type="button"
-                            data-play-target="subway-fps-play-shell"
-                            data-iframe-url="https://html5.gamedistribution.com/fd5f903d4b93483e809891046eb0b180/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
-                            data-iframe-title="Subway FPS ब्राउज़र सेशन"
-                            data-expand-target="subway-fps-play-shell-expand"
-                        ><i class="fas fa-play"></i><span class="play-trigger-label-desktop">Subway FPS लोड करें</span><span class="play-trigger-label-mobile">Playable frame खोलें</span></button>
-                        <a class="button-link secondary" href="../how-to-improve-browser-fps-aim.html">FPS aim guide पढ़ें</a>
-                    </div>
-                    <div class="play-status">Playable frame तभी लोड होगा जब visitor इसे खोलने का निर्णय करेगा।</div>
-                </div>
-            </div>
+        <div class="game-frame play-frame-shell" id="subway-fps-play-shell" data-loaded="true">
+            <iframe src="https://html5.gamedistribution.com/fd5f903d4b93483e809891046eb0b180/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F" title="Subway FPS ब्राउज़र सेशन" loading="eager" allowfullscreen></iframe>
         </div>
         <div class="game-controls">
             <div class="game-title-section">
@@ -205,13 +182,11 @@ gtag('config', 'G-DNT670B4R3');
                     type="button"
                     id="subway-fps-play-shell-expand"
                     data-fullscreen-target="subway-fps-play-shell"
-                    hidden
-                    aria-hidden="true"
                 ><i class="fas fa-expand"></i><span>फुलस्क्रीन</span></button>
+                <a class="button-link secondary" href="../how-to-improve-browser-fps-aim.html">FPS aim guide पढ़ें</a>
             </div>
         </div>
         <div class="embed-note">ऊपर दिखाया गया playable frame third-party browser distribution partner द्वारा दिया जा सकता है। SkillWarz इस page पर context, original summary text और साफ navigation जोड़ता है।</div>
-        <div class="mobile-play-disclaimer">छोटी स्क्रीन पर game frame को secondary रखा जाता है ताकि पेज पढ़ना और tap करना आसान रहे।</div>
     </div>
                         </section>
 
@@ -300,7 +275,7 @@ gtag('config', 'G-DNT670B4R3');
         const iframe = document.createElement('iframe');
         iframe.src = trigger.getAttribute('data-iframe-url');
         iframe.title = trigger.getAttribute('data-iframe-title');
-        iframe.loading = 'lazy';
+        iframe.loading = 'eager';
         iframe.setAttribute('allowfullscreen', '');
 
         shell.innerHTML = '';
@@ -316,6 +291,12 @@ gtag('config', 'G-DNT670B4R3');
             expandButton.hidden = false;
             expandButton.removeAttribute('aria-hidden');
         }
+    }
+
+    function initPlayableFrames() {
+        document.querySelectorAll('[data-play-target]').forEach(function (trigger) {
+            loadPlayableFrame(trigger);
+        });
     }
 
     document.addEventListener('click', function (event) {
@@ -347,6 +328,12 @@ gtag('config', 'G-DNT670B4R3');
 
         iframe.requestFullscreen();
     });
+
+    initPlayableFrames();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPlayableFrames, { once: true });
+    }
 
     document.addEventListener('keydown', function (event) {
         if (event.key !== 'Escape') {

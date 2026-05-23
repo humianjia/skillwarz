@@ -136,7 +136,7 @@ gtag('config', 'G-DNT670B4R3');
                     </div>
 
                     <h1>FPS Simulator</h1>
-                    <div class="info-header">This SkillWarz page combines playable access with an original quick-take summary, player-fit notes, and category context.</div>
+                    <div class="info-header">This SkillWarz page now shows the playable browser frame by default while keeping the original quick-take summary, player-fit notes, and category context.</div>
 
                     <div class="button-row">
                         <a class="button-link" href="../categories.html#fps"><i class="fas fa-layer-group"></i>Back to First-Person Shooters</a>
@@ -165,31 +165,8 @@ gtag('config', 'G-DNT670B4R3');
                             <h2>Playable Browser Frame</h2>
                             <p>The browser frame is loaded only when a visitor chooses to open it, which keeps the editorial summary and player-fit notes visible before any third-party session starts.</p>
                             <div class="game-showcase deferred-play-shell">
-        <div class="game-frame play-frame-shell" id="fps-simulator-play-shell">
-            <div class="play-placeholder">
-                <img src="../../img/icon/FPS/FPSSimulator.jpeg" class="play-placeholder-thumb" alt="FPS Simulator icon" loading="lazy">
-                <div class="play-placeholder-copy">
-                    <span class="play-kicker">User-initiated browser session</span>
-                    <h3>Load FPS Simulator only after you have read the quick take</h3>
-                    <p>This page keeps the original summary and player-fit notes visible first, then lets the visitor choose whether to open the playable browser frame.</p>
-                    <div class="play-mobile-note">
-                        <strong>Mobile-friendly</strong>
-                        <span>On phones, it is usually better to read the quick summary first and launch play only when you are ready.</span>
-                    </div>
-                    <div class="button-row">
-                        <button
-                            class="button-link play-trigger"
-                            type="button"
-                            data-play-target="fps-simulator-play-shell"
-                            data-iframe-url="https://html5.gamedistribution.com/2952cdc03d9742febf95e22cb6e5756b/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F"
-                            data-iframe-title="FPS Simulator browser session"
-                            data-expand-target="fps-simulator-play-shell-expand"
-                        ><i class="fas fa-play"></i><span class="play-trigger-label-desktop">Load FPS Simulator</span><span class="play-trigger-label-mobile">Open playable frame</span></button>
-                        <a class="button-link secondary" href="../how-to-improve-browser-fps-aim.html">Read the FPS aim guide</a>
-                    </div>
-                    <div class="play-status">The playable frame loads only after the visitor chooses to open it.</div>
-                </div>
-            </div>
+        <div class="game-frame play-frame-shell" id="fps-simulator-play-shell" data-loaded="true">
+            <iframe src="https://html5.gamedistribution.com/2952cdc03d9742febf95e22cb6e5756b/?gd_sdk_referrer_url=https%3A%2F%2Fwww.onlinegames.io%2Fcat-runner%2F" title="FPS Simulator browser session" loading="eager" allowfullscreen></iframe>
         </div>
         <div class="game-controls">
             <div class="game-title-section">
@@ -205,13 +182,11 @@ gtag('config', 'G-DNT670B4R3');
                     type="button"
                     id="fps-simulator-play-shell-expand"
                     data-fullscreen-target="fps-simulator-play-shell"
-                    hidden
-                    aria-hidden="true"
                 ><i class="fas fa-expand"></i><span>Fullscreen</span></button>
+                <a class="button-link secondary" href="../how-to-improve-browser-fps-aim.html">Read the FPS aim guide</a>
             </div>
         </div>
         <div class="embed-note">The playable frame above may be supplied by a third-party browser distribution partner. SkillWarz uses this page to add context, original summary text, and cleaner navigation around the title.</div>
-        <div class="mobile-play-disclaimer">The game frame stays secondary on smaller screens so the page is easier to read and tap through.</div>
     </div>
                         </section>
 
@@ -300,7 +275,7 @@ gtag('config', 'G-DNT670B4R3');
         const iframe = document.createElement('iframe');
         iframe.src = trigger.getAttribute('data-iframe-url');
         iframe.title = trigger.getAttribute('data-iframe-title');
-        iframe.loading = 'lazy';
+        iframe.loading = 'eager';
         iframe.setAttribute('allowfullscreen', '');
 
         shell.innerHTML = '';
@@ -316,6 +291,12 @@ gtag('config', 'G-DNT670B4R3');
             expandButton.hidden = false;
             expandButton.removeAttribute('aria-hidden');
         }
+    }
+
+    function initPlayableFrames() {
+        document.querySelectorAll('[data-play-target]').forEach(function (trigger) {
+            loadPlayableFrame(trigger);
+        });
     }
 
     document.addEventListener('click', function (event) {
@@ -347,6 +328,12 @@ gtag('config', 'G-DNT670B4R3');
 
         iframe.requestFullscreen();
     });
+
+    initPlayableFrames();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPlayableFrames, { once: true });
+    }
 
     document.addEventListener('keydown', function (event) {
         if (event.key !== 'Escape') {

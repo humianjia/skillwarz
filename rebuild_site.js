@@ -1667,6 +1667,48 @@ function buildDeferredPlayShell({
     </div>`;
 }
 
+function buildLoadedPlayShell({
+    locale,
+    pagePath,
+    shellId,
+    iframeUrl,
+    title,
+    imageUrl,
+    imageAlt,
+    disclosure,
+    secondaryHref = '',
+    secondaryLabel = '',
+}) {
+    const secondaryLink = secondaryHref && secondaryLabel
+        ? `<a class="button-link secondary" href="${secondaryHref}">${escapeHtml(secondaryLabel)}</a>`
+        : '';
+
+    return `<div class="game-showcase deferred-play-shell">
+        <div class="game-frame play-frame-shell" id="${shellId}" data-loaded="true">
+            <iframe src="${escapeHtml(iframeUrl)}" title="${escapeHtml(title)}" loading="eager" allowfullscreen></iframe>
+        </div>
+        <div class="game-controls">
+            <div class="game-title-section">
+                <img src="${assetHref(locale, pagePath, imageUrl)}" class="game-icon" alt="${escapeHtml(imageAlt)}">
+                <div class="game-title-copy">
+                    <span class="game-title">${escapeHtml(title)}</span>
+                    <span class="game-title-note">${escapeHtml(t(locale, UI.mobilePlaySummary))}</span>
+                </div>
+            </div>
+            <div class="game-actions">
+                <button
+                    class="game-action-button"
+                    type="button"
+                    id="${shellId}-expand"
+                    data-fullscreen-target="${shellId}"
+                ><i class="fas fa-expand"></i><span>${escapeHtml(t(locale, UI.fullscreen))}</span></button>
+                ${secondaryLink}
+            </div>
+        </div>
+        <div class="embed-note">${escapeHtml(disclosure)}</div>
+    </div>`;
+}
+
 function buildPlayActivationScript(locale) {
     const loadedLabel = JSON.stringify(t(locale, UI.sessionLoaded));
 
@@ -1695,7 +1737,7 @@ function buildPlayActivationScript(locale) {
         const iframe = document.createElement('iframe');
         iframe.src = trigger.getAttribute('data-iframe-url');
         iframe.title = trigger.getAttribute('data-iframe-title');
-        iframe.loading = 'lazy';
+        iframe.loading = 'eager';
         iframe.setAttribute('allowfullscreen', '');
 
         shell.innerHTML = '';
@@ -1711,6 +1753,12 @@ function buildPlayActivationScript(locale) {
             expandButton.hidden = false;
             expandButton.removeAttribute('aria-hidden');
         }
+    }
+
+    function initPlayableFrames() {
+        document.querySelectorAll('[data-play-target]').forEach(function (trigger) {
+            loadPlayableFrame(trigger);
+        });
     }
 
     document.addEventListener('click', function (event) {
@@ -1742,6 +1790,12 @@ function buildPlayActivationScript(locale) {
 
         iframe.requestFullscreen();
     });
+
+    initPlayableFrames();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPlayableFrames, { once: true });
+    }
 
     document.addEventListener('keydown', function (event) {
         if (event.key !== 'Escape') {
@@ -1864,7 +1918,7 @@ function buildHomePage(locale, homeGame, featuredGames) {
     const statCards = stats.map((item) => `<div class="stat-card"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.text)}</p></div>`).join('');
     const guideCards = GUIDES.map((guide) => buildGuideCard(locale, pagePath, guide)).join('');
     const featuredCards = featuredGames.slice(0, 8).map((game) => buildCatalogCard(locale, pagePath, game)).join('');
-    const homePlayShell = buildDeferredPlayShell({
+    const homePlayShell = buildLoadedPlayShell({
         locale,
         pagePath,
         shellId: 'home-play-shell',
@@ -1969,7 +2023,7 @@ function buildHomePage(locale, homeGame, featuredGames) {
                             <h2>${escapeHtml(locale.code === 'hi' ? 'Playable browser session' : 'Playable Browser Session')}</h2>
                             <p>${escapeHtml(locale.code === 'hi'
                                 ? 'Visitors अब भी homepage से SkillWarz launch कर सकते हैं, लेकिन browser frame केवल तब लोड होती है जब वे खुद request करें। इससे page पहले original guidance पर केंद्रित रहता है और playable access बाद में आती है।'
-                                : 'Visitors can still launch SkillWarz from this homepage, but the browser frame is loaded only after they actively request it. That keeps the page centered on original guidance first and playable access second.')}</p>
+                                : 'The homepage now loads the SkillWarz browser frame by default while keeping the original guidance and fullscreen entry visible.')}</p>
                             ${homePlayShell}
                         </section>
 
@@ -2213,7 +2267,7 @@ function buildGamePage(locale, game, allGames) {
         .sort((left, right) => Number(right.indexable) - Number(left.indexable) || left.name.localeCompare(right.name))
         .slice(0, 6);
 
-    const playShell = buildDeferredPlayShell({
+    const playShell = buildLoadedPlayShell({
         locale,
         pagePath,
         shellId: `${slugFromName(game.name)}-play-shell`,
@@ -2270,7 +2324,7 @@ function buildGamePage(locale, game, allGames) {
                     <h1>${escapeHtml(game.name)}</h1>
                     <div class="info-header">${escapeHtml(locale.code === 'hi'
                         ? 'यह SkillWarz page playable access को original quick-take summary, player-fit notes और category context के साथ जोड़ता है।'
-                        : 'This SkillWarz page combines playable access with an original quick-take summary, player-fit notes, and category context.')}</div>
+                        : 'This SkillWarz page now shows the playable browser frame by default while keeping the original quick-take summary, player-fit notes, and category context.')}</div>
 
                     <div class="button-row">
                         <a class="button-link" href="${sameLocaleHref(locale, pagePath, 'categories.html', game.categorySlug)}"><i class="fas fa-layer-group"></i>${escapeHtml(`${t(locale, UI.backTo)} ${categoryLabel}`)}</a>

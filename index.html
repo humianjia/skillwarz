@@ -175,33 +175,10 @@ gtag('config', 'G-DNT670B4R3');
 
                         <section class="section-block">
                             <h2>Playable Browser Session</h2>
-                            <p>Visitors can still launch SkillWarz from this homepage, but the browser frame is loaded only after they actively request it. That keeps the page centered on original guidance first and playable access second.</p>
+                            <p>The homepage now loads the SkillWarz browser frame by default while keeping the original guidance and fullscreen entry visible.</p>
                             <div class="game-showcase deferred-play-shell">
-        <div class="game-frame play-frame-shell" id="home-play-shell">
-            <div class="play-placeholder">
-                <img src="img/skillwarz.avif" class="play-placeholder-thumb" alt="SkillWarz icon" loading="lazy">
-                <div class="play-placeholder-copy">
-                    <span class="play-kicker">User-initiated browser session</span>
-                    <h3>Load the playable browser session only when you are ready</h3>
-                    <p>This keeps the homepage focused on original guidance first while still letting visitors launch the browser build on demand.</p>
-                    <div class="play-mobile-note">
-                        <strong>Mobile-friendly</strong>
-                        <span>On phones, it is usually better to read the quick summary first and launch play only when you are ready.</span>
-                    </div>
-                    <div class="button-row">
-                        <button
-                            class="button-link play-trigger"
-                            type="button"
-                            data-play-target="home-play-shell"
-                            data-iframe-url="https://ext.minijuegosgratis.com/cz/play.html?n=skillwarz&amp;mp_assets=https%3A%2F%2Fs2.minijuegosgratis.com%2F&amp;mp_embed=0&amp;mp_game_id=251508&amp;mp_game_uid=skillwarz-legacy-edition&amp;mp_game_url=https%3A%2F%2Fwww.miniplay.com%2Fgame%2Fskillwarz-legacy-edition&amp;mp_int=1&amp;mp_locale=en_US&amp;mp_player_type=IFRAME&amp;mp_site_https_url=https%3A%2F%2Fwww.miniplay.com%2F&amp;mp_site_name=miniplay.com&amp;mp_site_url=https%3A%2F%2Fwww.miniplay.com%2F&amp;mp_timezone=Asia%2FShanghai&amp;mp_view_type="
-                            data-iframe-title="SkillWarz browser session"
-                            data-expand-target="home-play-shell-expand"
-                        ><i class="fas fa-play"></i><span class="play-trigger-label-desktop">Load playable browser session</span><span class="play-trigger-label-mobile">Open playable frame</span></button>
-                        <a class="button-link secondary" href="skillwarz-beginner-guide.html">Read the beginner guide first</a>
-                    </div>
-                    <div class="play-status">The playable frame loads only after the visitor chooses to open it.</div>
-                </div>
-            </div>
+        <div class="game-frame play-frame-shell" id="home-play-shell" data-loaded="true">
+            <iframe src="https://ext.minijuegosgratis.com/cz/play.html?n=skillwarz&amp;mp_assets=https%3A%2F%2Fs2.minijuegosgratis.com%2F&amp;mp_embed=0&amp;mp_game_id=251508&amp;mp_game_uid=skillwarz-legacy-edition&amp;mp_game_url=https%3A%2F%2Fwww.miniplay.com%2Fgame%2Fskillwarz-legacy-edition&amp;mp_int=1&amp;mp_locale=en_US&amp;mp_player_type=IFRAME&amp;mp_site_https_url=https%3A%2F%2Fwww.miniplay.com%2F&amp;mp_site_name=miniplay.com&amp;mp_site_url=https%3A%2F%2Fwww.miniplay.com%2F&amp;mp_timezone=Asia%2FShanghai&amp;mp_view_type=" title="SkillWarz browser session" loading="eager" allowfullscreen></iframe>
         </div>
         <div class="game-controls">
             <div class="game-title-section">
@@ -217,13 +194,11 @@ gtag('config', 'G-DNT670B4R3');
                     type="button"
                     id="home-play-shell-expand"
                     data-fullscreen-target="home-play-shell"
-                    hidden
-                    aria-hidden="true"
                 ><i class="fas fa-expand"></i><span>Fullscreen</span></button>
+                <a class="button-link secondary" href="skillwarz-beginner-guide.html">Read the beginner guide first</a>
             </div>
         </div>
         <div class="embed-note">Playable browser sessions may be delivered through a third-party distribution partner when available. The editorial text on this site is written independently to help visitors understand controls, genre fit, and session style before they play.</div>
-        <div class="mobile-play-disclaimer">The game frame stays secondary on smaller screens so the page is easier to read and tap through.</div>
     </div>
                         </section>
 
@@ -420,7 +395,7 @@ gtag('config', 'G-DNT670B4R3');
         const iframe = document.createElement('iframe');
         iframe.src = trigger.getAttribute('data-iframe-url');
         iframe.title = trigger.getAttribute('data-iframe-title');
-        iframe.loading = 'lazy';
+        iframe.loading = 'eager';
         iframe.setAttribute('allowfullscreen', '');
 
         shell.innerHTML = '';
@@ -436,6 +411,12 @@ gtag('config', 'G-DNT670B4R3');
             expandButton.hidden = false;
             expandButton.removeAttribute('aria-hidden');
         }
+    }
+
+    function initPlayableFrames() {
+        document.querySelectorAll('[data-play-target]').forEach(function (trigger) {
+            loadPlayableFrame(trigger);
+        });
     }
 
     document.addEventListener('click', function (event) {
@@ -467,6 +448,12 @@ gtag('config', 'G-DNT670B4R3');
 
         iframe.requestFullscreen();
     });
+
+    initPlayableFrames();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPlayableFrames, { once: true });
+    }
 
     document.addEventListener('keydown', function (event) {
         if (event.key !== 'Escape') {
