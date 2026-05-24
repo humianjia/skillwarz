@@ -20,6 +20,7 @@ const SITE = {
 };
 
 const ROOT = __dirname;
+const GD_CATEGORY_DATA_FILE = path.join(ROOT, 'js', 'game_data', 'gd_categories.js');
 
 const LOCALES = [
     { code: 'en', lang: 'en', baseDir: '', switchLabel: 'EN', name: 'English' },
@@ -1074,6 +1075,14 @@ const EXTRA_GAMES = [
     },
 ];
 
+const GD_CATEGORY_PAGE_LABEL_OVERRIDES = {
+    shooter: lt('Shooter Games', 'शूटर गेम्स'),
+    'racing-and-driving': lt('Racing And Driving Games', 'रेसिंग और ड्राइविंग गेम्स'),
+    'mahjong-and-connect': lt('Mahjong And Connect Games', 'माहजोंग और कनेक्ट गेम्स'),
+    'bubble-shooter': lt('Bubble Shooter Games', 'बबल शूटर गेम्स'),
+    'io': lt('.IO Games', '.IO गेम्स'),
+};
+
 const PLAY_STYLE_COPY = {
     sniper: lt('slow-angle precision and patient line-of-sight control', 'धीमी angle precision और patient line-of-sight control'),
     battleRoyale: lt('survival pressure, positioning, and endgame decision making', 'survival pressure, positioning और endgame decision making'),
@@ -1152,6 +1161,16 @@ function escapeHtml(value) {
         .replace(/'/g, '&#39;');
 }
 
+function collapseWhitespace(value) {
+    return String(value || '')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+function isExternalUrl(value) {
+    return /^https?:\/\//i.test(String(value || ''));
+}
+
 function ensureDir(dirPath) {
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true });
@@ -1166,6 +1185,23 @@ function readVarArray(filePath, varName) {
     return sandbox[varName] || [];
 }
 
+function readScriptValue(filePath, key) {
+    const code = fs.readFileSync(path.join(ROOT, filePath), 'utf8');
+    const sandbox = { window: {} };
+    vm.createContext(sandbox);
+    vm.runInContext(code, sandbox);
+
+    if (sandbox[key] !== undefined) {
+        return sandbox[key];
+    }
+
+    if (sandbox.window && sandbox.window[key] !== undefined) {
+        return sandbox.window[key];
+    }
+
+    return null;
+}
+
 function normalizePagePath(pagePath) {
     return pagePath || 'index.html';
 }
@@ -1176,6 +1212,9 @@ function localizedOutputPath(locale, pagePath) {
 }
 
 function publicAssetUrl(assetPath) {
+    if (isExternalUrl(assetPath)) {
+        return assetPath;
+    }
     return `${SITE.url}/${assetPath.replace(/\\/g, '/')}`;
 }
 
@@ -1205,6 +1244,9 @@ function crossLocaleHref(fromLocale, fromPagePath, toLocale, toPagePath) {
 }
 
 function assetHref(locale, pagePath, assetPath) {
+    if (isExternalUrl(assetPath)) {
+        return assetPath;
+    }
     const fromOutput = localizedOutputPath(locale, pagePath);
     return relativePath(fromOutput, assetPath);
 }
@@ -1232,6 +1274,37 @@ function getCategoryLabel(category, locale) {
 function getCategoryIntro(category, locale) {
     const dataset = getDatasetByCategory(category);
     return dataset ? t(locale, dataset.intro) : '';
+}
+
+function getGdCategoryData() {
+    if (!fs.existsSync(GD_CATEGORY_DATA_FILE)) {
+        return null;
+    }
+
+    return readScriptValue('js/game_data/gd_categories.js', 'gdCategoryData');
+}
+
+function getGdCategoryLabel(category, locale) {
+    const override = GD_CATEGORY_PAGE_LABEL_OVERRIDES[category.key];
+    if (override) {
+        return t(locale, override);
+    }
+
+    return t(locale, category.label);
+}
+
+function getGdCategoryIntro(category, locale) {
+    const label = getGdCategoryLabel(category, locale);
+
+    if (locale.code === 'hi') {
+        return `${label} के लिए SkillWarz का यह अलग category page लगभग 50 curated GameDistribution titles, तेज thumbnails, साफ descriptions और direct browser access को एक जगह लाता है।`;
+    }
+
+    return `This standalone SkillWarz category page for ${label} brings together roughly 50 curated GameDistribution titles with direct browser access, cleaner descriptions, and fast-scanning thumbnails.`;
+}
+
+function categoryPageOpenLabel(locale) {
+    return locale.code === 'hi' ? 'पेज खोलें' : 'Open page';
 }
 
 function pageWord(locale, count) {
@@ -1313,6 +1386,7 @@ function buildHeader(locale, pagePath, activeKey = '') {
     const navItems = [
         { key: 'home', href: sameLocaleHref(locale, pagePath, 'index.html'), label: t(locale, UI.home) },
         { key: 'guides', href: sameLocaleHref(locale, pagePath, 'skillwarz-beginner-guide.html'), label: t(locale, UI.guides) },
+        { key: 'categories', href: sameLocaleHref(locale, pagePath, 'categories.html'), label: t(locale, UI.categories) },
         { key: 'fps', href: sameLocaleHref(locale, pagePath, 'categories.html', 'fps'), label: t(locale, UI.fps) },
         { key: 'battle-royale', href: sameLocaleHref(locale, pagePath, 'categories.html', 'battle-royale'), label: t(locale, UI.battleRoyale) },
         { key: 'sniper', href: sameLocaleHref(locale, pagePath, 'categories.html', 'sniper'), label: t(locale, UI.sniper) },
@@ -1581,6 +1655,71 @@ function buildCatalogCard(locale, pagePath, game) {
             <a class="catalog-link" href="${href}">${escapeHtml(t(locale, UI.openPage))}</a>
         </div>
     </article>`;
+}
+
+function buildCompactCatalogCard(locale, pagePath, game) {
+    const href = sameLocaleHref(locale, pagePath, game.link);
+    const imageHref = assetHref(locale, pagePath, game.imageUrl);
+    const description = collapseWhitespace(game.description || buildGameSummary(locale, game)[0]);
+
+    return `<article class="catalog-card">
+        <img src="${imageHref}" alt="${escapeHtml(game.name)}" loading="lazy">
+        <div class="catalog-card-body">
+            <div class="catalog-card-top">
+                <h3>${escapeHtml(game.name)}</h3>
+                <span class="meta-badge"><i class="fas fa-star"></i>${escapeHtml(game.rating || '4.5')}</span>
+            </div>
+            ${gameCategoryBadge(locale, game)}
+            <p>${escapeHtml(description)}</p>
+            <div class="catalog-tags">${tagList(game.tags, 5)}</div>
+            <a class="catalog-link" href="${href}">${escapeHtml(t(locale, UI.openPage))}</a>
+        </div>
+    </article>`;
+}
+
+function categoryGameCountText(locale, count) {
+    return locale.code === 'hi' ? `${count} गेम` : `${count} games`;
+}
+
+function buildCategorySwitchCards(locale, pagePath, categories, activeKey = '') {
+    return categories.map((category) => {
+        const isActive = category.key === activeKey;
+        return `<article class="jump-card${isActive ? ' active' : ''}">
+            <h3><a href="${sameLocaleHref(locale, pagePath, category.pagePath)}"${isActive ? ' aria-current="page"' : ''}>${escapeHtml(getGdCategoryLabel(category, locale))}</a></h3>
+            <p>${escapeHtml(categoryGameCountText(locale, category.games.length))}</p>
+        </article>`;
+    }).join('');
+}
+
+function buildCategoryGamesDetails(locale, pagePath, category) {
+    const previewCards = (category.recommendedGames || category.games.slice(0, 8))
+        .map((game) => buildCompactCatalogCard(locale, pagePath, game))
+        .join('');
+    const allCards = category.games.map((game) => buildCompactCatalogCard(locale, pagePath, game)).join('');
+    const label = getGdCategoryLabel(category, locale);
+
+    return `<section class="catalog-section" id="${category.key}">
+        <div class="catalog-section-header">
+            <div>
+                <h2>${escapeHtml(label)}</h2>
+                <p>${escapeHtml(getGdCategoryIntro(category, locale))}</p>
+            </div>
+            <span class="catalog-badge"><i class="fas fa-gamepad"></i>${escapeHtml(categoryGameCountText(locale, category.games.length))}</span>
+        </div>
+        <div class="page-anchor-links">
+            <a href="${sameLocaleHref(locale, pagePath, category.pagePath)}">${escapeHtml(locale.code === 'hi' ? '分类页 खोलें' : 'Open category page')}</a>
+            <a href="#top">${escapeHtml(locale.code === 'hi' ? 'ऊपर जाएं' : 'Back to top')}</a>
+        </div>
+        <div class="catalog-grid">
+            ${previewCards}
+        </div>
+        <details class="content-note">
+            <summary>${escapeHtml(locale.code === 'hi' ? 'सभी गेम दिखाएं' : 'Show all games')} (${category.games.length})</summary>
+            <div class="catalog-grid" style="margin-top:16px;">
+                ${allCards}
+            </div>
+        </details>
+    </section>`;
 }
 
 function buildRelatedCard(locale, pagePath, game) {
@@ -2120,6 +2259,11 @@ function buildCategoryPage(locale, allGames) {
         </section>`;
     }).join('\n');
 
+    const gdCategoryData = getGdCategoryData();
+    const gdCategories = (gdCategoryData?.categories || []).slice().sort((left, right) => getGdCategoryLabel(left, locale).localeCompare(getGdCategoryLabel(right, locale)));
+    const allCategoryCards = buildCategorySwitchCards(locale, pagePath, gdCategories, 'all');
+    const categorySections = gdCategories.map((category) => buildCategoryGamesDetails(locale, pagePath, category)).join('\n');
+
     const head = standardHead({
         locale,
         pagePath,
@@ -2137,23 +2281,110 @@ function buildCategoryPage(locale, allGames) {
     const mainContent = `        <div class="main-content">
             <div class="content-section">
                 <div class="game-info page-copy">
+                    <span id="top"></span>
                     <div class="page-breadcrumb"><a href="${sameLocaleHref(locale, pagePath, 'index.html')}">${escapeHtml(t(locale, UI.home))}</a><span>/</span><span>${escapeHtml(t(locale, UI.categories))}</span></div>
                     <h1>${escapeHtml(locale.code === 'hi' ? 'SkillWarz श्रेणियां' : 'SkillWarz Categories')}</h1>
                     <div class="info-header">${escapeHtml(locale.code === 'hi'
-                        ? 'SkillWarz का हर category page अब cleaner genre fit, वास्तविक page counts और मजबूत editorial summaries के आसपास फिर से बनाया जा रहा है।'
-                        : 'Every category page on SkillWarz is being rebuilt around cleaner genre fit, actual page counts, and stronger editorial summaries.')}</div>
+                        ? 'यह page अब सभी GameDistribution categories का एक unified overview देता है, और हर category card से आप सीधे उस category page पर जा सकते हैं।'
+                        : 'This page now acts as a unified overview of all GameDistribution categories, and each category card lets you jump straight into that category page.')}</div>
                     <p class="lead-copy">${escapeHtml(locale.code === 'hi'
-                        ? 'यह catalog अब सबसे मजबूत shooter-aligned editorial pages को पहले दिखाता है। Broader site inventory में support entries अभी भी मौजूद हैं, लेकिन original coverage बढ़ने तक वे noindex और मुख्य review path से बाहर रहती हैं।'
-                        : 'This catalog now highlights the strongest shooter-aligned editorial pages first. Support entries still exist in the broader site inventory, but they stay noindex and off the main review path while original coverage expands.')}</p>
+                        ? 'नीचे सभी categories की list है, साथ में preview cards, counts और direct switch links भी हैं।'
+                        : 'Below you will find the full category list with preview cards, counts, and direct switch links.')}</p>
                     <div class="catalog-note">${escapeHtml(locale.code === 'hi'
-                        ? 'अब आपको यहां बढ़ा-चढ़ाकर दिखाए गए counts, random ratings या नकली play totals नहीं दिखेंगे। Category sections अब flagship pages को प्राथमिकता देती हैं और कमजोर support entries की visibility घटाती हैं।'
-                        : 'You will no longer see inflated counts, random ratings, or fake play totals here. Category sections now prioritize flagship pages and reduce the visibility of weaker support entries.')}</div>
-
+                        ? '所有数据来自共享的 GD 分类数据源，分类页和多语言页会一起更新。'
+                        : 'All data comes from the shared GD category source, so the main page and localized pages stay in sync.')}</div>
                     <div class="category-jump-grid">
-                        ${jumpCards}
+                        ${allCategoryCards}
                     </div>
+                    ${categorySections}
+                </div>
+            </div>
+        </div>`;
 
-                    ${sections}
+    return buildPageLayout({
+        locale,
+        head,
+        header: buildHeader(locale, pagePath, ''),
+        mainContent,
+        footer: buildFooter(locale, pagePath),
+    });
+}
+
+function buildGdCategoryPage(locale, category, allCategoryPages) {
+    const pagePath = category.pagePath;
+    const label = getGdCategoryLabel(category, locale);
+    const intro = getGdCategoryIntro(category, locale);
+    const allCategoriesSorted = allCategoryPages.slice().sort((left, right) => getGdCategoryLabel(left, locale).localeCompare(getGdCategoryLabel(right, locale)));
+    const recommendedCards = category.recommendedGames.map((game) => buildCompactCatalogCard(locale, pagePath, game)).join('');
+    const catalogCards = category.games.map((game) => buildCompactCatalogCard(locale, pagePath, game)).join('');
+    const jumpLinks = buildCategorySwitchCards(locale, pagePath, allCategoriesSorted, category.key);
+
+    const head = standardHead({
+        locale,
+        pagePath,
+        title: locale.code === 'hi' ? `${label} - SkillWarz` : `${label} - SkillWarz`,
+        description: locale.code === 'hi'
+            ? `${label} category के लिए curated GameDistribution browser games देखें। इस page में推荐 games और पूरी category सूची दोनों शामिल हैं।`
+            : `Browse curated GameDistribution browser games for the ${label} category, including recommended picks and the full category list.`,
+        ogTitle: `${label} | SkillWarz`,
+        ogDescription: locale.code === 'hi'
+            ? `${label} के लिए curated browser game selection, thumbnails, descriptions और direct play links।`
+            : `Curated browser game picks, thumbnails, descriptions, and direct play links for the ${label} category.`,
+        ogImage: category.recommendedGames[0]?.imageUrl || category.games[0]?.imageUrl || 'img/skillwarz.avif',
+    });
+
+    const recommendedSection = recommendedCards
+        ? `<section class="catalog-section" id="recommended">
+            <div class="catalog-section-header">
+                <div>
+                    <h2>${escapeHtml(locale.code === 'hi' ? '推荐游戏' : 'Recommended Games')}</h2>
+                    <p>${escapeHtml(locale.code === 'hi'
+                        ? `${label} 中优先展示的一批热门或精选 titles。`
+                        : `A highlighted set of popular or editorially useful picks inside the ${label} category.`)}</p>
+                </div>
+                <span class="catalog-badge"><i class="fas fa-fire"></i>${escapeHtml(`${category.recommendedGames.length} picks`)}</span>
+            </div>
+            <div class="catalog-grid">
+                ${recommendedCards}
+            </div>
+        </section>`
+        : '';
+
+    const mainContent = `        <div class="main-content">
+            <div class="content-section">
+                <div class="game-info page-copy">
+                    <div class="page-breadcrumb"><a href="${sameLocaleHref(locale, pagePath, 'index.html')}">${escapeHtml(t(locale, UI.home))}</a><span>/</span><a href="${sameLocaleHref(locale, pagePath, 'categories.html')}">${escapeHtml(t(locale, UI.categories))}</a><span>/</span><span>${escapeHtml(label)}</span></div>
+                    <h1>${escapeHtml(label)}</h1>
+                    <div class="info-header">${escapeHtml(intro)}</div>
+                    <p class="lead-copy">${escapeHtml(locale.code === 'hi'
+                        ? `这个独立页面不会改动首页内容，只把 ${label} 相关的 GameDistribution 游戏整理成一个单独入口。`
+                        : `This standalone page leaves the homepage untouched and simply collects GameDistribution titles for the ${label} category in one dedicated entry point.`)}</p>
+                    <div class="catalog-note">${escapeHtml(locale.code === 'hi'
+                        ? `当前分类共整理出 ${category.games.length} 个去重后的游戏，iframe URL 已统一追加 referrer 参数。`
+                        : `This category currently surfaces ${category.games.length} deduplicated games, and every iframe URL uses the normalized referrer parameter.`)}</div>
+                    <div class="page-anchor-links">
+                        <a href="#recommended">${escapeHtml(locale.code === 'hi' ? 'अनुशंसित गेम' : 'Jump to recommended games')}</a>
+                        <a href="#all-games">${escapeHtml(locale.code === 'hi' ? 'सभी गेम' : 'Jump to all games')}</a>
+                        <a href="${sameLocaleHref(locale, pagePath, 'categories.html')}">${escapeHtml(locale.code === 'hi' ? 'मुख्य कैटलॉग' : 'Main catalog')}</a>
+                    </div>
+                    <div class="category-jump-grid">
+                        ${jumpLinks}
+                    </div>
+                    ${recommendedSection}
+                    <section class="catalog-section" id="all-games">
+                        <div class="catalog-section-header">
+                            <div>
+                                <h2>${escapeHtml(locale.code === 'hi' ? 'गेम श्रेणी' : 'Game Category')}</h2>
+                                <p>${escapeHtml(locale.code === 'hi'
+                                    ? `${label} 分类下的全部去重游戏列表。`
+                                    : `The full deduplicated game list for the ${label} category.`)}</p>
+                            </div>
+                            <span class="catalog-badge"><i class="fas fa-gamepad"></i>${escapeHtml(`${category.games.length} games`)}</span>
+                        </div>
+                        <div class="catalog-grid">
+                            ${catalogCards}
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>`;
@@ -2488,6 +2719,15 @@ function clearLocalizedGameDirectories(locale) {
             }
         }
     }
+
+    const gdCategoryData = getGdCategoryData();
+    const gdCategories = gdCategoryData?.categories || [];
+    for (const category of gdCategories) {
+        const targetPath = path.join(ROOT, localizedOutputPath(locale, category.pagePath));
+        if (fs.existsSync(targetPath) && fs.statSync(targetPath).isFile()) {
+            fs.unlinkSync(targetPath);
+        }
+    }
 }
 
 function buildSitemap(entries) {
@@ -2566,6 +2806,8 @@ function buildSite() {
     const allGames = buildDatasets();
     const featuredGames = allGames.filter((game) => game.indexable).slice(0, 12);
     const sitemapEntries = [];
+    const gdCategoryData = getGdCategoryData();
+    const gdCategories = gdCategoryData?.categories || [];
 
     for (const locale of LOCALES) {
         clearLocalizedGameDirectories(locale);
@@ -2582,6 +2824,11 @@ function buildSite() {
         for (const page of INFO_PAGES) {
             writeFile(localizedOutputPath(locale, page.slug), buildInfoPage(locale, page));
             sitemapEntries.push({ locale, pagePath: page.slug });
+        }
+
+        for (const category of gdCategories) {
+            writeFile(localizedOutputPath(locale, category.pagePath), buildGdCategoryPage(locale, category, gdCategories));
+            sitemapEntries.push({ locale, pagePath: category.pagePath });
         }
 
         for (const game of allGames) {

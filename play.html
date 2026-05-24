@@ -116,6 +116,7 @@
     <script src="js/game_data/multiplayer.js"></script>
     <script src="js/game_data/sniper.js"></script>
     <script src="js/game_data/gd_extra.js"></script>
+    <script src="js/game_data/gd_categories.js"></script>
     <script src="js/site-locale.js"></script>
     <script src="js/site-language-switch.js"></script>
     <script>
@@ -210,6 +211,9 @@
         function getAllGames() {
             const gdExtraData = window.gdExtraGames || {};
             const gdExtraAll = Object.values(gdExtraData).reduce((all, list) => all.concat(list || []), []);
+            const gdCategoryAll = Array.isArray(window.gdCategoryData && window.gdCategoryData.allGames)
+                ? window.gdCategoryData.allGames
+                : [];
             return dedupeGames([
                 ...(window.gamesData || []),
                 ...(window.actionGames || []),
@@ -217,7 +221,8 @@
                 ...(window.fpsData || []),
                 ...(window.multiplayerGames || []),
                 ...(window.sniperData || []),
-                ...gdExtraAll
+                ...gdExtraAll,
+                ...gdCategoryAll
             ]);
         }
 
@@ -226,6 +231,24 @@
             const allGames = getAllGames();
             if (!gdSlug) return null;
             return allGames.find(game => game.slug === gdSlug || getGameKey(game) === `gd:${gdSlug}`) || null;
+        }
+
+        function getCategoryCatalog() {
+            const categories = Array.isArray(window.gdCategoryData && window.gdCategoryData.categories)
+                ? window.gdCategoryData.categories
+                : [];
+            return categories.slice().sort((left, right) => left.label.en.localeCompare(right.label.en));
+        }
+
+        function getCategoryLabel(categoryKey) {
+            const localeLabels = localeMessages && localeMessages.categories && localeMessages.categories.labels
+                ? localeMessages.categories.labels
+                : null;
+            const category = getCategoryCatalog().find(item => item.key === categoryKey);
+            if (category && localeLabels && localeLabels[category.key]) {
+                return localeLabels[category.key];
+            }
+            return category ? category.label.en : categoryKey;
         }
 
         function renderPageMeta(game, categoryKey) {
@@ -325,8 +348,13 @@
             if (!container) return;
 
             const gdExtraData = window.gdExtraGames || {};
+            const gdCategoryGroups = Array.isArray(window.gdCategoryData && window.gdCategoryData.categories)
+                ? window.gdCategoryData.categories
+                : [];
+            const gdCategoryMatch = gdCategoryGroups.find(group => group.key === categoryKey);
             const primaryPool = dedupeGames([
                 ...((gdExtraData[categoryKey] || [])),
+                ...((gdCategoryMatch && gdCategoryMatch.games) || []),
                 ...(window[categoryKey === 'battle-royale' ? 'battleRoyaleData' :
                     categoryKey === 'fps' ? 'fpsData' :
                     categoryKey === 'sniper' ? 'sniperData' :
@@ -364,6 +392,21 @@
 
                 container.appendChild(card);
             });
+        }
+
+        function renderCategoryNav(currentCategoryKey) {
+            const nav = document.querySelector('.nav-categories');
+            if (!nav) return;
+
+            const categories = getCategoryCatalog();
+            const visibleCategories = categories.slice(0, 12);
+            nav.innerHTML = [
+                '<a href="categories.html?category=all" class="nav-item" data-i18n-category="all">All Games</a>',
+                ...visibleCategories.map(category => {
+                    const isActive = category.key === currentCategoryKey ? ' active' : '';
+                    return `<a href="${resolveLink(category.pagePath)}" class="nav-item${isActive}" data-category-key="${category.key}">${getCategoryLabel(category.key)}</a>`;
+                })
+            ].join('');
         }
 
         function toggleFullscreen() {
@@ -412,6 +455,7 @@
             renderPageMeta(currentGame, categoryKey);
             renderGameFrame(currentGame);
             loadRelatedGames(currentGame, categoryKey);
+            renderCategoryNav(categoryKey);
             initParticles();
             initCursorGlow();
         }
