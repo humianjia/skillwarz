@@ -21,6 +21,11 @@ const SITE = {
 
 const ROOT = __dirname;
 const GD_CATEGORY_DATA_FILE = path.join(ROOT, 'js', 'game_data', 'gd_categories.js');
+const GD_EXTRA_DATA_FILE = path.join(ROOT, 'js', 'game_data', 'gd_extra.js');
+const LEGACY_DESCRIPTION_FILES = [
+    { file: path.join(ROOT, 'add_more_descriptions.js'), anchor: 'const descriptions = {' },
+    { file: path.join(ROOT, 'update_individual_descriptions.js'), anchor: 'const searchResults = {' },
+];
 
 const LOCALES = [
     { code: 'en', lang: 'en', baseDir: '', switchLabel: 'EN', name: 'English' },
@@ -1202,6 +1207,97 @@ function readScriptValue(filePath, key) {
     return null;
 }
 
+function parseInlineObjectByAnchor(filePath, anchor) {
+    if (!fs.existsSync(filePath)) {
+        return {};
+    }
+
+    const code = fs.readFileSync(filePath, 'utf8');
+    const anchorIndex = code.indexOf(anchor);
+    if (anchorIndex === -1) {
+        return {};
+    }
+
+    const objectStart = code.indexOf('{', anchorIndex);
+    if (objectStart === -1) {
+        return {};
+    }
+
+    let depth = 0;
+    let inSingle = false;
+    let inDouble = false;
+    let inTemplate = false;
+    let escaped = false;
+
+    for (let index = objectStart; index < code.length; index += 1) {
+        const char = code[index];
+
+        if (escaped) {
+            escaped = false;
+            continue;
+        }
+
+        if (char === '\\') {
+            escaped = true;
+            continue;
+        }
+
+        if (!inDouble && !inTemplate && char === '\'') {
+            inSingle = !inSingle;
+            continue;
+        }
+
+        if (!inSingle && !inTemplate && char === '"') {
+            inDouble = !inDouble;
+            continue;
+        }
+
+        if (!inSingle && !inDouble && char === '`') {
+            inTemplate = !inTemplate;
+            continue;
+        }
+
+        if (inSingle || inDouble || inTemplate) {
+            continue;
+        }
+
+        if (char === '{') {
+            depth += 1;
+        } else if (char === '}') {
+            depth -= 1;
+            if (depth === 0) {
+                const literal = code.slice(objectStart, index + 1);
+                return Function(`return (${literal});`)();
+            }
+        }
+    }
+
+    return {};
+}
+
+let legacyDescriptionMapCache = null;
+
+function getLegacyDescriptionMap() {
+    if (legacyDescriptionMapCache) {
+        return legacyDescriptionMapCache;
+    }
+
+    legacyDescriptionMapCache = {};
+    for (const source of LEGACY_DESCRIPTION_FILES) {
+        const entries = parseInlineObjectByAnchor(source.file, source.anchor);
+        Object.assign(legacyDescriptionMapCache, entries || {});
+    }
+    return legacyDescriptionMapCache;
+}
+
+function getGdExtraGames() {
+    if (!fs.existsSync(GD_EXTRA_DATA_FILE)) {
+        return {};
+    }
+
+    return readScriptValue('js/game_data/gd_extra.js', 'gdExtraGames') || {};
+}
+
 function normalizePagePath(pagePath) {
     return pagePath || 'index.html';
 }
@@ -1578,6 +1674,179 @@ function inferWarnings(locale, game) {
         ? 'Playable browser embeds उपलब्ध होने पर third-party distribution partner के माध्यम से दिए जा सकते हैं।'
         : 'Playable browser embeds may be provided by a third-party distribution partner when available.');
     return notes;
+}
+
+function normalizeSeoGameType(game) {
+    const rawType = collapseWhitespace(
+        typeof game.gameType === 'string'
+            ? game.gameType
+            : (game.gameType && game.gameType.en) || ''
+    );
+
+    if (rawType && !/^skillwarz$/i.test(rawType) && !/^index$/i.test(rawType)) {
+        return rawType;
+    }
+
+    const categoryLabels = {
+        Action: 'Action game',
+        BattleRoyale: 'Battle royale game',
+        FPS: 'FPS game',
+        Multiplayer: 'Multiplayer game',
+        Sniper: 'Sniper game',
+    };
+
+    return categoryLabels[game.category] || 'Browser game';
+}
+
+function getRecoveredDescription(game) {
+    const rawDescription = collapseWhitespace(game.description);
+    const hasPollutedDescription = /SkillWarz is a fast-paced first-person shooter offering advanced movement mechanics/i.test(rawDescription);
+    if (rawDescription && !hasPollutedDescription) {
+        return rawDescription;
+    }
+
+    const legacyDescription = collapseWhitespace(getLegacyDescriptionMap()[game.name]);
+    if (legacyDescription) {
+        return legacyDescription;
+    }
+
+    const gdCategoryData = getGdCategoryData();
+    const gdAllGames = Array.isArray(gdCategoryData && gdCategoryData.allGames) ? gdCategoryData.allGames : [];
+    const categoryMatch = gdAllGames.find((entry) => collapseWhitespace(entry.name) === game.name);
+    const categoryDescription = collapseWhitespace(categoryMatch && categoryMatch.description);
+    if (categoryDescription) {
+        return categoryDescription;
+    }
+
+    const gdExtraGames = getGdExtraGames();
+    const extraEntries = Object.values(gdExtraGames).flatMap((list) => Array.isArray(list) ? list : []);
+    const extraMatch = extraEntries.find((entry) => collapseWhitespace(entry.name) === game.name);
+    const extraDescription = collapseWhitespace(extraMatch && extraMatch.description);
+    if (extraDescription) {
+        return extraDescription;
+    }
+
+    const tags = Array.isArray(game.tags) ? game.tags.filter(Boolean).slice(0, 4) : [];
+    if (tags.length) {
+        return `${game.name} is a ${normalizeSeoGameType(game).toLowerCase()} featuring ${tags.join(', ')} elements.`;
+    }
+
+    return `${game.name} is a browser-based ${normalizeSeoGameType(game).toLowerCase()}.`;
+}
+
+function getRecoveredInstruction(game) {
+    const rawInstruction = collapseWhitespace(game.instruction);
+    if (rawInstruction) {
+        return rawInstruction;
+    }
+
+    const gdCategoryData = getGdCategoryData();
+    const gdAllGames = Array.isArray(gdCategoryData && gdCategoryData.allGames) ? gdCategoryData.allGames : [];
+    const categoryMatch = gdAllGames.find((entry) => collapseWhitespace(entry.name) === game.name);
+    const categoryInstruction = collapseWhitespace(categoryMatch && categoryMatch.instruction);
+    if (categoryInstruction) {
+        return categoryInstruction;
+    }
+
+    const gdExtraGames = getGdExtraGames();
+    const extraEntries = Object.values(gdExtraGames).flatMap((list) => Array.isArray(list) ? list : []);
+    const extraMatch = extraEntries.find((entry) => collapseWhitespace(entry.name) === game.name);
+    return collapseWhitespace(extraMatch && extraMatch.instruction);
+}
+
+function deriveControlSentence(game, instructionText) {
+    const text = collapseWhitespace(instructionText).toLowerCase();
+
+    if (/(wasd|keyboard|space bar|left mouse|right mouse|mouse)/.test(text) && /(touch|tap|phone|smartphone|screen)/.test(text)) {
+        return 'On desktop, you can use keyboard and mouse controls, while touch input works smoothly on phones and tablets.';
+    }
+
+    if (/(wasd|keyboard|space bar|left mouse|right mouse|mouse)/.test(text)) {
+        return 'On desktop, the game is best played with keyboard and mouse for quick, responsive control.';
+    }
+
+    if (/(touch|tap|phone|smartphone|screen|finger)/.test(text)) {
+        return 'On mobile, simple touch controls make it easy to jump in and play from the first round.';
+    }
+
+    if (game.category === 'FPS' || game.category === 'Sniper') {
+        return 'Keyboard and mouse controls feel natural on desktop, while touch support keeps matches playable on mobile.';
+    }
+
+    return 'Whether you play with a mouse, keyboard, or touch controls, the inputs stay simple enough to learn quickly.';
+}
+
+function deriveFeatureSentence(game, descriptionText) {
+    const text = collapseWhitespace(descriptionText).toLowerCase();
+    const tagText = Array.isArray(game.tags) ? game.tags.join(', ') : '';
+
+    if (/(multiplayer|other players|friends|team)/.test(text)) {
+        return 'A big part of the appeal comes from competitive multiplayer moments, quick rematches, and easy-to-read action.';
+    }
+
+    if (/(levels|progress|unlock|upgrade|quests|missions)/.test(text)) {
+        return 'Progression, unlocks, and steadily rising challenge give each session a clear sense of momentum.';
+    }
+
+    if (/(colorful|cute|charming|stylish|beautiful|voxel|pixel|3d)/.test(text) || /(pixel|voxel|3d|cute)/i.test(tagText)) {
+        return 'Colorful visuals and a clear visual style help the game stand out while keeping the action easy to follow.';
+    }
+
+    if (game.category === 'BattleRoyale') {
+        return 'Its biggest highlight is the pressure of survival, fast decisions, and the thrill of outlasting the competition.';
+    }
+
+    if (game.category === 'Sniper') {
+        return 'Precision-focused gameplay, clean target tracking, and satisfying long-range shots are the main highlights here.';
+    }
+
+    return 'Easy-to-read objectives, fast restarts, and a low-friction browser format make it a strong pick for quick sessions.';
+}
+
+function buildSeoParagraph(game) {
+    const description = getRecoveredDescription(game);
+    const instruction = getRecoveredInstruction(game);
+    const controlSentence = deriveControlSentence(game, instruction);
+    const featureSentence = deriveFeatureSentence(game, description);
+    const shortDescription = description.replace(/\s+/g, ' ').trim();
+
+    const sentences = [
+        buildSeoIntroSentence(game),
+        shortDescription,
+        `Gameplay usually centers on ${game.category === 'BattleRoyale' ? 'surviving longer, choosing smart moments to engage, and making the most of every round' : game.category === 'Sniper' ? 'careful aiming, timing your shots, and staying focused under pressure' : game.category === 'FPS' ? 'quick reactions, steady aim, and keeping control of the pace of each fight' : game.category === 'Multiplayer' ? 'jumping into fast rounds, adapting to other players, and making smart decisions on the fly' : 'learning the pattern, reacting quickly, and improving your results with each attempt'}.`,
+        controlSentence,
+        featureSentence,
+        `That mix of accessible controls, readable action, and browser-friendly pacing makes ${game.name} a solid choice for both short breaks and longer play sessions.`,
+        `Play ${game.name} instantly on minefun io with no download required.`
+    ];
+
+    return sentences.join(' ');
+}
+
+function pickIndefiniteArticle(phrase) {
+    const text = collapseWhitespace(phrase).toLowerCase();
+    if (!text) {
+        return 'a';
+    }
+
+    if (/^(fps|rpg|mp3|mmo|fbi|x-ray)\b/.test(text)) {
+        return 'an';
+    }
+
+    return /^[aeiou]/.test(text) ? 'an' : 'a';
+}
+
+function buildSeoIntroSentence(game) {
+    const gameType = normalizeSeoGameType(game).toLowerCase();
+    return `${game.name} is ${pickIndefiniteArticle(gameType)} ${gameType} that gives players a clear, easy-to-follow core loop from the moment the session begins.`;
+}
+
+function buildSeoMetaDescription(game) {
+    const description = getRecoveredDescription(game);
+    const intro = buildSeoIntroSentence(game);
+    const featureSentence = deriveFeatureSentence(game, description);
+    const meta = `${intro} ${featureSentence} Play ${game.name} instantly on minefun io with no download required.`;
+    return meta.length <= 320 ? meta : meta.slice(0, 317).trimEnd() + '...';
 }
 
 function buildGameSummary(locale, game) {
@@ -2462,6 +2731,7 @@ function buildGuidePage(locale, guide) {
 function buildGamePage(locale, game, allGames) {
     const pagePath = game.link;
     const categoryLabel = getCategoryLabel(game.category, locale);
+    const seoParagraph = buildSeoParagraph(game);
     const summary = buildGameSummary(locale, game);
     const expectations = buildGameExpectations(locale, game);
     const bullets = buildGameBullets(locale, game);
@@ -2529,11 +2799,11 @@ function buildGamePage(locale, game, allGames) {
             : `${game.name} - Browser Guide And Play Page | SkillWarz`,
         description: locale.code === 'hi'
             ? `${game.name} के लिए SkillWarz quick guide पढ़ें, उसका core loop समझें और उपलब्ध होने पर browser version लोड करें।`
-            : `Read the SkillWarz quick guide for ${game.name}, understand the core loop, and load the browser version when available.`,
+            : seoParagraph,
         ogTitle: `${game.name} | SkillWarz`,
         ogDescription: locale.code === 'hi'
             ? `${game.name} के लिए curated SkillWarz page, जिसमें original summary text, on-demand browser play और category context शामिल हैं।`
-            : `A curated SkillWarz page for ${game.name} with original summary text, on-demand browser play, and category context.`,
+            : seoParagraph,
         ogImage: game.imageUrl,
         robots: game.indexable ? 'index, follow, max-image-preview:large' : 'noindex, follow',
     });
@@ -2569,7 +2839,9 @@ function buildGamePage(locale, game, allGames) {
                     <div class="section-stack">
                         <section class="section-block">
                             <h2>${escapeHtml(t(locale, UI.quickTake))}</h2>
-                            ${summary.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('\n')}
+                            ${locale.code === 'hi'
+                                ? summary.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('\n')
+                                : `<p>${escapeHtml(seoParagraph)}</p>`}
                         </section>
 
                         <section class="section-block">

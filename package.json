@@ -6,6 +6,7 @@
   "scripts": {
     "build:site": "node rebuild_site.js",
     "localize:site": "node scripts/localize_site.js",
+    "seo:prompt": "node scripts/generate_seo_prompt.js",
     "build": "npm run build:site",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
